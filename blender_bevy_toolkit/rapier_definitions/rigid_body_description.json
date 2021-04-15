@@ -1,0 +1,50 @@
+{
+    "name": "RigidBody",
+    "description": "Makes this object obey physics",
+    "id": "rapier_rigid_body",
+    "struct": "blender_bevy_toolkit::rapier_physics::RigidBodyDescription",
+    "fields": [
+        {
+            "field": "body_status", 
+            "type": "u8enum", 
+            "default": ["dynamic", "static", "kinematic"],
+            "description": "Dynamic bodies respond to forces. Static bodies do not move. Kinematic bodies must be moved manually but internally track velocity so they push other dynamic bodies properly"
+        },
+        {
+            "field": "damping_angular", 
+            "type": "f32", 
+            "default": 0.0,
+            "description": "damp the rotation of this body"
+        },
+        {
+            "field": "damping_linear", 
+            "type": "f32", 
+            "default": 0.0,
+            "description": "damp the translation of this body"
+        },
+        {
+            "field": "ccd_enable", 
+            "type": "bool", 
+            "default": false,
+            "description": "enable continous collision detection"
+        },
+        {
+            "field": "sleep_allow", 
+            "type": "bool", 
+            "default": false,
+            "description": "allow this body to sleep when velocity is low - this increases performance"
+        },
+        {
+            "field": "mass_extra", 
+            "type": "f32", 
+            "default": 0.0,
+            "description": "mass of the body additional to the mass of the collision shapes"
+        },
+        {
+            "field": "inertia_extra", 
+            "type": "vec3", 
+            "default": [0.0, 0.0, 0.0],
+            "description": "inertia of the body additional to the mass of the collision shapes"
+        }
+    ]
+}
