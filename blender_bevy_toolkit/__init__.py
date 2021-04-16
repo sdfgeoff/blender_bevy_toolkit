@@ -5,16 +5,20 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 import bpy
 from bpy.app.handlers import persistent
+from bpy_extras.io_utils import ExportHelper
 
 from . import components
 from . import operators
 from . import component_base
+from . import export
 
 bl_info = {
     "name": "Bevy Game Engine Toolkit",
     "blender": (2, 90, 0),
     "category": "Game",
 }
+
+
 
 
 
@@ -37,15 +41,20 @@ def register():
     bpy.utils.register_class(BevyComponentsPanel)
     bpy.utils.register_class(operators.RemoveBevyComponent)
     bpy.utils.register_class(operators.AddBevyComponent)
+    bpy.utils.register_class(ExportBevy)
     
     bpy.app.handlers.load_post.append(load_handler)
+    
+    bpy.types.TOPBAR_MT_file_export.append(menu_func)
     
     
 def unregister():
     bpy.utils.unregister_class(BevyComponentsPanel)
     bpy.utils.unregister_class(operators.RemoveBevyComponent)
     bpy.utils.unregister_class(operators.AddBevyComponent)
+    bpy.utils.unregister_class(ExportBevy)
     
+    bpy.types.TOPBAR_MT_file_export.remove(menu_func)
     bpy.app.handlers.load_post.remove(load_handler)
     
     for component in component_base.COMPONENTS:
@@ -63,6 +72,38 @@ def load_handler(dummy):
     
     for component in component_base.COMPONENTS:
         component.register()
-    
+
+
+def menu_func(self, context):
+    """Add export operation to the menu"""
+    self.layout.operator(ExportBevy.bl_idname, text="Bevy Engine (.scn)")
+
     
 
+class ExportBevy(bpy.types.Operator, ExportHelper):
+    """Selection to Godot"""
+    bl_idname = "export_bevy.scn"
+    bl_label = "Export to Bevy"
+    bl_options = {"PRESET"}
+
+    filename_ext = ".scn"
+    filter_glob: bpy.props.StringProperty(default="*.scn", options={"HIDDEN"})
+    
+    
+    def execute(self, context):
+        """Begin the export"""
+        
+        if not self.filepath:
+            raise Exception("filepath not set")
+        
+        do_export({
+            "output_filepath": self.filepath,
+            "mesh_output_folder": "meshes",
+            "make_duplicates_real": False
+        })
+
+        return {"FINISHED"}
+
+
+def do_export(config):
+    export.export_all(config)

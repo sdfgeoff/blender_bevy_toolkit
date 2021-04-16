@@ -7,7 +7,7 @@ class Parent:
         """ Returns a ComponentRepresentation representing this component
         """
         
-        collection_objs = list(config["collection"].objects)
+        collection_objs = list(config["scene"].objects)
         
         parent_id = collection_objs.index(obj.parent)
         

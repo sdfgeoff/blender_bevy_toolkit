@@ -8,6 +8,10 @@ custom components to objects is through code. That's where
 to objects in [blender](https://www.blender.org/) and exports
 the blender scene to bevy's scn format.
 
+*Note:* I am developing this for my specific game and use case, so the 
+exporter may not include all the features your game requires. PR's 
+welcome!
+
 
 # Instructions
 1. Copy or symlink the `blender_bevy_toolkit` subfolder (the one with all 
@@ -44,7 +48,7 @@ The whole point of this integration is to allow use of a user interface
 for creating scenes and adding components! So here's what using it 
 looks like:
 
-![clip of adding components](media/adding_components.gif)
+![clip of adding components](docs/adding_components.gif)
 
 
 ## Collection Export
@@ -68,7 +72,7 @@ stored externally to the addon (the addon looks for the folder
 `component_definitions` in the directory of the blend file), so you can 
 work on multiple games without conflicts.
 
-![screenshot of custom component definition](media/json_custom_components.jpg)
+![screenshot of custom component definition](docs/json_custom_components.jpg)
 
 
 
@@ -82,3 +86,9 @@ Rust:
 Blender:
 
 * blender 2.92 (may work on others)
+
+
+# Developing
+
+The makefile runs a script to export some blends from the `test_scenes`
+folder. 
