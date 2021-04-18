@@ -117,6 +117,13 @@ pub struct ColliderDescription {
 }
 
 
+/// Reads a f32 from a buffer
+fn get_f32(arr: &[u8]) -> f32 {
+    f32::from_le_bytes(arr[0..4].try_into().unwrap())
+}
+
+
+
 pub fn collider_description_to_builder(
     mut commands: Commands,
     collider_desc_query: Query<(&ColliderDescription, Entity)>,
@@ -125,20 +132,30 @@ pub fn collider_description_to_builder(
         commands.entity(entity).remove::<ColliderDescription>();
 
         let shape = match collider_desc.collider_shape {
-             0 => {
-                let radius = f32::from_le_bytes(collider_desc.collider_shape_data[0..4].try_into().unwrap());
+            0 => {
+                // Sphere
+                let radius = get_f32(&collider_desc.collider_shape_data[0..]);
                 SharedShape::ball(radius)
-             }
-             1 => {
-                let half_height = f32::from_le_bytes(collider_desc.collider_shape_data[0..4].try_into().unwrap());
-                let radius = f32::from_le_bytes(collider_desc.collider_shape_data[4..8].try_into().unwrap());
+            }
+            1 => {
+                // Capsule
+                let half_height = get_f32(&collider_desc.collider_shape_data[0..]);
+                let radius = get_f32(&collider_desc.collider_shape_data[4..]);
                 SharedShape::capsule(
                     na::Point3::new(0.0, 0.0, half_height),
                     na::Point3::new(0.0, 0.0, -half_height),
                     radius
                 )
-             }
-             _ => panic!("Unnknown collider shape")
+            }
+            2 => {
+                // Box
+                SharedShape::cuboid(
+                    get_f32(&collider_desc.collider_shape_data[0..]),
+                    get_f32(&collider_desc.collider_shape_data[4..]),
+                    get_f32(&collider_desc.collider_shape_data[8..])
+                )
+            }
+            _ => panic!("Unnknown collider shape")
         };
 
         let collider_builder = ColliderBuilder::new(shape)

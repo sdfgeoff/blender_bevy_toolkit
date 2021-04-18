@@ -2,10 +2,14 @@ from blender_bevy_toolkit.component_base import ComponentRepresentation, registe
 import bpy
 import utils
 import struct
+import collections
 
-# TODO:
-# Instead of using obj.dimensions, use obj.bound_box
-# This allows setting the offset WRT parent
+# Used to define the different bounds. Each bound
+# has a name (displayed in teh enum), a function
+# that turns an object into bytes
+# and draw_type defines how bounds are drawn in the viewport.
+BoundsType = collections.namedtuple("BoundsType", ["name", "encoder", "draw_type"])
+
 
 def encode_sphere_collider_data(obj):
     if obj.type == "EMPTY":
@@ -35,12 +39,35 @@ def encode_capsule_collider_data(obj):
     return struct.pack("<ff", half_height, radius)
 
 
+def encode_box_collider_data(obj):
+    if obj.type == "MESH":
+        dims = [obj.dimensions.x/2.0, obj.dimensions.y/2.0, obj.dimensions.z/2.0]
+    else:
+        print("Unable to figure out box dimensions for {}", obj.name)
+        dims = [1.0, 1.0, 1.0]
+    return struct.pack("<fff", *dims)
+
+
+
 # Physics shapes and a function to encode that shape provided an object
 # Be cautious about inserting to the beginning/middle of this list or 
 # removing an item as it will break existing blend files.
 COLLIDER_SHAPES = [
-    ("Sphere", encode_sphere_collider_data),
-    ("Capsule", encode_capsule_collider_data),
+    BoundsType(
+        name="Sphere", 
+        encoder=encode_sphere_collider_data,
+        draw_type="SPHERE"
+    ),
+    BoundsType(
+        name="Capsule",
+        encoder=encode_capsule_collider_data,
+        draw_type="CAPSULE"
+    ),
+    BoundsType(
+        name="Box",
+        encoder=encode_box_collider_data,
+        draw_type="BOX"
+    ),
 ]
     
 
@@ -65,7 +92,7 @@ class ColliderDescription:
         # derivation here
         collider_shape = int(obj.rapier_collider_description.collider_shape)
 
-        encode_function = COLLIDER_SHAPES[collider_shape][1]
+        encode_function = COLLIDER_SHAPES[collider_shape].encoder
         raw_data = encode_function(obj)
         
         data = list(raw_data)
@@ -82,7 +109,6 @@ class ColliderDescription:
             field_dict
         )
         
-        
     def is_present(obj):
         """ Returns true if the supplied object has this component """
         return obj.rapier_collider_description.present
@@ -93,10 +119,12 @@ class ColliderDescription:
     @staticmethod
     def add(obj):
         obj.rapier_collider_description.present = True
+        update_draw_bounds(obj)
 
     @staticmethod
     def remove(obj):
         obj.rapier_collider_description.present = False
+        update_draw_bounds(obj)
     
     @staticmethod
     def register():
@@ -135,6 +163,23 @@ class ColliderDescriptionPanel(bpy.types.Panel):
 
 
 
+def update_draw_bounds(obj):
+    """ Changes how the object is shown in the viewport in order to
+    display the bounds to the user """
+    if ColliderDescription.is_present(obj):
+        collider_type_id = int(obj.rapier_collider_description.collider_shape)
+        collider_type_data = COLLIDER_SHAPES[collider_type_id].draw_type
+        
+        obj.show_bounds = True
+        obj.display_bounds_type = collider_type_data
+    
+    else:
+        obj.show_bounds = False
+
+def collider_shape_changed(_, context):
+    """ Runs when the enum selecting the shape is changed """
+    update_draw_bounds(context.object)
+
 class ColliderDescriptionProperties(bpy.types.PropertyGroup):
     present: bpy.props.BoolProperty(name="Present", default=False)
 
@@ -144,6 +189,11 @@ class ColliderDescriptionProperties(bpy.types.PropertyGroup):
     
     density: bpy.props.FloatProperty(name="density", default=0.5)
 
-    shape_items = [(str(i), s[0], "") for i, s in enumerate(COLLIDER_SHAPES)]
+    shape_items = [(str(i), s.name, "") for i, s in enumerate(COLLIDER_SHAPES)]
 
-    collider_shape: bpy.props.EnumProperty(name="collider_shape", default=0, items=shape_items)
+    collider_shape: bpy.props.EnumProperty(
+        name="collider_shape", 
+        default=0, 
+        items=shape_items,
+        update=collider_shape_changed
+    )
