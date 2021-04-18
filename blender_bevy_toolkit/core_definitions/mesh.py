@@ -28,7 +28,8 @@ class Mesh:
         path = os.path.relpath(mesh_output_file, config["output_folder"])
         
         # TODO: The rust side doesn't support relative paths, so for now we have to hardcode this
-        path = os.path.join("models", path)
+        path = os.path.join("scenes", path)
+
         
         return ComponentRepresentation("blender_bevy_toolkit::blend_mesh::BlendMeshLoader", {"path": path})
     
