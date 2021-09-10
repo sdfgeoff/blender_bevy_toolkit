@@ -5,11 +5,13 @@ On the command line, call something like:
 	blender -b test_scenes/Cube.blend --python export.py -- --output-file="bin/Cube.scn"
 """
 
+import os
 import sys
 import bpy
 import traceback
 import argparse
 
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import blender_bevy_toolkit
 
 

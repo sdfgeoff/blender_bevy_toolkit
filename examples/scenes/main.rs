@@ -3,13 +3,11 @@ use bevy::prelude::*;
 use bevy_rapier3d::physics::RapierPhysicsPlugin;
 use blender_bevy_toolkit::BlendLoadPlugin;
 
-
 fn spawn_scene(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
     mut scene_spawner: ResMut<SceneSpawner>,
 ) {
-    
     //Create a camera
     commands.spawn().insert_bundle(PerspectiveCameraBundle {
         transform: Transform::from_matrix(Mat4::from_rotation_translation(
@@ -25,10 +23,7 @@ fn spawn_scene(
         ..Default::default()
     });
 
-
-
-    let scene_handle: Handle<DynamicScene> =
-        asset_server.load("scenes/PhysicsTest.scn");
+    let scene_handle: Handle<DynamicScene> = asset_server.load("scenes/PhysicsTest.scn");
     scene_spawner.spawn_dynamic(scene_handle);
 }
 
@@ -40,6 +35,5 @@ fn main() {
         .add_plugin(RapierPhysicsPlugin)
         .add_plugin(BlendLoadPlugin::default())
         .add_startup_system(spawn_scene.system())
-    
         .run();
 }

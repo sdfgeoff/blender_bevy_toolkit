@@ -98,19 +98,19 @@ def construct_component_classes(component_filepath):
     fields = {}
     for field in component_def.fields:
         prop_type = TYPE_PROPERTIES[field.type]
-        prop = prop_type(
-            name=field.field,
-            description=field.description,
-        )
-
+        args_dict = {
+            'name': field.field,
+            'description': field.description,
+            }
         if prop_type == bpy.props.EnumProperty:
             items = []
             for index, name in enumerate(field.default):
                 items.append((str(index), name, ""))
-            prop[1]["items"] = items
+            args_dict["items"] = items
         else:
-            prop[1]["default"]=field.default
-        
+            args_dict["default"]=field.default
+
+        prop = prop_type(**args_dict)
         fields[field.field] = prop
                         
     fields["present"] = bpy.props.BoolProperty(name="Present", default=False)

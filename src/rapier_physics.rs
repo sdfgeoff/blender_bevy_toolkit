@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use bevy_rapier3d::rapier::dynamics::{RigidBodyBuilder, BodyStatus};
+use bevy_rapier3d::rapier::dynamics::{BodyStatus, RigidBodyBuilder};
 use bevy_rapier3d::rapier::geometry::{ColliderBuilder, SharedShape};
 use bevy_rapier3d::rapier::math::AngVector;
 use bevy_rapier3d::rapier::na;
@@ -62,23 +62,23 @@ pub fn body_description_to_builder(
 
         let position = na::Isometry3::from_parts(
             na::Translation3::new(
-                transform.translation.x, 
-                transform.translation.y, 
-                transform.translation.z, 
+                transform.translation.x,
+                transform.translation.y,
+                transform.translation.z,
             ),
             na::UnitQuaternion::from_quaternion(na::Quaternion::new(
                 transform.rotation.w,
                 transform.rotation.x,
                 transform.rotation.y,
                 transform.rotation.z,
-            ))
+            )),
         );
 
         let body_status = match body_desc.body_status {
             0 => BodyStatus::Dynamic,
             1 => BodyStatus::Static,
             2 => BodyStatus::Kinematic,
-            _ => panic!("Unknown body status")
+            _ => panic!("Unknown body status"),
         };
 
         let rigid_body_builder = RigidBodyBuilder::new(body_status)
@@ -98,7 +98,6 @@ pub fn body_description_to_builder(
     }
 }
 
-
 #[derive(Reflect, Default, Debug)]
 #[reflect(Component)]
 pub struct ColliderDescription {
@@ -108,21 +107,18 @@ pub struct ColliderDescription {
     density: f32,
 
     /// At the moment, you can't use an enum with bevy's Reflect derivation.
-    /// So instead we're doing this the old fashioned way. 
-    /// 
+    /// So instead we're doing this the old fashioned way.
+    ///
     /// collider_shape = 0: Sphere collider
     ///     collider_shape_data: f32 = radius
     collider_shape: u8,
-    collider_shape_data: smallvec::SmallVec<[u8; 8]>
+    collider_shape_data: smallvec::SmallVec<[u8; 8]>,
 }
-
 
 /// Reads a f32 from a buffer
 fn get_f32(arr: &[u8]) -> f32 {
     f32::from_le_bytes(arr[0..4].try_into().unwrap())
 }
-
-
 
 pub fn collider_description_to_builder(
     mut commands: Commands,
@@ -144,7 +140,7 @@ pub fn collider_description_to_builder(
                 SharedShape::capsule(
                     na::Point3::new(0.0, 0.0, half_height),
                     na::Point3::new(0.0, 0.0, -half_height),
-                    radius
+                    radius,
                 )
             }
             2 => {
@@ -152,10 +148,10 @@ pub fn collider_description_to_builder(
                 SharedShape::cuboid(
                     get_f32(&collider_desc.collider_shape_data[0..]),
                     get_f32(&collider_desc.collider_shape_data[4..]),
-                    get_f32(&collider_desc.collider_shape_data[8..])
+                    get_f32(&collider_desc.collider_shape_data[8..]),
                 )
             }
-            _ => panic!("Unnknown collider shape")
+            _ => panic!("Unnknown collider shape"),
         };
 
         let collider_builder = ColliderBuilder::new(shape)
