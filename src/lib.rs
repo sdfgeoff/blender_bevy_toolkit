@@ -15,7 +15,7 @@ impl BlendLoadPlugin {
 }
 
 impl Plugin for BlendLoadPlugin {
-    fn build(&self, app: &mut AppBuilder) {
+    fn build(&self, app: &mut App) {
         app.register_type::<blend_label::BlendLabel>();
         app.register_type::<blend_collection::BlendCollectionLoader>();
         app.register_type::<blend_mesh::BlendMeshLoader>();

@@ -2,18 +2,18 @@
 name = "blender_bevy_toolkit"
 version = "0.1.0"
 authors = ["Geoffrey Irons <sdfgeoff@gmail.com>"]
-edition = "2018"
+edition = "2021"
 license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anyhow = "1.0"
-serde = {version = "1", features = ["derive"]}
-smallvec = { version = "1.4", features = ["serde"] }
+anyhow = "1.0.52"
+serde = {version = "1.0.133", features = ["derive"]}
+smallvec = { version = "1.8.0", features = ["serde"] }
 
 [dependencies.bevy]
-version="0.5.0"
+version="0.6.0"
 
 [dependencies.bevy_rapier3d]
-version="0.9.0"
+version="0.12.0"

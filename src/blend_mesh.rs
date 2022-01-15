@@ -1,12 +1,13 @@
 use bevy::{
     asset::{AssetLoader, LoadContext},
     prelude::*,
-    render::{mesh::Indices, pipeline::PrimitiveTopology},
+    render::{mesh::Indices},
     utils::BoxedFuture,
 };
 use std::convert::TryInto;
+use bevy::render::render_resource::PrimitiveTopology;
 
-#[derive(Reflect, Default)]
+#[derive(Reflect, Default, Component)]
 #[reflect(Component)] // this tells the reflect derive to also reflect component behaviors
 pub struct BlendMeshLoader {
     path: String,
@@ -37,14 +38,7 @@ pub fn blend_mesh_loader(
             ..Default::default()
         };
 
-        commands.entity(entity).insert_bundle((
-            bundle.mesh,
-            bundle.material,
-            bundle.main_pass,
-            bundle.draw,
-            bundle.visible,
-            bundle.render_pipelines,
-        ));
+        commands.entity(entity).insert_bundle(bundle);
     }
 }
 
