@@ -1,5 +1,4 @@
 import os
-import sys
 
 import bpy
 import utils
@@ -37,11 +36,12 @@ def load_folder(folder):
 
 def load_python_components(folder):
     import importlib.util
+    
+    filepaths = []
     for filename in os.listdir(folder):
         if filename.endswith(".py"):
-            module_name = os.path.splitext(filename)[0]
             full_path = os.path.join(folder, filename)
-            spec = importlib.util.spec_from_file_location(module_name, full_path)
+            
+            spec = importlib.util.spec_from_file_location(filename, full_path)
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
-            sys.modules[module_name] = module
