@@ -4,6 +4,7 @@ use bevy::prelude::*;
 /// of the entity with this component
 #[derive(Reflect, Default)]
 #[reflect(Component)]
+#[derive(Component)]
 pub struct BlendCollectionLoader {
     path: String,
 }
