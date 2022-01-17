@@ -1,5 +1,10 @@
 import mathutils
 import bpy
+import json
+
+def jdict(**kwargs):
+    return json.dumps(dict(**kwargs))
+
 
 def iterable_to_string(data, start="[", end="]", joiner=","):
     return start + joiner.join(encode(d) for d in data) + end

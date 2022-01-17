@@ -4,6 +4,9 @@ import hashlib
 import os
 from blender_bevy_toolkit.component_base import ComponentRepresentation, register_component
 
+import logging
+from blender_bevy_toolkit import jdict
+logger = logging.getLogger(__name__)
 
 @register_component
 class Mesh:
@@ -22,7 +25,7 @@ class Mesh:
             hash_text,
         ))
         if not os.path.exists(mesh_output_file):
-            print("Writing Mesh {}".format(mesh_output_file))
+            logger.info(jdict(event="writing_mesh", path=mesh_output_file))
             open(mesh_output_file, 'wb').write(mesh_data)
         
         path = os.path.relpath(mesh_output_file, config["output_folder"])

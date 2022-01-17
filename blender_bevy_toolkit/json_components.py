@@ -19,6 +19,11 @@ import mathutils
 from .component_base import ComponentRepresentation, register_component
 import utils
 
+import logging
+from utils import jdict
+logger = logging.getLogger(__name__)
+
+
 FieldDefinition = collections.namedtuple("FieldDefinition", ["field", "type", "default", "description"])
 ComponentDefininition = collections.namedtuple("ComponentDefinition", ["name", "description", "id", "struct", "fields"])
 
@@ -59,10 +64,12 @@ def get_component_files(folder):
 
 def construct_component_classes(component_filepath):
     # Parse the file from JSON into some python namedtuples
+    logging.info(jdict(event="construct_json_classes", path=component_filepath, state="start"))
+
     try:
         component = json.load(open(component_filepath))
     except json.decoder.JSONDecodeError as err:
-        print("Failed to construct class for {}: {}".format(component_filepath, err))
+        logging.exception(jdict(event="construct_json_component_parse_error", path=component_filepath, error=err, exc_info=err))
         return None
     
     def parse_field(field):
@@ -80,6 +87,7 @@ def construct_component_classes(component_filepath):
         struct=component["struct"],
         fields=[parse_field(f) for f in component["fields"]]
     )
+    logging.debug(jdict(event="construct_json_classes", path=component_filepath, state="parse_complete"))
     
     
     # component becomes bpy.types.Object.<<<obj_key>>>
@@ -116,6 +124,7 @@ def construct_component_classes(component_filepath):
     fields["present"] = bpy.props.BoolProperty(name="Present", default=False)
     properties.__annotations__ = fields
 
+    logging.debug(jdict(event="construct_json_classes", path=component_filepath, state="fields_completed"))
     
     
     # Create a class to store the data about this component inside the
@@ -157,6 +166,8 @@ def construct_component_classes(component_filepath):
                 row.prop(getattr(context.object, obj_key), field)
     panel.draw = draw
     
+    logging.debug(jdict(event="construct_json_classes", path=component_filepath, state="panel_created"))
+
     
     
     # These functions all get put inside the component_class
@@ -194,13 +205,16 @@ def construct_component_classes(component_filepath):
     component_class.remove = staticmethod(remove)
     component_class.encode = staticmethod(encode)
     
-
+    logging.debug(jdict(event="construct_json_classes", path=component_filepath, state="end"))
     return component_class
     
 
 
 def load_folder(folder):
+    logger.info(jdict(event="scan_folder_for_json_components", folder=folder))
+
     json_files = get_component_files(folder)
+    logger.info(jdict(event="scan_folder_for_json_components", folder=folder, json_files=json_files))
     classes = [construct_component_classes(c) for c in json_files]
     for cls in classes:
         register_component(cls)

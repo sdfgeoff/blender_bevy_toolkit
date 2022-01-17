@@ -8,7 +8,8 @@ import collections
 # has a name (displayed in teh enum), a function
 # that turns an object into bytes
 # and draw_type defines how bounds are drawn in the viewport.
-BoundsType = collections.namedtuple("BoundsType", ["name", "encoder", "draw_type"])
+BoundsType = collections.namedtuple(
+    "BoundsType", ["name", "encoder", "draw_type"])
 
 
 def encode_sphere_collider_data(obj):
@@ -23,7 +24,6 @@ def encode_sphere_collider_data(obj):
     else:
         print("Unable to figure out radius for {}", obj.name)
         radius = 1.0
-    
 
     return struct.pack("<f", radius)
 
@@ -41,20 +41,20 @@ def encode_capsule_collider_data(obj):
 
 def encode_box_collider_data(obj):
     if obj.type == "MESH":
-        dims = [obj.dimensions.x/2.0, obj.dimensions.y/2.0, obj.dimensions.z/2.0]
+        dims = [obj.dimensions.x/2.0,
+                obj.dimensions.y/2.0, obj.dimensions.z/2.0]
     else:
         print("Unable to figure out box dimensions for {}", obj.name)
         dims = [1.0, 1.0, 1.0]
     return struct.pack("<fff", *dims)
 
 
-
 # Physics shapes and a function to encode that shape provided an object
-# Be cautious about inserting to the beginning/middle of this list or 
+# Be cautious about inserting to the beginning/middle of this list or
 # removing an item as it will break existing blend files.
 COLLIDER_SHAPES = [
     BoundsType(
-        name="Sphere", 
+        name="Sphere",
         encoder=encode_sphere_collider_data,
         draw_type="SPHERE"
     ),
@@ -69,7 +69,7 @@ COLLIDER_SHAPES = [
         draw_type="BOX"
     ),
 ]
-    
+
 
 @register_component
 class ColliderDescription:
@@ -86,7 +86,8 @@ class ColliderDescription:
 
         field_dict = {}
         for field_name, converter in field_converters:
-            field_dict[field_name] = converter(getattr(obj.rapier_collider_description, field_name))
+            field_dict[field_name] = converter(
+                getattr(obj.rapier_collider_description, field_name))
 
         # The collider_data field is dependant on the collider_shape, so we have to do some
         # derivation here
@@ -94,9 +95,8 @@ class ColliderDescription:
 
         encode_function = COLLIDER_SHAPES[collider_shape].encoder
         raw_data = encode_function(obj)
-        
-        data = list(raw_data)
 
+        data = list(raw_data)
 
         field_dict["collider_shape"] = collider_shape
         field_dict["collider_shape_data"] = {
@@ -108,11 +108,11 @@ class ColliderDescription:
             "blender_bevy_toolkit::rapier_physics::ColliderDescription",
             field_dict
         )
-        
+
     def is_present(obj):
         """ Returns true if the supplied object has this component """
         return obj.rapier_collider_description.present
-    
+
     def can_add(obj):
         return True
 
@@ -125,13 +125,13 @@ class ColliderDescription:
     def remove(obj):
         obj.rapier_collider_description.present = False
         update_draw_bounds(obj)
-    
+
     @staticmethod
     def register():
         bpy.utils.register_class(ColliderDescriptionPanel)
         bpy.utils.register_class(ColliderDescriptionProperties)
-        bpy.types.Object.rapier_collider_description = bpy.props.PointerProperty(type=ColliderDescriptionProperties)
-
+        bpy.types.Object.rapier_collider_description = bpy.props.PointerProperty(
+            type=ColliderDescriptionProperties)
 
     @staticmethod
     def unregister():
@@ -150,17 +150,18 @@ class ColliderDescriptionPanel(bpy.types.Panel):
     @classmethod
     def poll(cls, context):
         return ColliderDescription.is_present(context.object)
-    
+
     def draw(self, context):
         row = self.layout.row()
-        row.label(text="A collider so this object can collide with things (when coupled with a rigidbody somewhere)")
+        row.label(
+            text="A collider so this object can collide with things (when coupled with a rigidbody somewhere)")
 
-        fields = ["friction", "restitution", "is_sensor", "density", "collider_shape"]
+        fields = ["friction", "restitution",
+                  "is_sensor", "density", "collider_shape"]
 
         for field in fields:
             row = self.layout.row()
             row.prop(context.object.rapier_collider_description, field)
-
 
 
 def update_draw_bounds(obj):
@@ -169,16 +170,18 @@ def update_draw_bounds(obj):
     if ColliderDescription.is_present(obj):
         collider_type_id = int(obj.rapier_collider_description.collider_shape)
         collider_type_data = COLLIDER_SHAPES[collider_type_id].draw_type
-        
+
         obj.show_bounds = True
         obj.display_bounds_type = collider_type_data
-    
+
     else:
         obj.show_bounds = False
+
 
 def collider_shape_changed(_, context):
     """ Runs when the enum selecting the shape is changed """
     update_draw_bounds(context.object)
+
 
 class ColliderDescriptionProperties(bpy.types.PropertyGroup):
     present: bpy.props.BoolProperty(name="Present", default=False)
@@ -186,14 +189,14 @@ class ColliderDescriptionProperties(bpy.types.PropertyGroup):
     friction: bpy.props.FloatProperty(name="friction", default=0.5)
     restitution: bpy.props.FloatProperty(name="restitution", default=0.5)
     is_sensor: bpy.props.BoolProperty(name="is_sensor", default=False)
-    
+
     density: bpy.props.FloatProperty(name="density", default=0.5)
 
     shape_items = [(str(i), s.name, "") for i, s in enumerate(COLLIDER_SHAPES)]
 
     collider_shape: bpy.props.EnumProperty(
-        name="collider_shape", 
-        default=0, 
+        name="collider_shape",
+        default=0,
         items=shape_items,
         update=collider_shape_changed
     )
