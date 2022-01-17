@@ -43,7 +43,7 @@ class BevyComponentsPanel(bpy.types.Panel):
 
 
 def register():
-    logger.info({"event":"registering_bevy_addon", "state":"start"})
+    logger.info(jdict(event="registering_bevy_addon", state="start"))
     bpy.utils.register_class(BevyComponentsPanel)
     bpy.utils.register_class(operators.RemoveBevyComponent)
     bpy.utils.register_class(operators.AddBevyComponent)
