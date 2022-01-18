@@ -2,9 +2,8 @@ use bevy::prelude::*;
 
 /// This component loads another collection and spawns it as a child
 /// of the entity with this component
-#[derive(Reflect, Default)]
+#[derive(Reflect, Default, Component)]
 #[reflect(Component)]
-#[derive(Component)]
 pub struct BlendCollectionLoader {
     path: String,
 }

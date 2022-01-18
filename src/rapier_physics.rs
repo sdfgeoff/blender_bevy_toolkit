@@ -6,9 +6,8 @@ use std::convert::TryInto;
 
 use smallvec;
 
-#[derive(Reflect, Default)]
+#[derive(Reflect, Default, Component)]
 #[reflect(Component)]
-#[derive(Component)]
 /// A RigidBodyDescription is only present until the body_description_to_builder system runs,
 /// upon which it is converted to a rapier::dynamics::RigidBodyBuilder with matching properties.
 /// Then the bevy rapier plugin converts that into a RigidBodyHandle component for the purpose
@@ -141,9 +140,8 @@ pub fn body_description_to_builder(
 }
 
 /// Maps to a [`ColliderBundle`]
-#[derive(Reflect, Default, Debug)]
+#[derive(Reflect, Default, Debug, Component)]
 #[reflect(Component)]
-#[derive(Component)]
 pub struct ColliderDescription {
     /// Maps to [`ColliderMaterial`] friction
     friction: f32,
