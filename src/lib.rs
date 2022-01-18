@@ -29,7 +29,7 @@ impl Plugin for BlendLoadPlugin {
         app.add_system(blend_mesh::blend_mesh_loader.system());
         
         app.register_type::<rapier_physics::ColliderDescription>();
-        // app.add_system(rapier_physics::body_description_to_builder.system());
-        // app.add_system(rapier_physics::collider_description_to_builder.system());
+        app.add_system(rapier_physics::body_description_to_builder.system());
+        app.add_system(rapier_physics::collider_description_to_builder.system());
     }
 }
