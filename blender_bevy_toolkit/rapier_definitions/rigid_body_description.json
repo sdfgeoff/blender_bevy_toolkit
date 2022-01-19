@@ -34,17 +34,5 @@
             "default": false,
             "description": "allow this body to sleep when velocity is low - this increases performance"
         },
-        {
-            "field": "mass_extra", 
-            "type": "f32", 
-            "default": 0.0,
-            "description": "mass of the body additional to the mass of the collision shapes"
-        },
-        {
-            "field": "inertia_extra", 
-            "type": "vec3", 
-            "default": [0.0, 0.0, 0.0],
-            "description": "inertia of the body additional to the mass of the collision shapes"
-        }
     ]
 }

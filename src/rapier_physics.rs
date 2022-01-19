@@ -13,45 +13,25 @@ use smallvec;
 /// Then the bevy rapier plugin converts that into a RigidBodyHandle component for the purpose
 /// of actually simulating it.
 pub struct RigidBodyDescription {
-    /// Maps to [`RigidBodyType`]. Because we can't export enums yet, this is encoded as a u8
+    /// Because we can't export enums yet, this is encoded as a u8
     ///  0 => dynamic
     ///  1 => static
     ///  2 => kinematic position based
     ///  3 => kinematic velocity based
     pub body_status: u8,
 
-    
-    /// Maps to [`RigidBodyForces`] `torque`
-    pub initial_torque: Vec3,
+    /// Damp the rotation of the body
+    pub damping_angular: f32,
+    /// Damp the linear of the body
+    pub damping_linear: f32,
 
-    /// Maps to [`RigidBodyDamping`] `linear_damping`
-    pub linear_damping: f32,
-    /// Maps to [`RigidBodyDamping`] `angular_damping`
-    pub angular_damping: f32,
+    /// Enable continous collision detection - good for fast moving objects but increases
+    /// processor load
+    pub ccd_enable: bool,
 
-    /// Maps to [`RigidBodyCcd`] `ccd_enabled` (default is false)
-    pub ccd_enabled: bool,
-    
     /// Allow the physics engine to "sleep" the body when it's velocity is low. This helps
     /// save processing time if there are lots of nearly-static-bodies
     pub sleep_allow: bool,
-
-    /// Mass of the body (additional to the densities of the collision shapes)
-    pub mass_extra: f32,
-    /// Inertia of the body (additional to the intertia contributed by the collision shapes)
-    pub inertia_extra: Vec3,
-}
-
-impl RigidBodyDescription {
-    fn rigid_body_type(&self) -> RigidBodyType {
-        dbg!(match self.body_status {
-            0 => RigidBodyType::Dynamic,
-            1 => RigidBodyType::Static,
-            2 => RigidBodyType::KinematicPositionBased,
-            3 => RigidBodyType::KinematicVelocityBased,
-            _ => RigidBodyType::Dynamic,
-        })
-    }
 }
 
 /// Converts a RigidBodyDescription into a rapier::dynamics::RigidBodyBuilder. This allows
@@ -60,13 +40,21 @@ pub fn body_description_to_builder(
     mut commands: Commands,
     body_desc_query: Query<(&RigidBodyDescription, Entity, &Transform)>,
 ) {
-    for (desc, entity, transform) in body_desc_query.iter() {
+    for (body_desc, entity, transform) in body_desc_query.iter() {
         commands.entity(entity).remove::<RigidBodyDescription>();
 
         let isometry = Isometry3::from((transform.translation, transform.rotation));
 
+        let body_status = match body_desc.body_status {
+            0 => RigidBodyType::Dynamic,
+            1 => RigidBodyType::Static,
+            2 => RigidBodyType::KinematicPositionBased,
+            3 => RigidBodyType::KinematicVelocityBased,
+            _ => RigidBodyType::Dynamic,
+        };
+
         let bundle = RigidBodyBundle {
-            body_type: RigidBodyTypeComponent(desc.rigid_body_type()),
+            body_type: RigidBodyTypeComponent(body_status),
             position: RigidBodyPositionComponent(RigidBodyPosition {
                 position: isometry,
                 next_position: isometry,
@@ -79,11 +67,11 @@ pub fn body_description_to_builder(
             }),
             activation: Default::default(),
             damping: RigidBodyDampingComponent(RigidBodyDamping {
-                linear_damping: desc.linear_damping,
-                angular_damping: desc.angular_damping,
+                linear_damping: body_desc.damping_linear,
+                angular_damping: body_desc.damping_angular,
             }),
             ccd: RigidBodyCcdComponent(RigidBodyCcd {
-                ccd_enabled: desc.ccd_enabled,
+                ccd_enabled: body_desc.ccd_enable,
                 ..Default::default()
             }),
             ..Default::default()
@@ -93,17 +81,13 @@ pub fn body_description_to_builder(
     }
 }
 
-/// Maps to a [`ColliderBundle`]
+
 #[derive(Reflect, Default, Debug, Component)]
 #[reflect(Component)]
 pub struct ColliderDescription {
-    /// Maps to [`ColliderMaterial`] friction
     friction: f32,
-    /// Maps to [`ColliderMaterial`] restitution
     restitution: f32,
-    /// Maps to [`ColliderType`] as `Solid` if false, and `Sensor` if true
     is_sensor: bool,
-    /// Maps to [`ColliderMassProps::Density`]
     density: f32,
 
     /// At the moment, you can't use an enum with bevy's Reflect derivation.
@@ -115,71 +99,66 @@ pub struct ColliderDescription {
     collider_shape_data: smallvec::SmallVec<[u8; 8]>,
 }
 
-impl ColliderDescription {
-    fn collider_type(&self) -> ColliderTypeComponent {
-        ColliderTypeComponent(match self.is_sensor {
+/// Reads a f32 from a buffer
+fn get_f32(arr: &[u8]) -> f32 {
+    f32::from_le_bytes(arr[0..4].try_into().unwrap())
+}
+
+
+pub fn collider_description_to_builder(
+    mut commands: Commands,
+    collider_desc_query: Query<(&ColliderDescription, Entity)>,
+) {
+    for (collider_desc, entity) in collider_desc_query.iter() {
+        commands.entity(entity).remove::<ColliderDescription>();
+
+        let collider_type = match collider_desc.is_sensor {
             true => ColliderType::Sensor,
             false => ColliderType::Solid,
-        })
-    }
+        };
 
-    fn collider_shape(&self) -> ColliderShapeComponent {
-        ColliderShapeComponent(match self.collider_shape {
+        let shape = match collider_desc.collider_shape {
             0 => {
                 // Sphere
-                let radius = get_f32(&self.collider_shape_data[0..]);
+                let radius = get_f32(&collider_desc.collider_shape_data[0..]);
                 SharedShape::ball(radius)
             }
             1 => {
                 // Capsule
-                let half_height = get_f32(&self.collider_shape_data[0..]);
-                let radius = get_f32(&self.collider_shape_data[4..]);
+                let half_height = get_f32(&collider_desc.collider_shape_data[0..]);
+                let radius = get_f32(&collider_desc.collider_shape_data[4..]);
                 SharedShape::capsule(
-                    Point3::from_slice(&[0.0, 0.0, half_height]),
-                    Point3::from_slice(&[0.0, 0.0, -half_height]),
+                    Point3::new(0.0, 0.0, half_height),
+                    Point3::new(0.0, 0.0, -half_height),
                     radius,
                 )
             }
             2 => {
                 // Box
                 SharedShape::cuboid(
-                    get_f32(&self.collider_shape_data[0..]),
-                    get_f32(&self.collider_shape_data[4..]),
-                    get_f32(&self.collider_shape_data[8..]),
+                    get_f32(&collider_desc.collider_shape_data[0..]),
+                    get_f32(&collider_desc.collider_shape_data[4..]),
+                    get_f32(&collider_desc.collider_shape_data[8..]),
                 )
             }
             _ => panic!("Unnknown collider shape"),
-        })
-    }
-}
+        };
 
-pub fn collider_description_to_builder(
-    mut commands: Commands,
-    collider_desc_query: Query<(Entity, &ColliderDescription, &Transform)>,
-) {
-    for (entity, desc, transform) in collider_desc_query.iter() {
-        commands.entity(entity).remove::<ColliderDescription>();
-
-        let bundle = ColliderBundle {
-            collider_type: desc.collider_type(),
-            shape: desc.collider_shape(),
+        let collider_bundle = ColliderBundle {
+            collider_type: ColliderTypeComponent(collider_type),
+            shape: ColliderShapeComponent(shape),
             material: ColliderMaterialComponent(ColliderMaterial {
-                friction: desc.friction,
-                restitution: desc.restitution,
+                friction: collider_desc.friction,
+                restitution: collider_desc.restitution,
                 ..Default::default()
             }),
             mass_properties: ColliderMassPropsComponent(
-                ColliderMassProps::Density(desc.density)
+                ColliderMassProps::Density(collider_desc.density)
             ),
             ..Default::default()
 
         };
 
-        commands.entity(entity).insert_bundle(bundle);
+        commands.entity(entity).insert_bundle(collider_bundle);
     }
-}
-
-/// Reads a f32 from a buffer
-fn get_f32(arr: &[u8]) -> f32 {
-    f32::from_le_bytes(arr[0..4].try_into().unwrap())
 }

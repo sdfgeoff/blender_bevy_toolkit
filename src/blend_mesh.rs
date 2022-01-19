@@ -41,13 +41,9 @@ pub fn blend_mesh_loader(
         commands.entity(entity).insert_bundle((
             bundle.mesh,
             bundle.material,
-            // bundle.main_pass,
-            // bundle.draw,
             bundle.visibility,
             bundle.computed_visibility,
-            // bundle.render_pipelines,
         ));
-        //commands.entity(entity).insert_bundle(bundle);
     }
 }
 
@@ -79,11 +75,11 @@ pub fn load_mesh(data: &[u8]) -> Mesh {
     let indices = Indices::U32(indices);
 
     let mut mesh = Mesh::new(PrimitiveTopology::TriangleList);
-    
+    mesh.set_indices(Some(indices));
     mesh.set_attribute(Mesh::ATTRIBUTE_POSITION, positions);
     mesh.set_attribute(Mesh::ATTRIBUTE_NORMAL, normals);
     mesh.set_attribute(Mesh::ATTRIBUTE_UV_0, uv0s);
-    mesh.set_indices(Some(indices));
+    
     mesh
 }
 
