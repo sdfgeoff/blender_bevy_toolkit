@@ -79,10 +79,8 @@ pub fn load_mesh(data: &[u8]) -> Mesh {
     mesh.set_attribute(Mesh::ATTRIBUTE_POSITION, positions);
     mesh.set_attribute(Mesh::ATTRIBUTE_NORMAL, normals);
     mesh.set_attribute(Mesh::ATTRIBUTE_UV_0, uv0s);
-    
     mesh
 }
-
 
 /// Reads a f32 from a buffer
 fn get_f32(arr: &[u8]) -> f32 {

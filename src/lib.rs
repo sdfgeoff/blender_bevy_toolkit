@@ -21,7 +21,6 @@ impl Plugin for BlendLoadPlugin {
         app.register_type::<blend_mesh::BlendMeshLoader>();
         app.register_type::<rapier_physics::RigidBodyDescription>();
         app.register_type::<rapier_physics::ColliderDescription>();
-        
         app.init_asset_loader::<blend_mesh::BlendMeshAssetLoader>();
 
         app.add_system(blend_collection::blend_collection_loader.system());

@@ -3,7 +3,6 @@ use bevy::prelude::*;
 use bevy_rapier3d::physics::{NoUserData, RapierPhysicsPlugin};
 use bevy_rapier3d::prelude::*;
 use blender_bevy_toolkit::BlendLoadPlugin;
-use blender_bevy_toolkit::blend_label::BlendLabel;
 
 use std::env;
 
