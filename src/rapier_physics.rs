@@ -18,33 +18,9 @@ pub struct RigidBodyDescription {
     ///  1 => static
     ///  2 => kinematic position based
     ///  3 => kinematic velocity based
-    pub body_type: u8,
+    pub body_status: u8,
 
-    /// Maps to [`RigidBodyPosition`] `translation`
-    pub position: Vec3,
-    /// Maps to [`RigidBodyPosition`] `scale`
-    pub scale: Vec3,
-    /// Maps to [`RigidBodyPosition`] `rotation`
-    pub rotation: Vec3,
-
-    /// Maps to [`RigidBodyVelocity`] `linvel`
-    pub linear_velocity: Vec3,
-    /// Maps to [`RigidBodyVelocity`] `linvel`
-    pub angular_velocity: Vec3,
-
-    /// Maps to [`RigidBodyMassProps`] flags, [`RigidBodyMassPropsFlags`]
-    pub lock_translation: bool,
-    /// Maps to [`RigidBodyMassProps`] flags, [`RigidBodyMassPropsFlags`]
-    pub lock_rotation_x: bool,
-    /// Maps to [`RigidBodyMassProps`] flags, [`RigidBodyMassPropsFlags`]
-    pub lock_rotation_y: bool,
-    /// Maps to [`RigidBodyMassProps`] flags, [`RigidBodyMassPropsFlags`]
-    pub lock_rotation_z: bool,
-
-    /// Maps to [`RigidBodyForces`] `gravity_scale`
-    pub gravity_scale: f32,
-    // /// Maps to [`RigidBodyForces`] `force`
-    // pub inertia_extra: Vec3,
+    
     /// Maps to [`RigidBodyForces`] `torque`
     pub initial_torque: Vec3,
 
@@ -55,42 +31,26 @@ pub struct RigidBodyDescription {
 
     /// Maps to [`RigidBodyCcd`] `ccd_enabled` (default is false)
     pub ccd_enabled: bool,
-    // pub sleep_allow: bool,
+    
+    /// Allow the physics engine to "sleep" the body when it's velocity is low. This helps
+    /// save processing time if there are lots of nearly-static-bodies
+    pub sleep_allow: bool,
 
-    // /// Mass of the body (additional to the densities of the collision shapes)
-    // pub mass_extra: f32,
+    /// Mass of the body (additional to the densities of the collision shapes)
+    pub mass_extra: f32,
+    /// Inertia of the body (additional to the intertia contributed by the collision shapes)
+    pub inertia_extra: Vec3,
 }
 
 impl RigidBodyDescription {
-    fn rigid_body_type(&self) -> RigidBodyTypeComponent {
-        RigidBodyTypeComponent(match self.body_type {
+    fn rigid_body_type(&self) -> RigidBodyType {
+        dbg!(match self.body_status {
             0 => RigidBodyType::Dynamic,
             1 => RigidBodyType::Static,
             2 => RigidBodyType::KinematicPositionBased,
             3 => RigidBodyType::KinematicVelocityBased,
             _ => RigidBodyType::Dynamic,
         })
-    }
-
-    fn rigid_body_flags(&self) -> RigidBodyMassPropsFlags {
-        let mut flags = RigidBodyMassPropsFlags::empty();
-        if self.lock_rotation_x {
-            // lock all r
-            flags.insert(RigidBodyMassPropsFlags::ROTATION_LOCKED_X);
-        }
-        if self.lock_rotation_y {
-            // lock all r
-            flags.insert(RigidBodyMassPropsFlags::ROTATION_LOCKED_Y);
-        }
-        if self.lock_rotation_z {
-            // lock all r
-            flags.insert(RigidBodyMassPropsFlags::ROTATION_LOCKED_Z);
-        }
-        if self.lock_translation {
-            // lock all r
-            flags.insert(RigidBodyMassPropsFlags::TRANSLATION_LOCKED);
-        }
-        flags
     }
 }
 
@@ -106,21 +66,15 @@ pub fn body_description_to_builder(
         let isometry = Isometry3::from((transform.translation, transform.rotation));
 
         let bundle = RigidBodyBundle {
-            body_type: desc.rigid_body_type(),
+            body_type: RigidBodyTypeComponent(desc.rigid_body_type()),
             position: RigidBodyPositionComponent(RigidBodyPosition {
                 position: isometry,
                 next_position: isometry,
             }),
-            velocity: RigidBodyVelocityComponent(RigidBodyVelocity {
-                linvel: desc.linear_velocity.into(),
-                angvel: desc.angular_velocity.into(),
-            }),
             mass_properties: RigidBodyMassPropsComponent(RigidBodyMassProps {
-                flags: desc.rigid_body_flags(),
                 ..Default::default()
             }),
             forces: RigidBodyForcesComponent(RigidBodyForces {
-                gravity_scale: desc.gravity_scale,
                 ..Default::default()
             }),
             activation: Default::default(),
@@ -135,7 +89,7 @@ pub fn body_description_to_builder(
             ..Default::default()
         };
 
-        commands.entity(entity).insert_bundle(bundle);
+        commands.entity(entity).insert_bundle(bundle).insert(RigidBodyPositionSync::Discrete);
     }
 }
 
@@ -218,6 +172,7 @@ pub fn collider_description_to_builder(
                 ColliderMassProps::Density(desc.density)
             ),
             ..Default::default()
+
         };
 
         commands.entity(entity).insert_bundle(bundle);

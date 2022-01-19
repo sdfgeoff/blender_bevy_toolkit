@@ -7,7 +7,7 @@
         {
             "field": "body_status", 
             "type": "u8enum", 
-            "default": ["dynamic", "static", "kinematic"],
+            "default": ["dynamic", "static", "kinematic (position)", "kinematic (velocity)"],
             "description": "Dynamic bodies respond to forces. Static bodies do not move. Kinematic bodies must be moved manually but internally track velocity so they push other dynamic bodies properly"
         },
         {
