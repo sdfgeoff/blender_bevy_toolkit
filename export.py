@@ -23,6 +23,7 @@ required=True)
 
     logging.basicConfig(level=config.log_level)
 
+
     try:
         import blender_bevy_toolkit
         print("WARNING: Plugin is installed in blender, using installed version for export")

@@ -33,6 +33,6 @@
             "type": "bool", 
             "default": false,
             "description": "allow this body to sleep when velocity is low - this increases performance"
-        },
+        }
     ]
 }

@@ -4,8 +4,6 @@ use bevy_rapier3d::physics::{NoUserData, RapierPhysicsPlugin};
 use bevy_rapier3d::prelude::*;
 use blender_bevy_toolkit::BlendLoadPlugin;
 
-use std::env;
-
 
 fn spawn_scene(
     mut commands: Commands,
@@ -27,16 +25,7 @@ fn spawn_scene(
         ..Default::default()
     });
 
-    let args: Vec<String> = env::args().collect();
-
-    if args.len() != 2 {
-        println!("Please specify a scene file to load. For example:\n cargo run --example scenes -- scenes/Heirarchy.scn");
-        std::process::exit(1);
-    }
-
-    println!("Running scene: {}", args[1]);
-
-    let scene_handle: Handle<DynamicScene> = asset_server.load(args[1].as_str());
+    let scene_handle: Handle<DynamicScene> = asset_server.load("scenes/PhysicsTest.scn");
     scene_spawner.spawn_dynamic(scene_handle);
 }
 
@@ -48,6 +37,8 @@ fn setup_physics(mut physics_config: ResMut<RapierConfiguration>) {
 
 
 fn main() {
+    println!("Running example scenes");
+    
     App::new()
         .add_plugins(DefaultPlugins)
         .add_plugin(RapierPhysicsPlugin::<NoUserData>::default())
