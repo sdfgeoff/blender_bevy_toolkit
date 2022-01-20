@@ -1,7 +1,9 @@
 //! This example loads the various test scenes
 use bevy::prelude::*;
-use bevy_rapier3d::physics::RapierPhysicsPlugin;
+use bevy_rapier3d::physics::{NoUserData, RapierPhysicsPlugin};
+use bevy_rapier3d::prelude::*;
 use blender_bevy_toolkit::BlendLoadPlugin;
+
 
 fn spawn_scene(
     mut commands: Commands,
@@ -18,7 +20,7 @@ fn spawn_scene(
     });
 
     // Create a Light
-    commands.spawn().insert_bundle(LightBundle {
+    commands.spawn().insert_bundle(PointLightBundle {
         transform: Transform::from_translation(Vec3::new(0.0, 8.0, 0.0)),
         ..Default::default()
     });
@@ -27,13 +29,21 @@ fn spawn_scene(
     scene_spawner.spawn_dynamic(scene_handle);
 }
 
+
+fn setup_physics(mut physics_config: ResMut<RapierConfiguration>) {
+    physics_config.gravity.y = 0.0;
+    physics_config.gravity.z = -9.8;
+}
+
+
 fn main() {
     println!("Running example scenes");
-
-    App::build()
+    
+    App::new()
         .add_plugins(DefaultPlugins)
-        .add_plugin(RapierPhysicsPlugin)
+        .add_plugin(RapierPhysicsPlugin::<NoUserData>::default())
         .add_plugin(BlendLoadPlugin::default())
         .add_startup_system(spawn_scene.system())
+        .add_system(setup_physics.system())
         .run();
 }

@@ -1,13 +1,12 @@
 use bevy::prelude::*;
-use bevy_rapier3d::rapier::dynamics::{BodyStatus, RigidBodyBuilder};
-use bevy_rapier3d::rapier::geometry::{ColliderBuilder, SharedShape};
-use bevy_rapier3d::rapier::math::AngVector;
-use bevy_rapier3d::rapier::na;
+use bevy_rapier3d::na::{Isometry3, Point3};
+use bevy_rapier3d::prelude::*;
+use bevy_rapier3d::rapier::geometry::SharedShape;
 use std::convert::TryInto;
 
 use smallvec;
 
-#[derive(Reflect, Default)]
+#[derive(Reflect, Default, Component)]
 #[reflect(Component)]
 /// A RigidBodyDescription is only present until the body_description_to_builder system runs,
 /// upon which it is converted to a rapier::dynamics::RigidBodyBuilder with matching properties.
@@ -17,7 +16,8 @@ pub struct RigidBodyDescription {
     /// Because we can't export enums yet, this is encoded as a u8
     ///  0 => dynamic
     ///  1 => static
-    ///  2 => kinematic
+    ///  2 => kinematic position based
+    ///  3 => kinematic velocity based
     pub body_status: u8,
 
     /// Damp the rotation of the body
@@ -32,12 +32,6 @@ pub struct RigidBodyDescription {
     /// Allow the physics engine to "sleep" the body when it's velocity is low. This helps
     /// save processing time if there are lots of nearly-static-bodies
     pub sleep_allow: bool,
-
-    /// Mass of the body (additional to the densities of the collision shapes)
-    pub mass_extra: f32,
-
-    /// Inertia of the body (additional to the intertia contributed by the collision shapes)
-    pub inertia_extra: Vec3,
 }
 
 /// Converts a RigidBodyDescription into a rapier::dynamics::RigidBodyBuilder. This allows
@@ -49,56 +43,46 @@ pub fn body_description_to_builder(
     for (body_desc, entity, transform) in body_desc_query.iter() {
         commands.entity(entity).remove::<RigidBodyDescription>();
 
-        // There's probably a better way to convert from a glam vector to a nalgebra matrix,
-        // but I couldn't find it.
-        let inertia_vec = AngVector::from_iterator(
-            vec![
-                body_desc.inertia_extra.x,
-                body_desc.inertia_extra.y,
-                body_desc.inertia_extra.z,
-            ]
-            .into_iter(),
-        );
-
-        let position = na::Isometry3::from_parts(
-            na::Translation3::new(
-                transform.translation.x,
-                transform.translation.y,
-                transform.translation.z,
-            ),
-            na::UnitQuaternion::from_quaternion(na::Quaternion::new(
-                transform.rotation.w,
-                transform.rotation.x,
-                transform.rotation.y,
-                transform.rotation.z,
-            )),
-        );
+        let isometry = Isometry3::from((transform.translation, transform.rotation));
 
         let body_status = match body_desc.body_status {
-            0 => BodyStatus::Dynamic,
-            1 => BodyStatus::Static,
-            2 => BodyStatus::Kinematic,
-            _ => panic!("Unknown body status"),
+            0 => RigidBodyType::Dynamic,
+            1 => RigidBodyType::Static,
+            2 => RigidBodyType::KinematicPositionBased,
+            3 => RigidBodyType::KinematicVelocityBased,
+            _ => RigidBodyType::Dynamic,
         };
 
-        let rigid_body_builder = RigidBodyBuilder::new(body_status)
-            .position(position)
-            .linear_damping(body_desc.damping_linear)
-            .angular_damping(body_desc.damping_angular)
-            .ccd_enabled(body_desc.ccd_enable)
-            .can_sleep(body_desc.sleep_allow)
-            .additional_mass(body_desc.mass_extra)
-            .additional_principal_angular_inertia(inertia_vec);
+        let bundle = RigidBodyBundle {
+            body_type: RigidBodyTypeComponent(body_status),
+            position: RigidBodyPositionComponent(RigidBodyPosition {
+                position: isometry,
+                next_position: isometry,
+            }),
+            mass_properties: RigidBodyMassPropsComponent(RigidBodyMassProps {
+                ..Default::default()
+            }),
+            forces: RigidBodyForcesComponent(RigidBodyForces {
+                ..Default::default()
+            }),
+            activation: Default::default(),
+            damping: RigidBodyDampingComponent(RigidBodyDamping {
+                linear_damping: body_desc.damping_linear,
+                angular_damping: body_desc.damping_angular,
+            }),
+            ccd: RigidBodyCcdComponent(RigidBodyCcd {
+                ccd_enabled: body_desc.ccd_enable,
+                ..Default::default()
+            }),
+            ..Default::default()
+        };
 
-        commands.entity(entity).insert(rigid_body_builder);
-
-        // TODO: remove this when collider loading is implemented
-        // let collider1 = ColliderBuilder::ball(1.0).density(1.0);
-        // commands.entity(entity).insert(collider1);
+        commands.entity(entity).insert_bundle(bundle).insert(RigidBodyPositionSync::Discrete);
     }
 }
 
-#[derive(Reflect, Default, Debug)]
+
+#[derive(Reflect, Default, Debug, Component)]
 #[reflect(Component)]
 pub struct ColliderDescription {
     friction: f32,
@@ -120,12 +104,18 @@ fn get_f32(arr: &[u8]) -> f32 {
     f32::from_le_bytes(arr[0..4].try_into().unwrap())
 }
 
+
 pub fn collider_description_to_builder(
     mut commands: Commands,
     collider_desc_query: Query<(&ColliderDescription, Entity)>,
 ) {
     for (collider_desc, entity) in collider_desc_query.iter() {
         commands.entity(entity).remove::<ColliderDescription>();
+
+        let collider_type = match collider_desc.is_sensor {
+            true => ColliderType::Sensor,
+            false => ColliderType::Solid,
+        };
 
         let shape = match collider_desc.collider_shape {
             0 => {
@@ -138,8 +128,8 @@ pub fn collider_description_to_builder(
                 let half_height = get_f32(&collider_desc.collider_shape_data[0..]);
                 let radius = get_f32(&collider_desc.collider_shape_data[4..]);
                 SharedShape::capsule(
-                    na::Point3::new(0.0, 0.0, half_height),
-                    na::Point3::new(0.0, 0.0, -half_height),
+                    Point3::new(0.0, 0.0, half_height),
+                    Point3::new(0.0, 0.0, -half_height),
                     radius,
                 )
             }
@@ -154,12 +144,21 @@ pub fn collider_description_to_builder(
             _ => panic!("Unnknown collider shape"),
         };
 
-        let collider_builder = ColliderBuilder::new(shape)
-            .friction(collider_desc.friction)
-            .restitution(collider_desc.restitution)
-            .sensor(collider_desc.is_sensor)
-            .density(collider_desc.density);
+        let collider_bundle = ColliderBundle {
+            collider_type: ColliderTypeComponent(collider_type),
+            shape: ColliderShapeComponent(shape),
+            material: ColliderMaterialComponent(ColliderMaterial {
+                friction: collider_desc.friction,
+                restitution: collider_desc.restitution,
+                ..Default::default()
+            }),
+            mass_properties: ColliderMassPropsComponent(
+                ColliderMassProps::Density(collider_desc.density)
+            ),
+            ..Default::default()
 
-        commands.entity(entity).insert(collider_builder);
+        };
+
+        commands.entity(entity).insert_bundle(collider_bundle);
     }
 }

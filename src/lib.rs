@@ -15,13 +15,12 @@ impl BlendLoadPlugin {
 }
 
 impl Plugin for BlendLoadPlugin {
-    fn build(&self, app: &mut AppBuilder) {
+    fn build(&self, app: &mut App) {
         app.register_type::<blend_label::BlendLabel>();
         app.register_type::<blend_collection::BlendCollectionLoader>();
         app.register_type::<blend_mesh::BlendMeshLoader>();
         app.register_type::<rapier_physics::RigidBodyDescription>();
         app.register_type::<rapier_physics::ColliderDescription>();
-
         app.init_asset_loader::<blend_mesh::BlendMeshAssetLoader>();
 
         app.add_system(blend_collection::blend_collection_loader.system());

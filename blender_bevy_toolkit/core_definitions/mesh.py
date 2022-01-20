@@ -76,9 +76,9 @@ class Mesh:
                 if mesh.uv_layers:
                 
                     uv_raw = mesh.uv_layers[0].data[loop_index].uv
-                    uv = (uv_raw[0], uv_raw[1], 0.0)
+                    uv = (uv_raw[0], uv_raw[1])
                 else:
-                    uv = (0.0, 0.0, 0.0)
+                    uv = (0.0, 0.0)
 
                 dedup = (position, normal, uv)
                 if dedup not in dedup_data_lookup:
@@ -112,7 +112,7 @@ class Mesh:
         for normal in normals:
             out_data += struct.pack("fff", *normal)
         for uv in uv0:
-            out_data += struct.pack("fff", *uv)
+            out_data += struct.pack("ff", *uv)
         for index in indices:
             out_data += struct.pack("III", *index)
         
