@@ -77,10 +77,12 @@ pub fn body_description_to_builder(
             ..Default::default()
         };
 
-        commands.entity(entity).insert_bundle(bundle).insert(RigidBodyPositionSync::Discrete);
+        commands
+            .entity(entity)
+            .insert_bundle(bundle)
+            .insert(RigidBodyPositionSync::Discrete);
     }
 }
-
 
 #[derive(Reflect, Default, Debug, Component)]
 #[reflect(Component)]
@@ -103,7 +105,6 @@ pub struct ColliderDescription {
 fn get_f32(arr: &[u8]) -> f32 {
     f32::from_le_bytes(arr[0..4].try_into().unwrap())
 }
-
 
 pub fn collider_description_to_builder(
     mut commands: Commands,
@@ -152,11 +153,10 @@ pub fn collider_description_to_builder(
                 restitution: collider_desc.restitution,
                 ..Default::default()
             }),
-            mass_properties: ColliderMassPropsComponent(
-                ColliderMassProps::Density(collider_desc.density)
-            ),
+            mass_properties: ColliderMassPropsComponent(ColliderMassProps::Density(
+                collider_desc.density,
+            )),
             ..Default::default()
-
         };
 
         commands.entity(entity).insert_bundle(collider_bundle);

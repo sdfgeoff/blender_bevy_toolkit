@@ -5,7 +5,6 @@ use bevy_rapier3d::prelude::*;
 use blender_bevy_toolkit::BlendLoadPlugin;
 use std::env;
 
-
 fn spawn_scene(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
@@ -39,12 +38,10 @@ fn spawn_scene(
     scene_spawner.spawn_dynamic(scene_handle);
 }
 
-
 fn setup_physics(mut physics_config: ResMut<RapierConfiguration>) {
     physics_config.gravity.y = 0.0;
     physics_config.gravity.z = -9.8;
 }
-
 
 fn main() {
     App::new()
