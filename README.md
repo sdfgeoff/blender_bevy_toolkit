@@ -80,15 +80,21 @@ work on multiple games without conflicts.
 
 Rust:
 
-* bevy 0.5.0
-* bevy_rapier 0.9.0
+* bevy 0.6.0
+* bevy_rapier 0.12.0
 
 Blender:
 
-* blender 2.92 (may work on others)
+* blender 3.x (may work on others)
 
 
 # Developing
 
 The makefile runs a script to export some blends from the `test_scenes`
 folder. 
+
+You should install:
+```
+pip install black
+
+```

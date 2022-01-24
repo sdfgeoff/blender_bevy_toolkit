@@ -2,6 +2,7 @@ import mathutils
 import bpy
 import json
 
+
 def jdict(**kwargs):
     return json.dumps(dict(**kwargs))
 
@@ -11,34 +12,39 @@ def iterable_to_string(data, start="[", end="]", joiner=","):
 
 
 def dict_to_str(data):
-    return "{"+",".join("{}:{}".format(encode(k), encode(v)) for k,v in data.items()) +"}"
+    return (
+        "{"
+        + ",".join("{}:{}".format(encode(k), encode(v)) for k, v in data.items())
+        + "}"
+    )
 
 
 def vect_to_str(data):
     vec_size = len(data)
-    return encode({
-        "type": "glam::vec{0}::Vec{0}".format(vec_size),
-        "value": tuple(data)
-    })
+    return encode(
+        {"type": "glam::vec{0}::Vec{0}".format(vec_size), "value": tuple(data)}
+    )
+
 
 def quat_to_str(data):
-    return encode({
-        "type": "glam::quat::Quat",
-        "value": (data.x, data.y, data.z, data.w)
-    })
+    return encode(
+        {"type": "glam::quat::Quat", "value": (data.x, data.y, data.z, data.w)}
+    )
 
-        
+
 def dq_string(data):
-    """ repr a string with double quotes. This is probably a fragile
-    hack, so if it breaks, please do something better! """
-    return '"'+repr("'"+data)[2:]
-    
+    """repr a string with double quotes. This is probably a fragile
+    hack, so if it breaks, please do something better!"""
+    return '"' + repr("'" + data)[2:]
+
+
 def bool_to_str(b):
     # return encode({
     #     "type": "bool",
     #     "value": str(b).lower()
     # })
     return str(b).lower()
+
 
 def encode(data):
     if hasattr(data, "to_str"):
@@ -49,22 +55,18 @@ def encode(data):
 class F32:
     def __init__(self, val):
         self.val = val
-    
+
     def to_str(self):
-        return encode({
-            "type": "f32",
-            "value": self.val
-        })
+        return encode({"type": "f32", "value": self.val})
+
 
 class F64:
     def __init__(self, val):
         self.val = val
-    
+
     def to_str(self):
-        return encode({
-            "type": "f64",
-            "value": self.val
-        })
+        return encode({"type": "f64", "value": self.val})
+
 
 ENCODE_MAP = {
     str: dq_string,
