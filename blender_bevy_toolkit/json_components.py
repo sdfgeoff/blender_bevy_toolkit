@@ -10,17 +10,17 @@ debug. Sorry
 """
 import os
 import json
+import logging
 import collections
 import functools
 
 import bpy
 import mathutils
 
-from .component_base import ComponentRepresentation, register_component
 import utils
-
-import logging
 from utils import jdict
+
+from .component_base import ComponentRepresentation, register_component
 
 logger = logging.getLogger(__name__)
 
@@ -243,6 +243,7 @@ def construct_component_classes(component_filepath):
 
 
 def load_folder(folder):
+    """ Scans a folder for json files and loads them as components """
     logger.info(jdict(event="scan_folder_for_json_components", folder=folder))
 
     json_files = get_component_files(folder)
