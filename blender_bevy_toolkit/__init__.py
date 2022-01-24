@@ -70,7 +70,7 @@ def unregister():
 
 
 @persistent
-def load_handler(dummy):
+def load_handler(_dummy):
     """Scan the folder of the blend file for components to add"""
     for component in component_base.COMPONENTS:
         component.unregister()

@@ -1,7 +1,7 @@
 BLENDER = blender
 
 
-.PHONY: assets run fmt fmt-test
+.PHONY: assets run fmt fmt-test ref-assets
 
 assets:
 	rm -r assets || true
@@ -22,9 +22,29 @@ fmt-test:
 	python -m black --diff --check blender_bevy_toolkit
 	
 	# Linting python requires the blender environment
-	blender -b --python-expr "from pylint.lint import Run; Run(['blender_bevy_toolkit'])"
+	# Currently disabled because I haven't gone through and made pylint compliant
+	# blender -b --python-expr "from pylint.lint import Run; Run(['blender_bevy_toolkit'])"
 	
 	# Dead code check (python)
 	python -m vulture --min-confidence 100 blender_bevy_toolkit
 	
 	
+ref-assets:
+	# Delete existing ref-assets
+	rm -r ref-assets  || true
+	
+	# Store current assets somewhere safe
+	mv assets assets-bak || true
+	
+	# Make new assets from scratch
+	$(MAKE) assets
+	
+	# Store new assets as ref-assets
+	mv assets ref-assets
+	
+	# Restore current assets
+	mv assets-bak assets
+	
+
+diff-test: assets
+	diff --recursive assets ref-assets

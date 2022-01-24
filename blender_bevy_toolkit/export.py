@@ -9,8 +9,8 @@ from . import utils, components, component_base
 
 
 class Entity:
-    def __init__(self, id, comp):
-        self.id = id
+    def __init__(self, entity_id, comp):
+        self.id = entity_id
         self.components = comp
 
     def to_str(self):
@@ -22,8 +22,8 @@ class Entity:
         )
 
 
-def export_entity(config, obj, id):
-    entity = Entity(id, list())
+def export_entity(config, obj, entity_id):
+    entity = Entity(entity_id, list())
 
     for component in component_base.COMPONENTS:
         if component.is_present(obj):

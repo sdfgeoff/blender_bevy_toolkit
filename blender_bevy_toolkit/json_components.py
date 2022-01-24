@@ -243,7 +243,7 @@ def construct_component_classes(component_filepath):
 
 
 def load_folder(folder):
-    """ Scans a folder for json files and loads them as components """
+    """Scans a folder for json files and loads them as components"""
     logger.info(jdict(event="scan_folder_for_json_components", folder=folder))
 
     json_files = get_component_files(folder)

@@ -39,7 +39,7 @@ class RemoveBevyComponent(bpy.types.Operator):
         items=update_component_to_remove_list,
     )
 
-    def invoke(self, context, event):
+    def invoke(self, context, _event):
         wm = context.window_manager
         return wm.invoke_props_dialog(self)
 
@@ -81,7 +81,7 @@ class AddBevyComponent(bpy.types.Operator):
         items=update_component_to_add_list,
     )
 
-    def invoke(self, context, event):
+    def invoke(self, context, _event):
         wm = context.window_manager
         return wm.invoke_props_dialog(self)
 

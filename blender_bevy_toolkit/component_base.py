@@ -11,7 +11,7 @@ class ComponentRepresentation:
         return utils.encode({"type": self.typ, self.type_override: self.struct})
 
     def __repr__(self):
-        return "{} {{...}}".format(self.typ)
+        return f"{self.typ} {{...}}"
 
 
 COMPONENTS = []
