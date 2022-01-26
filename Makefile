@@ -1,4 +1,6 @@
-BLENDER = blender
+.SUFFIXES:
+
+BLENDER = .blender/blender
 
 
 .PHONY: assets run fmt fmt-test ref-assets
@@ -49,3 +51,18 @@ diff-test: assets
 	# Check for changes against the files in ref-assets. This allows seeing what impact a PR has by forcing output changes to show up in the commit
 	# To update the reference assets run `make ref-assets`
 	diff --recursive assets ref-assets
+
+
+# Version of blender for testing
+.blender/blender-3.0.0-linux-x64.tar.xz:
+	mkdir -p .blender
+	# Downloading blender
+	cd .blender; wget -nv https://mirror.clarkson.edu/blender/release/Blender3.0/blender-3.0.0-linux-x64.tar.xz; 
+	
+.blender/blender: .blender/blender-3.0.0-linux-x64.tar.xz
+	# Extracting blender
+	cd .blender; tar -xf blender-3.0.0-linux-x64.tar.xz
+	cd .blender; touch blender-3.0.0-linux-x64/blender 
+	cd .blender; ln -s blender-3.0.0-linux-x64/blender blender 
+
+blender: .blender/blender

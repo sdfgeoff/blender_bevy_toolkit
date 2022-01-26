@@ -4,12 +4,8 @@ jobs:
   Fmt-check:
     runs-on: ubuntu-latest
     steps:
-      - name: Installing blender
-        run: 
-          wget -nv https://mirror.clarkson.edu/blender/release/Blender3.0/blender-3.0.0-linux-x64.tar.xz -O blender.tar.xz; 
-          mkdir .blender;
-          tar -xf blender.tar.xz -C .blender;
-          .blender/blender*/blender --version;
       - name: Check out repository code
         uses: actions/checkout@v2
-      - run: make diff-test BLENDER=$(ls .blender/blender*/blender)
+      - name: Installing blender
+        run: make blender;
+      - run: make diff-test
