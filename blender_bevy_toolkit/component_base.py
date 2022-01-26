@@ -20,4 +20,5 @@ COMPONENTS = []
 def register_component(cls):
     global COMPONENTS
     COMPONENTS.append(cls)
+    COMPONENTS.sort(key=lambda c: c.__name__)
     return cls
