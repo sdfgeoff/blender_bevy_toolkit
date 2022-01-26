@@ -12,4 +12,4 @@ jobs:
           .blender/blender*/blender --version;
       - name: Check out repository code
         uses: actions/checkout@v2
-      - run: make diff-test BLENDER=.blender/blender*/blender
+      - run: make diff-test BLENDER=$(ls .blender/blender*/blender)
