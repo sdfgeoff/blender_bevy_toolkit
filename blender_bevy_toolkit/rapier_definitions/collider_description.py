@@ -1,4 +1,7 @@
-from blender_bevy_toolkit.component_base import ComponentRepresentation, register_component
+from blender_bevy_toolkit.component_base import (
+    ComponentRepresentation,
+    register_component,
+)
 import bpy
 import utils
 import struct
@@ -8,19 +11,14 @@ import collections
 # has a name (displayed in teh enum), a function
 # that turns an object into bytes
 # and draw_type defines how bounds are drawn in the viewport.
-BoundsType = collections.namedtuple(
-    "BoundsType", ["name", "encoder", "draw_type"])
+BoundsType = collections.namedtuple("BoundsType", ["name", "encoder", "draw_type"])
 
 
 def encode_sphere_collider_data(obj):
     if obj.type == "EMPTY":
         radius = obj.empty_display_size
     elif obj.type == "MESH":
-        radius = max(
-            obj.dimensions.x,
-            obj.dimensions.y,
-            obj.dimensions.z
-        ) / 2.0
+        radius = max(obj.dimensions.x, obj.dimensions.y, obj.dimensions.z) / 2.0
     else:
         print("Unable to figure out radius for {}", obj.name)
         radius = 1.0
@@ -41,8 +39,7 @@ def encode_capsule_collider_data(obj):
 
 def encode_box_collider_data(obj):
     if obj.type == "MESH":
-        dims = [obj.dimensions.x/2.0,
-                obj.dimensions.y/2.0, obj.dimensions.z/2.0]
+        dims = [obj.dimensions.x / 2.0, obj.dimensions.y / 2.0, obj.dimensions.z / 2.0]
     else:
         print("Unable to figure out box dimensions for {}", obj.name)
         dims = [1.0, 1.0, 1.0]
@@ -53,29 +50,18 @@ def encode_box_collider_data(obj):
 # Be cautious about inserting to the beginning/middle of this list or
 # removing an item as it will break existing blend files.
 COLLIDER_SHAPES = [
+    BoundsType(name="Sphere", encoder=encode_sphere_collider_data, draw_type="SPHERE"),
     BoundsType(
-        name="Sphere",
-        encoder=encode_sphere_collider_data,
-        draw_type="SPHERE"
+        name="Capsule", encoder=encode_capsule_collider_data, draw_type="CAPSULE"
     ),
-    BoundsType(
-        name="Capsule",
-        encoder=encode_capsule_collider_data,
-        draw_type="CAPSULE"
-    ),
-    BoundsType(
-        name="Box",
-        encoder=encode_box_collider_data,
-        draw_type="BOX"
-    ),
+    BoundsType(name="Box", encoder=encode_box_collider_data, draw_type="BOX"),
 ]
 
 
 @register_component
 class ColliderDescription:
     def encode(config, obj):
-        """ Returns a ComponentRepresentation representing this component
-        """
+        """Returns a ComponentRepresentation representing this component"""
 
         field_converters = [
             ("friction", utils.F32),
@@ -87,7 +73,8 @@ class ColliderDescription:
         field_dict = {}
         for field_name, converter in field_converters:
             field_dict[field_name] = converter(
-                getattr(obj.rapier_collider_description, field_name))
+                getattr(obj.rapier_collider_description, field_name)
+            )
 
         # The collider_data field is dependant on the collider_shape, so we have to do some
         # derivation here
@@ -101,16 +88,15 @@ class ColliderDescription:
         field_dict["collider_shape"] = collider_shape
         field_dict["collider_shape_data"] = {
             "type": "smallvec::SmallVec<[u8; {}]>".format(len(data)),
-            "list": data
+            "list": data,
         }
 
         return ComponentRepresentation(
-            "blender_bevy_toolkit::rapier_physics::ColliderDescription",
-            field_dict
+            "blender_bevy_toolkit::rapier_physics::ColliderDescription", field_dict
         )
 
     def is_present(obj):
-        """ Returns true if the supplied object has this component """
+        """Returns true if the supplied object has this component"""
         return obj.rapier_collider_description.present
 
     def can_add(obj):
@@ -131,7 +117,8 @@ class ColliderDescription:
         bpy.utils.register_class(ColliderDescriptionPanel)
         bpy.utils.register_class(ColliderDescriptionProperties)
         bpy.types.Object.rapier_collider_description = bpy.props.PointerProperty(
-            type=ColliderDescriptionProperties)
+            type=ColliderDescriptionProperties
+        )
 
     @staticmethod
     def unregister():
@@ -143,8 +130,8 @@ class ColliderDescription:
 class ColliderDescriptionPanel(bpy.types.Panel):
     bl_idname = "OBJECT_PT_rapier_collider_description"
     bl_label = "ColliderDescription"
-    bl_space_type = 'PROPERTIES'
-    bl_region_type = 'WINDOW'
+    bl_space_type = "PROPERTIES"
+    bl_region_type = "WINDOW"
     bl_context = "physics"
 
     @classmethod
@@ -154,10 +141,10 @@ class ColliderDescriptionPanel(bpy.types.Panel):
     def draw(self, context):
         row = self.layout.row()
         row.label(
-            text="A collider so this object can collide with things (when coupled with a rigidbody somewhere)")
+            text="A collider so this object can collide with things (when coupled with a rigidbody somewhere)"
+        )
 
-        fields = ["friction", "restitution",
-                  "is_sensor", "density", "collider_shape"]
+        fields = ["friction", "restitution", "is_sensor", "density", "collider_shape"]
 
         for field in fields:
             row = self.layout.row()
@@ -165,8 +152,8 @@ class ColliderDescriptionPanel(bpy.types.Panel):
 
 
 def update_draw_bounds(obj):
-    """ Changes how the object is shown in the viewport in order to
-    display the bounds to the user """
+    """Changes how the object is shown in the viewport in order to
+    display the bounds to the user"""
     if ColliderDescription.is_present(obj):
         collider_type_id = int(obj.rapier_collider_description.collider_shape)
         collider_type_data = COLLIDER_SHAPES[collider_type_id].draw_type
@@ -179,7 +166,7 @@ def update_draw_bounds(obj):
 
 
 def collider_shape_changed(_, context):
-    """ Runs when the enum selecting the shape is changed """
+    """Runs when the enum selecting the shape is changed"""
     update_draw_bounds(context.object)
 
 
@@ -198,5 +185,5 @@ class ColliderDescriptionProperties(bpy.types.PropertyGroup):
         name="collider_shape",
         default=0,
         items=shape_items,
-        update=collider_shape_changed
+        update=collider_shape_changed,
     )

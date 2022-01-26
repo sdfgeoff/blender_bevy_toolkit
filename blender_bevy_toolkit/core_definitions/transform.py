@@ -1,11 +1,14 @@
-from blender_bevy_toolkit.component_base import ComponentRepresentation, register_component
+from blender_bevy_toolkit.component_base import (
+    ComponentRepresentation,
+    register_component,
+)
 
 
 @register_component
 class Transform:
     def encode(config, obj):
-        """ Returns a ComponentRepresentation representing this component
-        
+        """Returns a ComponentRepresentation representing this component
+
         {
             "type": "bevy_transform::components::transform::Transform",
             "struct": {
@@ -28,7 +31,7 @@ class Transform:
             transform = obj.matrix_world
         else:
             transform = obj.matrix_local
-        
+
         position, rotation, scale = transform.decompose()
         return ComponentRepresentation(
             "bevy_transform::components::transform::Transform",
@@ -36,21 +39,20 @@ class Transform:
                 "translation": position,
                 "rotation": rotation,
                 "scale": scale,
-            }
+            },
         )
-        
-        
+
     def is_present(obj):
-        """ Returns true if the supplied object has this component """
+        """Returns true if the supplied object has this component"""
         return hasattr(obj, "matrix_world")
-        
+
     def can_add(obj):
         return False
-    
+
     @staticmethod
     def register():
         pass
-    
+
     @staticmethod
     def unregister():
         pass
