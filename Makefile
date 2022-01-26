@@ -22,7 +22,6 @@ fmt-test:
 	python -m black --diff --check blender_bevy_toolkit
 	
 	# Linting python requires the blender environment
-	# Currently disabled because I haven't gone through and made pylint compliant
 	# blender -b --python-expr "from pylint.lint import Run; Run(['blender_bevy_toolkit'])"
 	
 	# Dead code check (python)
@@ -47,4 +46,6 @@ ref-assets:
 	
 
 diff-test: assets
+	# Check for changes against the files in ref-assets. This allows seeing what impact a PR has by forcing output changes to show up in the commit
+	# To update the reference assets run `make ref-assets`
 	diff --recursive assets ref-assets

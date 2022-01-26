@@ -1,0 +1,8 @@
+name: Check formating
+on: [push]
+jobs:
+  Fmt-check:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Testing github actions"
+      - run: make fmt-test 
