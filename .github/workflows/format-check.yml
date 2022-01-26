@@ -4,5 +4,8 @@ jobs:
   Fmt-check:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Testing github actions"
+      - name: Installing python deps
+        run: pip install vulture black
+      - name: Check out repository code
+        uses: actions/checkout@v2
       - run: make fmt-test 
