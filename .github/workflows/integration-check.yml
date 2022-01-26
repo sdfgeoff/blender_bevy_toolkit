@@ -1,0 +1,11 @@
+name: Integration Test
+on: [push]
+jobs:
+  Fmt-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Installing blender
+        run: sudo apt install blender; blender --version
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - run: make diff-test
