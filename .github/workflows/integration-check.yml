@@ -5,7 +5,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Installing blender
-        run: sudo apt install blender; blender --version
+        run: 
+          wget -nv https://mirror.clarkson.edu/blender/release/Blender3.0/blender-3.0.0-linux-x64.tar.xz -O blender.tar.xz; 
+          mkdir .blender;
+          tar -xf blender.tar.xz -C .blender;
+          .blender/blender*/blender --version;
       - name: Check out repository code
         uses: actions/checkout@v2
-      - run: make diff-test
+      - run: make diff-test BLENDER=.blender/blender*/blender
