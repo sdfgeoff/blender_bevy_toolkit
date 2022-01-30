@@ -1,7 +1,7 @@
 name: Integration Test
 on: [push]
 jobs:
-  Fmt-check:
+  diff-output-assets-vs-reference-assets:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
