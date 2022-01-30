@@ -3,7 +3,7 @@
     components:[
         {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(0.0,0.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
         {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Cube"}},
-        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(0.0,0.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
-        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/3b8561feaf141b84a3f405efbd22786a.mesh"}}
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/3b8561feaf141b84a3f405efbd22786a.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(0.0,0.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
     ]
 )]

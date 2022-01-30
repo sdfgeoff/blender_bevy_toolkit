@@ -1,0 +1,11 @@
+name: Integration Test
+on: [push]
+jobs:
+  diff-output-assets-vs-reference-assets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Installing blender
+        run: make blender;
+      - run: make diff-test
