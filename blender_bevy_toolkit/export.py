@@ -1,11 +1,6 @@
 import os
-
 import bpy
-import struct
-import hashlib
-
-
-from . import utils, components, component_base
+from . import utils, component_base
 
 
 class Entity:
@@ -64,4 +59,5 @@ def export_all(config):
     entities = [export_entity(config, o, i) for i, o in enumerate(objects)]
     collection_data = entities
 
-    open(config["output_filepath"], "w").write(utils.encode(entities))
+    with open(config["output_filepath"], "w") as outfile:
+        outfile.write(utils.encode(entities))

@@ -1,17 +1,16 @@
 import os
 import sys
-
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-
 import logging
-from utils import jdict
-
-logger = logging.getLogger(__name__)
-
 
 import bpy
 from bpy.app.handlers import persistent
 from bpy_extras.io_utils import ExportHelper
+
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from utils import jdict
+
+logger = logging.getLogger(__name__)
 
 from . import components
 from . import operators
