@@ -4,8 +4,10 @@ jobs:
   Fmt-check:
     runs-on: ubuntu-latest
     steps:
-      - name: Installing python deps
-        run: pip install vulture black
       - name: Check out repository code
         uses: actions/checkout@v2
+      - name: Installing blender
+        run: make blender;
+      - name: Installing python deps
+        run: pip install vulture black
       - run: make fmt-test 
