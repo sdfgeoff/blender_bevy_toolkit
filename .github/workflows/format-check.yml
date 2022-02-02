@@ -4,6 +4,13 @@ jobs:
   Fmt-check:
     runs-on: ubuntu-latest
     steps:
+    
+      - name: Cache Blender packages
+        uses: actions/cache@v2
+        with:
+          path: .blender
+          key: CACHE_BLENDER_ALWAYS
+    
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Installing blender
