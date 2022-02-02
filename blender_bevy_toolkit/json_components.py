@@ -78,6 +78,130 @@ def parse_field(field):
     )
 
 
+def create_ui_panel(component_def, component_class, fields):
+    """Create a class that will create a UI for the component"""
+    panel = type(
+        component_def.name + "Panel",
+        (bpy.types.Panel,),
+        {
+            "bl_idname": "OBJECT_PT_" + component_def.id,
+            "bl_label": component_def.name,
+            "bl_space_type": "PROPERTIES",
+            "bl_region_type": "WINDOW",
+            "bl_context": "physics",
+        },
+    )
+    panel.poll = classmethod(
+        lambda cls, context: component_class.is_present(context.object)
+    )
+
+    def draw(self, context):
+        row = self.layout.row()
+        row.label(text=component_def.description)
+        if len(fields) == 1:
+            row = self.layout.row()
+            row.label(text="No Options")
+        else:
+            for field in fields:
+                if field == "present":
+                    continue
+                row = self.layout.row()
+                row.prop(getattr(context.object, component_def.id), field)
+
+    panel.draw = draw
+
+    logging.debug(
+        jdict(
+            event="construct_json_classes",
+            component=component_def.name,
+            state="panel_created",
+        )
+    )
+
+    return panel
+
+
+def insert_class_methods(component_class, component_def, panel, properties, fields):
+    """The class representing this component needs some functions (eg to detect if
+    the component exists on a blender object). These functions are generated and
+    added to the class here"""
+    # These functions all get put inside the component_class
+    def register():
+        bpy.utils.register_class(panel)
+        bpy.utils.register_class(properties)
+        setattr(
+            bpy.types.Object,
+            component_def.id,
+            bpy.props.PointerProperty(type=properties),
+        )
+
+    def unregister():
+        bpy.utils.unregister_class(panel)
+        bpy.utils.unregister_class(properties)
+        delattr(bpy.types.Object, component_def.id)
+
+    def add(obj):
+        getattr(obj, component_def.id).present = True
+
+    def can_add(obj):
+        return True
+
+    def is_present(obj):
+        return getattr(obj, component_def.id).present
+
+    def remove(obj):
+        getattr(obj, component_def.id).present = False
+
+    def encode(_config, obj):
+        """Returns a ComponentRepresentation representing this component"""
+        component_data = getattr(obj, component_def.id)
+
+        def fix_types(field_name, value):
+            """Ensure types are properly represented for encoding"""
+            field_data = [f for f in component_def.fields if f.field == field_name][0]
+            encoder = TYPE_ENCODERS[field_data.type]
+            return encoder(value)
+
+        component_values = {
+            f: fix_types(f, getattr(component_data, f))
+            for f in fields
+            if f != "present"
+        }
+        return ComponentRepresentation(component_def.struct, component_values)
+
+    component_class.register = staticmethod(register)
+    component_class.unregister = staticmethod(unregister)
+    component_class.add = staticmethod(add)
+    component_class.can_add = staticmethod(can_add)
+    component_class.is_present = staticmethod(is_present)
+    component_class.remove = staticmethod(remove)
+    component_class.encode = staticmethod(encode)
+
+
+def create_fields(component_def):
+    """Create bpy.props Properties for each field inside the component"""
+    fields = {}
+    for field in component_def.fields:
+        prop_type = TYPE_PROPERTIES[field.type]
+        args_dict = {
+            "name": field.field,
+            "description": field.description,
+        }
+        if prop_type == bpy.props.EnumProperty:
+            items = []
+            for index, name in enumerate(field.default):
+                items.append((str(index), name, ""))
+            args_dict["items"] = items
+        else:
+            args_dict["default"] = field.default
+
+        prop = prop_type(**args_dict)
+        fields[field.field] = prop
+
+    fields["present"] = bpy.props.BoolProperty(name="Present", default=False)
+    return fields
+
+
 def construct_component_classes(component_filepath):
     """Parse the file from JSON into some python namedtuples"""
     logging.info(
@@ -113,33 +237,12 @@ def construct_component_classes(component_filepath):
         )
     )
 
-    # component becomes bpy.types.Object.<<<obj_key>>>
-    obj_key = component_def.id
-
     # Create a class that stores all the internals of the properties in
     # a blender-compatible way.
     properties = type(component["name"] + "Properties", (bpy.types.PropertyGroup,), {})
 
-    # Create bpy.props Properties for each field inside the component
-    fields = {}
-    for field in component_def.fields:
-        prop_type = TYPE_PROPERTIES[field.type]
-        args_dict = {
-            "name": field.field,
-            "description": field.description,
-        }
-        if prop_type == bpy.props.EnumProperty:
-            items = []
-            for index, name in enumerate(field.default):
-                items.append((str(index), name, ""))
-            args_dict["items"] = items
-        else:
-            args_dict["default"] = field.default
+    fields = create_fields(component_def)
 
-        prop = prop_type(**args_dict)
-        fields[field.field] = prop
-
-    fields["present"] = bpy.props.BoolProperty(name="Present", default=False)
     properties.__annotations__ = fields
 
     logging.debug(
@@ -155,90 +258,12 @@ def construct_component_classes(component_filepath):
     component_class = type(
         component["name"],
         (),
-        {
-            "can_add": lambda _: True,
-            "is_present": lambda obj: getattr(obj, obj_key).present,
-        },
+        {},
     )
 
-    # Create a class that will create a UI for the component
-    panel = type(
-        component_def.name + "Panel",
-        (bpy.types.Panel,),
-        {
-            "bl_idname": "OBJECT_PT_" + component_def.id,
-            "bl_label": component_def.name,
-            "bl_space_type": "PROPERTIES",
-            "bl_region_type": "WINDOW",
-            "bl_context": "physics",
-        },
-    )
-    panel.poll = classmethod(
-        lambda cls, context: component_class.is_present(context.object)
-    )
+    panel = create_ui_panel(component_def, component_class, fields)
 
-    def draw(self, context):
-        row = self.layout.row()
-        row.label(text=component_def.description)
-        if len(fields) == 1:
-            row = self.layout.row()
-            row.label(text="No Options")
-        else:
-            for field in fields:
-                if field == "present":
-                    continue
-                row = self.layout.row()
-                row.prop(getattr(context.object, obj_key), field)
-
-    panel.draw = draw
-
-    logging.debug(
-        jdict(
-            event="construct_json_classes",
-            path=component_filepath,
-            state="panel_created",
-        )
-    )
-
-    # These functions all get put inside the component_class
-    def register():
-        bpy.utils.register_class(panel)
-        bpy.utils.register_class(properties)
-        setattr(bpy.types.Object, obj_key, bpy.props.PointerProperty(type=properties))
-
-    def unregister():
-        bpy.utils.unregister_class(panel)
-        bpy.utils.unregister_class(properties)
-        delattr(bpy.types.Object, obj_key)
-
-    def add(obj):
-        getattr(obj, obj_key).present = True
-
-    def remove(obj):
-        getattr(obj, obj_key).present = False
-
-    def encode(_config, obj):
-        """Returns a ComponentRepresentation representing this component"""
-        component_data = getattr(obj, obj_key)
-
-        def fix_types(field_name, value):
-            """Ensure types are properly represented for encoding"""
-            field_data = [f for f in component_def.fields if f.field == field_name][0]
-            encoder = TYPE_ENCODERS[field_data.type]
-            return encoder(value)
-
-        component_values = {
-            f: fix_types(f, getattr(component_data, f))
-            for f in fields
-            if f != "present"
-        }
-        return ComponentRepresentation(component_def.struct, component_values)
-
-    component_class.register = staticmethod(register)
-    component_class.unregister = staticmethod(unregister)
-    component_class.add = staticmethod(add)
-    component_class.remove = staticmethod(remove)
-    component_class.encode = staticmethod(encode)
+    insert_class_methods(component_class, component_def, panel, properties, fields)
 
     logging.debug(
         jdict(event="construct_json_classes", path=component_filepath, state="end")
