@@ -1,9 +1,15 @@
-name: Integration Test
+name: Blender Export Test
 on: [push]
 jobs:
   diff-output-assets-vs-reference-assets:
     runs-on: ubuntu-latest
     steps:
+      - name: Cache Blender packages
+        uses: actions/cache@v2
+        with:
+          path: .blender
+          key: CACHE_BLENDER_ALWAYS
+          
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Installing blender

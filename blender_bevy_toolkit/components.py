@@ -1,13 +1,19 @@
+""" In an ECS, a component is a piece of data about an entity. We
+create these components from various properties in the blender object
+
+each component is independant, so it can be defined in either a JSON
+or pthon file. This file then goes and looks for these component
+definitions.
+"""
 import os
 import sys
+import logging
+import importlib.util
 
 import bpy
-import utils
 from . import json_components
 from . import component_base
-
-import logging
-from utils import jdict
+from .utils import jdict
 
 logger = logging.getLogger(__name__)
 
@@ -40,13 +46,18 @@ def generate_component_list():
 
 
 def load_folder(folder):
+    """Look for component defitions in a specific folder"""
     json_components.load_folder(folder)
     load_python_components(folder)
 
 
 def load_python_components(folder):
+    """Looks for python files in a folder. If they exist, load it as a module.
+
+    Unfortunately loading a python module from a specific filepath is not a
+    straightforward operation, so it is likely this will require revising for
+    different versions of python and possibly differnet OS's"""
     logger.info(jdict(event="scan_folder_for_python_components", folder=folder))
-    import importlib.util
 
     for filename in os.listdir(folder):
         if filename.endswith(".py"):

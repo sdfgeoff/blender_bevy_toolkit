@@ -17,8 +17,7 @@ import functools
 import bpy
 import mathutils
 
-import utils
-from utils import jdict
+from .utils import jdict, F64, F32
 
 from .component_base import ComponentRepresentation, register_component
 
@@ -50,8 +49,8 @@ TYPE_PROPERTIES = {
 TYPE_ENCODERS = {
     "string": str,
     "bool": bool,
-    "f64": utils.F64,
-    "f32": utils.F32,
+    "f64": F64,
+    "f32": F32,
     "int": int,
     "vec3": mathutils.Vector,
     "vec2": mathutils.Vector,
@@ -60,6 +59,8 @@ TYPE_ENCODERS = {
 
 
 def get_component_files(folder):
+    """Looks for component definition files (.json) in the specified folder.
+    Returns the path to these component files as an array"""
     component_definitions = []
     for filename in os.listdir(folder):
         if filename.endswith(".json"):
@@ -67,97 +68,18 @@ def get_component_files(folder):
     return component_definitions
 
 
-def construct_component_classes(component_filepath):
-    # Parse the file from JSON into some python namedtuples
-    logging.info(
-        jdict(event="construct_json_classes", path=component_filepath, state="start")
+def parse_field(field):
+    """Convert the json definition of a single field into something static"""
+    return FieldDefinition(
+        field=field["field"],
+        type=field["type"],
+        default=field["default"],
+        description=field["description"],
     )
 
-    try:
-        component = json.load(open(component_filepath))
-    except json.decoder.JSONDecodeError as err:
-        logging.exception(
-            jdict(
-                event="construct_json_component_parse_error",
-                path=component_filepath,
-                error=err,
-                exc_info=err,
-            )
-        )
-        return None
 
-    def parse_field(field):
-        return FieldDefinition(
-            field=field["field"],
-            type=field["type"],
-            default=field["default"],
-            description=field["description"],
-        )
-
-    component_def = ComponentDefininition(
-        name=component["name"],
-        description=component["description"],
-        id=component["id"],
-        struct=component["struct"],
-        fields=[parse_field(f) for f in component["fields"]],
-    )
-    logging.debug(
-        jdict(
-            event="construct_json_classes",
-            path=component_filepath,
-            state="parse_complete",
-        )
-    )
-
-    # component becomes bpy.types.Object.<<<obj_key>>>
-    obj_key = component_def.id
-
-    # Create a class that stores all the internals of the properties in
-    # a blender-compatible way.
-    properties = type(component["name"] + "Properties", (bpy.types.PropertyGroup,), {})
-
-    # Create bpy.props Properties for each field inside the component
-    fields = {}
-    for field in component_def.fields:
-        prop_type = TYPE_PROPERTIES[field.type]
-        args_dict = {
-            "name": field.field,
-            "description": field.description,
-        }
-        if prop_type == bpy.props.EnumProperty:
-            items = []
-            for index, name in enumerate(field.default):
-                items.append((str(index), name, ""))
-            args_dict["items"] = items
-        else:
-            args_dict["default"] = field.default
-
-        prop = prop_type(**args_dict)
-        fields[field.field] = prop
-
-    fields["present"] = bpy.props.BoolProperty(name="Present", default=False)
-    properties.__annotations__ = fields
-
-    logging.debug(
-        jdict(
-            event="construct_json_classes",
-            path=component_filepath,
-            state="fields_completed",
-        )
-    )
-
-    # Create a class to store the data about this component inside the
-    # blender object
-    component_class = type(
-        component["name"],
-        (),
-        {
-            "can_add": lambda _: True,
-            "is_present": lambda obj: getattr(obj, obj_key).present,
-        },
-    )
-
-    # Create a class that will create a UI for the component
+def create_ui_panel(component_def, component_class, fields):
+    """Create a class that will create a UI for the component"""
     panel = type(
         component_def.name + "Panel",
         (bpy.types.Panel,),
@@ -184,38 +106,55 @@ def construct_component_classes(component_filepath):
                 if field == "present":
                     continue
                 row = self.layout.row()
-                row.prop(getattr(context.object, obj_key), field)
+                row.prop(getattr(context.object, component_def.id), field)
 
     panel.draw = draw
 
     logging.debug(
         jdict(
             event="construct_json_classes",
-            path=component_filepath,
+            component=component_def.name,
             state="panel_created",
         )
     )
 
+    return panel
+
+
+def insert_class_methods(component_class, component_def, panel, properties, fields):
+    """The class representing this component needs some functions (eg to detect if
+    the component exists on a blender object). These functions are generated and
+    added to the class here"""
     # These functions all get put inside the component_class
     def register():
         bpy.utils.register_class(panel)
         bpy.utils.register_class(properties)
-        setattr(bpy.types.Object, obj_key, bpy.props.PointerProperty(type=properties))
+        setattr(
+            bpy.types.Object,
+            component_def.id,
+            bpy.props.PointerProperty(type=properties),
+        )
 
     def unregister():
         bpy.utils.unregister_class(panel)
         bpy.utils.unregister_class(properties)
-        delattr(bpy.types.Object, obj_key)
+        delattr(bpy.types.Object, component_def.id)
 
     def add(obj):
-        getattr(obj, obj_key).present = True
+        getattr(obj, component_def.id).present = True
+
+    def can_add(_obj):
+        return True
+
+    def is_present(obj):
+        return getattr(obj, component_def.id).present
 
     def remove(obj):
-        getattr(obj, obj_key).present = False
+        getattr(obj, component_def.id).present = False
 
-    def encode(config, obj):
+    def encode(_config, obj):
         """Returns a ComponentRepresentation representing this component"""
-        component_data = getattr(obj, obj_key)
+        component_data = getattr(obj, component_def.id)
 
         def fix_types(field_name, value):
             """Ensure types are properly represented for encoding"""
@@ -233,8 +172,98 @@ def construct_component_classes(component_filepath):
     component_class.register = staticmethod(register)
     component_class.unregister = staticmethod(unregister)
     component_class.add = staticmethod(add)
+    component_class.can_add = staticmethod(can_add)
+    component_class.is_present = staticmethod(is_present)
     component_class.remove = staticmethod(remove)
     component_class.encode = staticmethod(encode)
+
+
+def create_fields(component_def):
+    """Create bpy.props Properties for each field inside the component"""
+    fields = {}
+    for field in component_def.fields:
+        prop_type = TYPE_PROPERTIES[field.type]
+        args_dict = {
+            "name": field.field,
+            "description": field.description,
+        }
+        if prop_type == bpy.props.EnumProperty:
+            items = []
+            for index, name in enumerate(field.default):
+                items.append((str(index), name, ""))
+            args_dict["items"] = items
+        else:
+            args_dict["default"] = field.default
+
+        prop = prop_type(**args_dict)
+        fields[field.field] = prop
+
+    fields["present"] = bpy.props.BoolProperty(name="Present", default=False)
+    return fields
+
+
+def construct_component_classes(component_filepath):
+    """Parse the file from JSON into some python namedtuples"""
+    logging.info(
+        jdict(event="construct_json_classes", path=component_filepath, state="start")
+    )
+
+    try:
+        with open(component_filepath, encoding="utf-8") as component_definition:
+            component = json.load(component_definition)
+    except json.decoder.JSONDecodeError as err:
+        logging.exception(
+            jdict(
+                event="construct_json_component_parse_error",
+                path=component_filepath,
+                error=err,
+                exc_info=err,
+            )
+        )
+        return None
+
+    component_def = ComponentDefininition(
+        name=component["name"],
+        description=component["description"],
+        id=component["id"],
+        struct=component["struct"],
+        fields=[parse_field(f) for f in component["fields"]],
+    )
+    logging.debug(
+        jdict(
+            event="construct_json_classes",
+            path=component_filepath,
+            state="parse_complete",
+        )
+    )
+
+    # Create a class that stores all the internals of the properties in
+    # a blender-compatible way.
+    properties = type(component["name"] + "Properties", (bpy.types.PropertyGroup,), {})
+
+    fields = create_fields(component_def)
+
+    properties.__annotations__ = fields
+
+    logging.debug(
+        jdict(
+            event="construct_json_classes",
+            path=component_filepath,
+            state="fields_completed",
+        )
+    )
+
+    # Create a class to store the data about this component inside the
+    # blender object
+    component_class = type(
+        component["name"],
+        (),
+        {},
+    )
+
+    panel = create_ui_panel(component_def, component_class, fields)
+
+    insert_class_methods(component_class, component_def, panel, properties, fields)
 
     logging.debug(
         jdict(event="construct_json_classes", path=component_filepath, state="end")

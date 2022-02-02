@@ -1,9 +1,9 @@
 from blender_bevy_toolkit.component_base import (
     ComponentRepresentation,
     register_component,
+    utils,
 )
 import bpy
-import utils
 import struct
 import collections
 

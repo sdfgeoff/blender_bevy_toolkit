@@ -1,22 +1,25 @@
+"""
+Bevy is a game engine written in RUST, but it crrently lacks any sort of
+scene editor. Blender is a 3D graphics program that seems like it would
+be a good fit. This exporter converts from a blender file into a .scn file
+that can be loaded into bevy.
+"""
 import os
 import sys
-
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-
 import logging
-from utils import jdict
-
-logger = logging.getLogger(__name__)
-
 
 import bpy
-from bpy.app.handlers import persistent
+from bpy.app.handlers import persistent  # pylint: disable=E0401
 from bpy_extras.io_utils import ExportHelper
 
+
+from .utils import jdict
 from . import components
 from . import operators
 from . import component_base
 from . import export
+
+logger = logging.getLogger(__name__)
 
 bl_info = {
     "name": "Bevy Game Engine Toolkit",
@@ -34,13 +37,16 @@ class BevyComponentsPanel(bpy.types.Panel):
     bl_region_type = "WINDOW"
     bl_context = "physics"
 
-    def draw(self, context):
+    def draw(self, _context):
+        """Create the UI for the panel"""
         row = self.layout.row()
         row.operator("object.add_bevy_component")
         row.operator("object.remove_bevy_component")
 
 
 def register():
+    """Blender needs to know about all our classes and UI panels
+    so that it can draw/store things"""
     logger.info(jdict(event="registering_bevy_addon", state="start"))
     bpy.utils.register_class(BevyComponentsPanel)
     bpy.utils.register_class(operators.RemoveBevyComponent)
@@ -54,6 +60,8 @@ def register():
 
 
 def unregister():
+    """When closing blender or uninstalling the addon we should leave
+    things nice and clean...."""
     logger.info(jdict(event="unregistering_bevy_addon", state="start"))
     bpy.utils.unregister_class(BevyComponentsPanel)
     bpy.utils.unregister_class(operators.RemoveBevyComponent)
@@ -83,7 +91,7 @@ def load_handler(_dummy):
         component.register()
 
 
-def menu_func(self, context):
+def menu_func(self, _context):
     """Add export operation to the menu"""
     self.layout.operator(ExportBevy.bl_idname, text="Bevy Engine (.scn)")
 
@@ -98,7 +106,7 @@ class ExportBevy(bpy.types.Operator, ExportHelper):
     filename_ext = ".scn"
     filter_glob: bpy.props.StringProperty(default="*.scn", options={"HIDDEN"})
 
-    def execute(self, context):
+    def execute(self, _context):
         """Begin the export"""
 
         if not self.filepath:
@@ -116,4 +124,6 @@ class ExportBevy(bpy.types.Operator, ExportHelper):
 
 
 def do_export(config):
+    """Start the export. This is a global function to ensure it can be called
+    both from the operator and from external scripts"""
     export.export_all(config)

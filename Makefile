@@ -24,7 +24,7 @@ fmt-test:
 	python -m black --diff --check blender_bevy_toolkit
 	
 	# Linting python requires the blender environment
-	# blender -b --python-expr "from pylint.lint import Run; Run(['blender_bevy_toolkit'])"
+	$(BLENDER) -b --python-expr "from pylint.lint import Run; Run(['blender_bevy_toolkit'])"
 	
 	# Dead code check (python)
 	python -m vulture --min-confidence 100 blender_bevy_toolkit
