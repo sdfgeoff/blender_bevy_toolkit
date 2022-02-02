@@ -1,14 +1,20 @@
+""" Converts from blender objects into a scene description """
 import os
 import bpy
 from . import utils, component_base
 
 
 class Entity:
+    """In an ECS, an entity is an opaque ID that is referenced by (or references)
+    a set of components. This class represents an entity and as such ... contains
+    a lit of components. The ID field should be unique in the scene"""
+
     def __init__(self, entity_id, comp):
         self.id = entity_id
         self.components = comp
 
     def to_str(self):
+        """Convert into a ... string!"""
         return "(\n    entity: {},\n    components:{}\n)".format(
             utils.encode(self.id),
             utils.iterable_to_string(
@@ -18,20 +24,22 @@ class Entity:
 
 
 def export_entity(config, obj, entity_id):
-    entity = Entity(entity_id, list())
+    """Compile all the data about an object into an entity with components"""
+    entity = Entity(entity_id, [])
 
     for component in component_base.COMPONENTS:
         if component.is_present(obj):
             new_component = component.encode(config, obj)
             assert isinstance(
                 new_component, component_base.ComponentRepresentation
-            ), "Component {} did not return ComponentDefinition".format(component)
+            ), f"Component {component} did not return ComponentDefinition"
             entity.components.append(new_component)
 
     return entity
 
 
 def export_all(config):
+    """Exports everything from this bend file"""
     output_folder = os.path.dirname(config["output_filepath"])
 
     if config["make_duplicates_real"]:
@@ -55,9 +63,7 @@ def export_all(config):
     config["output_folder"] = output_folder
     config["scene"] = bpy.context.scene
 
-    objects = [o for o in scene.objects]
-    entities = [export_entity(config, o, i) for i, o in enumerate(objects)]
-    collection_data = entities
+    entities = [export_entity(config, o, i) for i, o in enumerate(scene.objects)]
 
-    with open(config["output_filepath"], "w") as outfile:
+    with open(config["output_filepath"], "w", encoding="utf-8") as outfile:
         outfile.write(utils.encode(entities))

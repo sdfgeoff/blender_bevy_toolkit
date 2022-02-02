@@ -1,3 +1,7 @@
+"""
+Blender operators are actions that can be taken to change an
+object. These actions include ... adding and removing bevy components
+"""
 import bpy
 from . import component_base
 
@@ -13,14 +17,14 @@ def update_all_component_list():
     """Maintain the list of components present in the scene. This needs
     to be re-invoked whenever this list may have changed (eg a new
     blend file is loaded)."""
-    global ALL_COMPONENT_LIST
+    global ALL_COMPONENT_LIST  # pylint: disable=W0603
     component_list = []
     for component_index, component in enumerate(component_base.COMPONENTS):
         component_list.append((str(component_index + 1), component.__name__, component))
     ALL_COMPONENT_LIST = component_list
 
 
-def generate_component_to_remove_list(widget, context):
+def generate_component_to_remove_list(_widget, context):
     """The remove component dialog only shows what components the
     object has present that can be removed. This function
     figures out what functions can be removed from an object"""
@@ -32,7 +36,7 @@ def generate_component_to_remove_list(widget, context):
     return component_types
 
 
-def generate_component_to_add_list(widget, context):
+def generate_component_to_add_list(_widget, context):
     """When adding a bevy component, the list only displays the
     components that do not already exist on the object and ones that
     can be added to this object type"""
@@ -47,6 +51,9 @@ def generate_component_to_add_list(widget, context):
 
 
 class RemoveBevyComponent(bpy.types.Operator):
+    """Removes a bevy component from this object - pops up a small
+    dialog to select which one."""
+
     bl_idname = "object.remove_bevy_component"
     bl_label = "Remove Bevy Component"
     bl_options = {"REGISTER", "UNDO"}
@@ -81,6 +88,9 @@ class RemoveBevyComponent(bpy.types.Operator):
 
 
 class AddBevyComponent(bpy.types.Operator):
+    """Adds a bevy component from this object - pops up a small
+    dialog to select which one."""
+
     bl_idname = "object.add_bevy_component"
     bl_label = "Add Bevy Component"
     bl_options = {"REGISTER", "UNDO"}

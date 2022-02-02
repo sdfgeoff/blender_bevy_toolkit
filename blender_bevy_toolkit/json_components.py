@@ -17,8 +17,7 @@ import functools
 import bpy
 import mathutils
 
-import utils
-from utils import jdict
+from .utils import jdict, F64, F32
 
 from .component_base import ComponentRepresentation, register_component
 
@@ -50,8 +49,8 @@ TYPE_PROPERTIES = {
 TYPE_ENCODERS = {
     "string": str,
     "bool": bool,
-    "f64": utils.F64,
-    "f32": utils.F32,
+    "f64": F64,
+    "f32": F32,
     "int": int,
     "vec3": mathutils.Vector,
     "vec2": mathutils.Vector,
@@ -60,6 +59,8 @@ TYPE_ENCODERS = {
 
 
 def get_component_files(folder):
+    """Looks for component definition files (.json) in the specified folder.
+    Returns the path to these component files as an array"""
     component_definitions = []
     for filename in os.listdir(folder):
         if filename.endswith(".json"):
@@ -67,14 +68,25 @@ def get_component_files(folder):
     return component_definitions
 
 
+def parse_field(field):
+    """Convert the json definition of a single field into something static"""
+    return FieldDefinition(
+        field=field["field"],
+        type=field["type"],
+        default=field["default"],
+        description=field["description"],
+    )
+
+
 def construct_component_classes(component_filepath):
-    # Parse the file from JSON into some python namedtuples
+    """Parse the file from JSON into some python namedtuples"""
     logging.info(
         jdict(event="construct_json_classes", path=component_filepath, state="start")
     )
 
     try:
-        component = json.load(open(component_filepath))
+        with open(component_filepath, encoding="utf-8") as component_definition:
+            component = json.load(component_definition)
     except json.decoder.JSONDecodeError as err:
         logging.exception(
             jdict(
@@ -85,14 +97,6 @@ def construct_component_classes(component_filepath):
             )
         )
         return None
-
-    def parse_field(field):
-        return FieldDefinition(
-            field=field["field"],
-            type=field["type"],
-            default=field["default"],
-            description=field["description"],
-        )
 
     component_def = ComponentDefininition(
         name=component["name"],
@@ -213,7 +217,7 @@ def construct_component_classes(component_filepath):
     def remove(obj):
         getattr(obj, obj_key).present = False
 
-    def encode(config, obj):
+    def encode(_config, obj):
         """Returns a ComponentRepresentation representing this component"""
         component_data = getattr(obj, obj_key)
 
