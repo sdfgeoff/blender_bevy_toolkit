@@ -1,4 +1,4 @@
-name: Integration Test
+name: Blender Export Test
 on: [push]
 jobs:
   diff-output-assets-vs-reference-assets:

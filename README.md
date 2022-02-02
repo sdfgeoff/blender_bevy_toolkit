@@ -1,3 +1,6 @@
+![FormatCheck](https://github.com/sdfgeoff/blender_bevy_toolkit/actions/workflows/format-check.yml/badge.svg)
+![ExportCheck](https://github.com/sdfgeoff/blender_bevy_toolkit/actions/workflows/blender-export-check.yml/badge.svg)
+
 # About
 
 [Bevy](https://bevyengine.org/) is a game engine written in the Rust 
