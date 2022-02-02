@@ -10,13 +10,13 @@ class Entity:
     a lit of components. The ID field should be unique in the scene"""
 
     def __init__(self, entity_id, comp):
-        self.id = entity_id
+        self.entity_id = entity_id
         self.components = comp
 
     def to_str(self):
         """Convert into a ... string!"""
         return "(\n    entity: {},\n    components:{}\n)".format(
-            utils.encode(self.id),
+            utils.encode(self.entity_id),
             utils.iterable_to_string(
                 self.components, "[\n        ", "\n    ]", ",\n        "
             ),

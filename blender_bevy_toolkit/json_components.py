@@ -143,7 +143,7 @@ def insert_class_methods(component_class, component_def, panel, properties, fiel
     def add(obj):
         getattr(obj, component_def.id).present = True
 
-    def can_add(obj):
+    def can_add(_obj):
         return True
 
     def is_present(obj):
