@@ -83,8 +83,10 @@ def register_component(cls):
     or called as a function on a class.
     """
     # Check the component has all the required functions
-    assert isinstance(cls(), ComponentBase), "Attempting to register component that does not inherit from Componentbase"
-    
+    assert isinstance(
+        cls(), ComponentBase
+    ), "Attempting to register component that does not inherit from Componentbase"
+
     COMPONENTS.append(cls)
     COMPONENTS.sort(key=lambda c: c.__name__)
     return cls
