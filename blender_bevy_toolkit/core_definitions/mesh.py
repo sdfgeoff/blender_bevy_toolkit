@@ -5,6 +5,7 @@ import os
 from blender_bevy_toolkit.component_base import (
     ComponentRepresentation,
     register_component,
+    ComponentBase,
 )
 
 import logging
@@ -14,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 @register_component
-class Mesh:
+class Mesh(ComponentBase):
     def encode(config, obj):
         """Returns a ComponentRepresentation to encode this component
         into a scene file"""

@@ -13,13 +13,14 @@ import json
 import logging
 import collections
 import functools
+import abc
 
 import bpy
 import mathutils
 
 from .utils import jdict, F64, F32
 
-from .component_base import ComponentRepresentation, register_component
+from .component_base import ComponentRepresentation, register_component, ComponentBase
 
 logger = logging.getLogger(__name__)
 
@@ -264,6 +265,7 @@ def construct_component_classes(component_filepath):
     panel = create_ui_panel(component_def, component_class, fields)
 
     insert_class_methods(component_class, component_def, panel, properties, fields)
+    abc.ABCMeta.register(ComponentBase, component_class)
 
     logging.debug(
         jdict(event="construct_json_classes", path=component_filepath, state="end")

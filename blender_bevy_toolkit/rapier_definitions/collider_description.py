@@ -1,5 +1,6 @@
 from blender_bevy_toolkit.component_base import (
     ComponentRepresentation,
+    ComponentBase,
     register_component,
     utils,
 )
@@ -59,7 +60,7 @@ COLLIDER_SHAPES = [
 
 
 @register_component
-class ColliderDescription:
+class ColliderDescription(ComponentBase):
     def encode(config, obj):
         """Returns a ComponentRepresentation representing this component"""
 
