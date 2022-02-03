@@ -13,13 +13,14 @@ import json
 import logging
 import collections
 import functools
+import abc
 
 import bpy
 import mathutils
 
 from .utils import jdict, F64, F32
 
-from .component_base import ComponentRepresentation, register_component
+from .component_base import ComponentRepresentation, register_component, ComponentBase
 
 logger = logging.getLogger(__name__)
 
@@ -177,6 +178,8 @@ def insert_class_methods(component_class, component_def, panel, properties, fiel
     component_class.remove = staticmethod(remove)
     component_class.encode = staticmethod(encode)
 
+    abc.update_abstractmethods(component_class)
+
 
 def create_fields(component_def):
     """Create bpy.props Properties for each field inside the component"""
@@ -257,7 +260,7 @@ def construct_component_classes(component_filepath):
     # blender object
     component_class = type(
         component["name"],
-        (),
+        (ComponentBase,),
         {},
     )
 

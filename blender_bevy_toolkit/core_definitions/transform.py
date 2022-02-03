@@ -1,11 +1,12 @@
 from blender_bevy_toolkit.component_base import (
     ComponentRepresentation,
     register_component,
+    ComponentBase,
 )
 
 
 @register_component
-class Transform:
+class Transform(ComponentBase):
     def encode(config, obj):
         """Returns a ComponentRepresentation representing this component
 
