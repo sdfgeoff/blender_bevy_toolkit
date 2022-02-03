@@ -1,10 +1,10 @@
 """ Base functionality for all components and for finding/idetifying
 them """
-from abc import ABC, abstractmethod
+from abc import ABCMeta, abstractmethod
 from . import utils
 
 
-class ComponentBase(ABC):
+class ComponentBase(metaclass=ABCMeta):
     """All components need to implement this base class to work with the exporter"""
 
     @staticmethod
@@ -83,11 +83,8 @@ def register_component(cls):
     or called as a function on a class.
     """
     # Check the component has all the required functions
-    assert (
-        ComponentBase in cls.__bases__
-    ), "Attempting to register component that does not inherit from Componentbase"
-    _test_instance = cls()  # Base Classes only do their checking on an instance
-
+    assert isinstance(cls(), ComponentBase), "Attempting to register component that does not inherit from Componentbase"
+    
     COMPONENTS.append(cls)
     COMPONENTS.sort(key=lambda c: c.__name__)
     return cls

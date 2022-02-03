@@ -178,8 +178,6 @@ def insert_class_methods(component_class, component_def, panel, properties, fiel
     component_class.remove = staticmethod(remove)
     component_class.encode = staticmethod(encode)
 
-    abc.update_abstractmethods(component_class)
-
 
 def create_fields(component_def):
     """Create bpy.props Properties for each field inside the component"""
@@ -260,13 +258,14 @@ def construct_component_classes(component_filepath):
     # blender object
     component_class = type(
         component["name"],
-        (ComponentBase,),
+        (),
         {},
     )
 
     panel = create_ui_panel(component_def, component_class, fields)
 
     insert_class_methods(component_class, component_def, panel, properties, fields)
+    abc.ABCMeta.register(ComponentBase, component_class)
 
     logging.debug(
         jdict(event="construct_json_classes", path=component_filepath, state="end")
