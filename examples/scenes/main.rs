@@ -9,7 +9,9 @@ fn spawn_scene(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
     mut scene_spawner: ResMut<SceneSpawner>,
+    mut ambient_light: ResMut<AmbientLight>,
 ) {
+    ambient_light.color = Color::BLACK;
     //Create a camera
     commands.spawn().insert_bundle(PerspectiveCameraBundle {
         transform: Transform::from_matrix(Mat4::from_rotation_translation(
