@@ -9,7 +9,9 @@ fn spawn_scene(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
     mut scene_spawner: ResMut<SceneSpawner>,
+    mut ambient_light: ResMut<AmbientLight>,
 ) {
+    ambient_light.color = Color::BLACK;
     //Create a camera
     commands.spawn().insert_bundle(PerspectiveCameraBundle {
         transform: Transform::from_matrix(Mat4::from_rotation_translation(
@@ -20,10 +22,10 @@ fn spawn_scene(
     });
 
     // Create a Light
-    commands.spawn().insert_bundle(PointLightBundle {
-        transform: Transform::from_translation(Vec3::new(0.0, 8.0, 0.0)),
-        ..Default::default()
-    });
+    // commands.spawn().insert_bundle(PointLightBundle {
+    //     transform: Transform::from_translation(Vec3::new(0.0, 8.0, 0.0)),
+    //     ..Default::default()
+    // });
 
     let args: Vec<String> = env::args().collect();
 

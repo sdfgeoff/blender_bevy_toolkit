@@ -2,6 +2,7 @@
 bevy/glam formats """
 import json
 import mathutils
+import bpy
 
 
 def jdict(**kwargs):
@@ -30,6 +31,26 @@ def quat_to_str(data):
     """Convert from a mathutils quaternion into a glam quaternion"""
     return encode(
         {"type": "glam::quat::Quat", "value": (data.x, data.y, data.z, data.w)}
+    )
+
+
+def color_to_str(data):
+    """
+    "type": "bevy_render::color::Color",
+    "value": Rgba(
+        red: 1.0,
+        green: 1.0,
+        blue: 1.0,
+        alpha: 1.0,
+    ),
+    """
+    return encode(
+        {
+            "type": "bevy_render::color::Color",
+            "value": EnumStruct(
+                "Rgba", {"red": data.r, "green": data.g, "blue": data.b, "alpha": 1.0}
+            ),
+        }
     )
 
 
@@ -66,6 +87,16 @@ class F64:
         return encode({"type": "f64", "value": self.val})
 
 
+class EnumStruct:
+    def __init__(self, name, fields):
+        self.name = name
+        self.fields = fields
+
+    def to_str(self):
+        fieldString = ",".join(f"{f}:{encode(v)}" for f, v in self.fields.items())
+        return f"{self.name}({fieldString})"
+
+
 def encode(data):
     """The "base" encoder. Call this with some data and hopefully it will be encoded
     as a string"""
@@ -74,7 +105,10 @@ def encode(data):
     return ENCODE_MAP[type(data)](data)
 
 
+import builtins
+
 ENCODE_MAP = {
+    mathutils.Color: color_to_str,
     str: dq_string,
     int: str,
     float: str,
