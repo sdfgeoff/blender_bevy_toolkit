@@ -1,0 +1,215 @@
+[(
+    entity: 0,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(182.9138641357422,-4.315144062042236,132.11439514160156)},"rotation":{"type":"glam::quat::Quat","value":(0.3055305778980255,0.3055306375026703,0.6376921534538269,0.6376917958259583)},"scale":{"type":"glam::vec3::Vec3","value":(1.0000001192092896,1.0000001192092896,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Camera"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(182.9138641357422,-4.315144062042236,132.11439514160156)},"rotation":{"type":"glam::quat::Quat","value":(0.3055305778980255,0.3055306375026703,0.6376921534538269,0.6376917958259583)},"scale":{"type":"glam::vec3::Vec3","value":(1.0000001192092896,1.0000001192092896,1.0)}}}
+    ]
+),(
+    entity: 1,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-30.0,30.0,-10.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Plane.003"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/2bb081eb2d1c60fa6ca1363b9c108a38.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-30.0,30.0,-10.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 2,
+    components:[
+        {"type":"bevy_render::primitives::CubemapFrusta","struct":{}},
+        {"type":"bevy_pbr::bundle::CubemapVisibleEntities","struct":{}},
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-29.0,29.0,-5.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Light.002"}},
+        {"type":"bevy_pbr::light::PointLight","struct":{"color":{"type":"bevy_render::color::Color","value":RgbaLinear(red:1.0,green:0.8939570784568787,blue:0.49997571110725403,alpha:1.0)},"intensity":{"type":"f32","value":5000.0},"range":{"type":"f32","value":40.0},"radius":{"type":"f32","value":5.0},"shadows_enabled":{"type":"bool","value":true},"shadow_depth_bias":{"type":"f32","value":1.0},"shadow_normal_bias":{"type":"f32","value":0.0}}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-29.0,29.0,-5.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 3,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-29.0,39.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Cube.003"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/958726ba688167988f56eb9e17c43e0a.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-29.0,39.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 4,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-19.0,29.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Cube.004"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/958726ba688167988f56eb9e17c43e0a.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-19.0,29.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 5,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-29.0,19.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Cube.005"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/958726ba688167988f56eb9e17c43e0a.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-29.0,19.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 6,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-39.0,29.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Cube.006"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/958726ba688167988f56eb9e17c43e0a.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-39.0,29.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 7,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(30.0,30.0,-10.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Plane.001"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/2bb081eb2d1c60fa6ca1363b9c108a38.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(30.0,30.0,-10.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 8,
+    components:[
+        {"type":"bevy_render::primitives::CubemapFrusta","struct":{}},
+        {"type":"bevy_pbr::bundle::CubemapVisibleEntities","struct":{}},
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(31.0,29.0,-5.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Light.001"}},
+        {"type":"bevy_pbr::light::PointLight","struct":{"color":{"type":"bevy_render::color::Color","value":RgbaLinear(red:0.45841625332832336,green:0.6981469988822937,blue:1.0,alpha:1.0)},"intensity":{"type":"f32","value":5000.0},"range":{"type":"f32","value":40.0},"radius":{"type":"f32","value":0.10000000149011612},"shadows_enabled":{"type":"bool","value":false},"shadow_depth_bias":{"type":"f32","value":1.0},"shadow_normal_bias":{"type":"f32","value":0.0}}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(31.0,29.0,-5.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 9,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(31.0,39.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Cube.001"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/958726ba688167988f56eb9e17c43e0a.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(31.0,39.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 10,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(41.0,29.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Cube.002"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/958726ba688167988f56eb9e17c43e0a.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(41.0,29.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 11,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(31.0,19.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Cube.007"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/958726ba688167988f56eb9e17c43e0a.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(31.0,19.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 12,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(21.0,29.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Cube.008"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/958726ba688167988f56eb9e17c43e0a.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(21.0,29.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 13,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-23.328365325927734,-4.202903747558594,9.579440116882324)},"rotation":{"type":"glam::quat::Quat","value":(0.194632887840271,-0.48910951614379883,-0.7945100665092468,0.3027271032333374)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,0.9999999403953552,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Camera.001"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-23.328365325927734,-4.202903747558594,9.579440116882324)},"rotation":{"type":"glam::quat::Quat","value":(0.194632887840271,-0.48910951614379883,-0.7945100665092468,0.3027271032333374)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,0.9999999403953552,1.0)}}}
+    ]
+),(
+    entity: 14,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-30.0,-30.0,-10.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Plane.002"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/2bb081eb2d1c60fa6ca1363b9c108a38.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-30.0,-30.0,-10.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 15,
+    components:[
+        {"type":"bevy_render::primitives::CubemapFrusta","struct":{}},
+        {"type":"bevy_pbr::bundle::CubemapVisibleEntities","struct":{}},
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-29.0,-31.0,-5.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Light.003"}},
+        {"type":"bevy_pbr::light::PointLight","struct":{"color":{"type":"bevy_render::color::Color","value":RgbaLinear(red:1.0,green:0.8939570784568787,blue:0.49997571110725403,alpha:1.0)},"intensity":{"type":"f32","value":200.0},"range":{"type":"f32","value":40.0},"radius":{"type":"f32","value":0.10000000149011612},"shadows_enabled":{"type":"bool","value":true},"shadow_depth_bias":{"type":"f32","value":1.0},"shadow_normal_bias":{"type":"f32","value":0.0}}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-29.0,-31.0,-5.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 16,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-29.0,-21.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Cube.009"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/958726ba688167988f56eb9e17c43e0a.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-29.0,-21.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 17,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-19.0,-31.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Cube.010"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/958726ba688167988f56eb9e17c43e0a.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-19.0,-31.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 18,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-29.0,-41.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Cube.011"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/958726ba688167988f56eb9e17c43e0a.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-29.0,-41.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 19,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-39.0,-31.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Cube.012"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/958726ba688167988f56eb9e17c43e0a.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-39.0,-31.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 20,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(30.0,-30.0,-10.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Plane.004"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/2bb081eb2d1c60fa6ca1363b9c108a38.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(30.0,-30.0,-10.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 21,
+    components:[
+        {"type":"bevy_render::primitives::CubemapFrusta","struct":{}},
+        {"type":"bevy_pbr::bundle::CubemapVisibleEntities","struct":{}},
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(31.0,-31.0,-5.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Light.004"}},
+        {"type":"bevy_pbr::light::PointLight","struct":{"color":{"type":"bevy_render::color::Color","value":RgbaLinear(red:1.0,green:0.15671786665916443,blue:0.0690162256360054,alpha:1.0)},"intensity":{"type":"f32","value":5000.0},"range":{"type":"f32","value":40.0},"radius":{"type":"f32","value":0.20000000298023224},"shadows_enabled":{"type":"bool","value":true},"shadow_depth_bias":{"type":"f32","value":1.0},"shadow_normal_bias":{"type":"f32","value":0.0}}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(31.0,-31.0,-5.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 22,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(31.0,-21.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Cube.013"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/958726ba688167988f56eb9e17c43e0a.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(31.0,-21.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 23,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(41.0,-31.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Cube.014"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/958726ba688167988f56eb9e17c43e0a.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(41.0,-31.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 24,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(31.0,-41.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Cube.015"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/958726ba688167988f56eb9e17c43e0a.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(31.0,-41.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 25,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(21.0,-31.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Cube.016"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/958726ba688167988f56eb9e17c43e0a.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(21.0,-31.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+)]
