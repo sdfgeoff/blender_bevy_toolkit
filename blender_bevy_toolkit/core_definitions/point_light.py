@@ -55,6 +55,7 @@ class PointLight(ComponentBase):
       },
     """
 
+    @staticmethod
     def encode(config, obj):
         assert PointLight.is_present(obj)
 
@@ -73,9 +74,11 @@ class PointLight(ComponentBase):
             },
         )
 
+    @staticmethod
     def can_add(obj):
         False
 
+    @staticmethod
     def is_present(obj):
         return obj.type == "LIGHT" and obj.data.type == "POINT"
 
@@ -97,36 +100,46 @@ class PointLight(ComponentBase):
 # Supporting classes
 @register_component
 class CubemapVisibleEntities(ComponentBase):
+    @staticmethod
     def encode(config, obj):
         return ComponentRepresentation("bevy_pbr::bundle::CubemapVisibleEntities", {})
 
+    @staticmethod
     def is_present(obj):
         return PointLight.is_present(obj)
 
+    @staticmethod
     def register():
         pass
 
+    @staticmethod
     def unregister():
         pass
 
+    @staticmethod
     def can_add(obj):
         return False
 
 
 @register_component
 class CubemapFrusta(ComponentBase):
+    @staticmethod
     def encode(config, obj):
         return ComponentRepresentation("bevy_render::primitives::CubemapFrusta", {})
 
+    @staticmethod
     def is_present(obj):
         return PointLight.is_present(obj)
 
+    @staticmethod
     def register():
         pass
 
+    @staticmethod
     def unregister():
         pass
 
+    @staticmethod
     def can_add(obj):
         return False
 
@@ -142,6 +155,7 @@ class PointLightPanel(bpy.types.Panel):
     def poll(cls, context):
         return PointLight.is_present(context.object)
 
+    @staticmethod
     def draw(self, context):
         row = self.layout.row()
         row.label(text="Provider of omnidirectional illumination")
@@ -151,9 +165,9 @@ class PointLightPanel(bpy.types.Panel):
         row = self.layout.row()
         row.prop(context.object.data, "energy")
         row = self.layout.row()
-        row.prop(context.object.data, "cutoff_distance")  # Bevy Range
+        row.prop(context.object.data, "cutoff_distance", text="Range")  # Bevy Range
         row = self.layout.row()
-        row.prop(context.object.data, "shadow_soft_size")  # Bevy Radius
+        row.prop(context.object.data, "shadow_soft_size", text="Radius")  # Bevy Radius
         row = self.layout.row()
         row.prop(context.object.data, "use_shadow", text="Enable Shadow")
 
