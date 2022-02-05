@@ -65,7 +65,7 @@ class PointLight(ComponentBase):
                 "intensity": utils.F32(obj.data.energy),
                 "range": utils.F32(obj.data.cutoff_distance),
                 "radius": utils.F32(obj.data.shadow_soft_size),
-                "shadows_enabled": obj.data.use_shadow,
+                "shadows_enabled": utils.Bool(obj.data.use_shadow),
                 "shadow_depth_bias": utils.F32(obj.data.shadow_buffer_bias),
                 "shadow_normal_bias": utils.F32(
                     obj.bevy_point_light_properties.shadow_normal_bias
@@ -99,35 +99,37 @@ class PointLight(ComponentBase):
 class CubemapVisibleEntities(ComponentBase):
     def encode(config, obj):
         return ComponentRepresentation("bevy_pbr::bundle::CubemapVisibleEntities", {})
-      
+
     def is_present(obj):
-      return PointLight.is_present(obj)
+        return PointLight.is_present(obj)
 
     def register():
-      pass
-    
+        pass
+
     def unregister():
-      pass
-    
+        pass
+
     def can_add(obj):
-      return False
+        return False
+
 
 @register_component
 class CubemapFrusta(ComponentBase):
     def encode(config, obj):
         return ComponentRepresentation("bevy_render::primitives::CubemapFrusta", {})
-      
+
     def is_present(obj):
-      return PointLight.is_present(obj)
+        return PointLight.is_present(obj)
 
     def register():
-      pass
-    
+        pass
+
     def unregister():
-      pass
-    
+        pass
+
     def can_add(obj):
-      return False
+        return False
+
 
 class PointLightPanel(bpy.types.Panel):
     bl_idname = "OBJECT_PT_point_light_properties"

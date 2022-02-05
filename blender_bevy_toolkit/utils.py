@@ -48,7 +48,8 @@ def color_to_str(data):
         {
             "type": "bevy_render::color::Color",
             "value": EnumStruct(
-                "Rgba", {"red": data.r, "green": data.g, "blue": data.b, "alpha": 1.0}
+                "RgbaLinear",
+                {"red": data.r, "green": data.g, "blue": data.b, "alpha": 1.0},
             ),
         }
     )
@@ -87,7 +88,28 @@ class F64:
         return encode({"type": "f64", "value": self.val})
 
 
+class Bool:
+    """Represents an explicit bool field in a class."""
+
+    def __init__(self, val):
+        self.val = val
+
+    def to_str(self):
+        """Encode the float into a bevy-compatible string!"""
+        return encode({"type": "bool", "value": self.val})
+
+
 class EnumStruct:
+    """
+    In rust you can define enums that contain structs, eg:
+    ```
+    enum Event {
+        Click { x: i64, y: i64 },
+        Key { code: i64 },
+    }
+    ```
+    """
+
     def __init__(self, name, fields):
         self.name = name
         self.fields = fields
@@ -104,8 +126,6 @@ def encode(data):
         return data.to_str()
     return ENCODE_MAP[type(data)](data)
 
-
-import builtins
 
 ENCODE_MAP = {
     mathutils.Color: color_to_str,
