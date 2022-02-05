@@ -22,10 +22,10 @@ fn spawn_scene(
     });
 
     // Create a Light
-    // commands.spawn().insert_bundle(PointLightBundle {
-    //     transform: Transform::from_translation(Vec3::new(0.0, 8.0, 0.0)),
-    //     ..Default::default()
-    // });
+    commands.spawn().insert_bundle(PointLightBundle {
+        transform: Transform::from_translation(Vec3::new(0.0, 8.0, 0.0)),
+        ..Default::default()
+    });
 
     let args: Vec<String> = env::args().collect();
 
