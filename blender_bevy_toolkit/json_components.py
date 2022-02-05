@@ -6,12 +6,15 @@ import os
 import json
 import logging
 from .utils import jdict
-from .component_constructor import ComponentDefininition, FieldDefinition, component_from_def
+from .component_constructor import (
+    ComponentDefinition,
+    FieldDefinition,
+    component_from_def,
+)
 from .component_base import register_component
 
 
 logger = logging.getLogger(__name__)
-
 
 
 def get_component_files(folder):
@@ -34,8 +37,6 @@ def parse_field(field):
     )
 
 
-
-
 def construct_component_classes(component_filepath):
     """Parse the file from JSON into some python namedtuples"""
     logging.info(
@@ -56,7 +57,7 @@ def construct_component_classes(component_filepath):
         )
         return None
 
-    component_def = ComponentDefininition(
+    component_def = ComponentDefinition(
         name=component["name"],
         description=component["description"],
         id=component["id"],
@@ -72,8 +73,6 @@ def construct_component_classes(component_filepath):
     )
 
     return component_from_def(component_def)
-
-    
 
 
 def load_folder(folder):

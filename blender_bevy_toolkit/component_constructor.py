@@ -23,7 +23,7 @@ import mathutils
 
 from .utils import jdict, F64, F32
 
-from .component_base import ComponentRepresentation, register_component, ComponentBase
+from .component_base import ComponentRepresentation, ComponentBase
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 FieldDefinition = collections.namedtuple(
     "FieldDefinition", ["field", "type", "default", "description"]
 )
-ComponentDefininition = collections.namedtuple(
+ComponentDefinition = collections.namedtuple(
     "ComponentDefinition", ["name", "description", "id", "struct", "fields"]
 )
 
@@ -105,7 +105,9 @@ def create_ui_panel(component_def, component_class, fields):
     return panel
 
 
-def insert_class_methods(component_class, component_def, panel, properties, fields):
+def insert_class_methods(
+    component_class, component_def, panel, properties, fields, is_present_function=None
+):
     """The class representing this component needs some functions (eg to detect if
     the component exists on a blender object). These functions are generated and
     added to the class here"""
@@ -123,15 +125,6 @@ def insert_class_methods(component_class, component_def, panel, properties, fiel
         bpy.utils.unregister_class(panel)
         bpy.utils.unregister_class(properties)
         delattr(bpy.types.Object, component_def.id)
-
-    def add(obj):
-        getattr(obj, component_def.id).present = True
-
-    def can_add(_obj):
-        return True
-
-    def is_present(obj):
-        return getattr(obj, component_def.id).present
 
     def remove(obj):
         getattr(obj, component_def.id).present = False
@@ -155,11 +148,33 @@ def insert_class_methods(component_class, component_def, panel, properties, fiel
 
     component_class.register = staticmethod(register)
     component_class.unregister = staticmethod(unregister)
+    component_class.remove = staticmethod(remove)
+    component_class.encode = staticmethod(encode)
+
+    if is_present_function is None:
+
+        def can_add(_obj):
+            return True
+
+        def add(obj):
+            getattr(obj, component_def.id).present = True
+
+        def is_present(obj):
+            return getattr(obj, component_def.id).present
+
+    else:
+
+        def can_add(_obj):
+            return False
+
+        def add(_obj):
+            pass
+
+        is_present = is_present_function
+
     component_class.add = staticmethod(add)
     component_class.can_add = staticmethod(can_add)
     component_class.is_present = staticmethod(is_present)
-    component_class.remove = staticmethod(remove)
-    component_class.encode = staticmethod(encode)
 
 
 def create_fields(component_def):
@@ -186,10 +201,18 @@ def create_fields(component_def):
     return fields
 
 
+def component_from_def(component_def, is_present_function=None):
+    """Create a class that stores all the internals of the properties in
+    a blender-compatible way.
 
-def component_from_def(component_def):
-    """ Create a class that stores all the internals of the properties in
-     a blender-compatible way."""
+    The major parameters is a component definition which describes all
+    the internals of the component.
+
+    The second parameters is a function that can be used to override the deteciton
+    of if the component is present. If this function does not exist, then the
+    user has to add the component manually. If a function is provided then it is
+    executed to determine if the component is present in an object.
+    """
     logging.debug(
         jdict(
             event="construct_class_from_def",
@@ -212,15 +235,17 @@ def component_from_def(component_def):
 
     panel = create_ui_panel(component_def, component_class, fields)
 
-    insert_class_methods(component_class, component_def, panel, properties, fields)
+    insert_class_methods(
+        component_class,
+        component_def,
+        panel,
+        properties,
+        fields,
+        is_present_function=is_present_function,
+    )
     abc.ABCMeta.register(ComponentBase, component_class)
 
     logging.debug(
         jdict(event="construct_class_from_def", definition=component_def, state="end")
     )
     return component_class
-
-
-
-
-

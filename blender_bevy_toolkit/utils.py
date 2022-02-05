@@ -2,7 +2,6 @@
 bevy/glam formats """
 import json
 import mathutils
-import bpy
 
 
 def jdict(**kwargs):
@@ -115,8 +114,9 @@ class EnumStruct:
         self.fields = fields
 
     def to_str(self):
-        fieldString = ",".join(f"{f}:{encode(v)}" for f, v in self.fields.items())
-        return f"{self.name}({fieldString})"
+        """Serialize"""
+        field_string = ",".join(f"{f}:{encode(v)}" for f, v in self.fields.items())
+        return f"{self.name}({field_string})"
 
 
 def encode(data):
