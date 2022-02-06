@@ -105,6 +105,7 @@ def create_ui_panel(component_def, component_class, fields):
     return panel
 
 
+# pylint: disable=too-many-arguments
 def insert_class_methods(
     component_class, component_def, panel, properties, fields, is_present_function=None
 ):

@@ -6,7 +6,7 @@ from blender_bevy_toolkit.component_base import (
 )
 from blender_bevy_toolkit.component_constructor import (
     ComponentDefinition,
-    component_from_def
+    component_from_def,
 )
 
 
@@ -14,9 +14,6 @@ import logging
 from blender_bevy_toolkit import jdict, utils
 
 logger = logging.getLogger(__name__)
-
-
-
 
 
 @register_component
@@ -94,7 +91,6 @@ class CameraPanel(bpy.types.Panel):
         row.prop(context.object.data, "clip_end", text="Far")
 
 
-
 register_component(
     component_from_def(
         ComponentDefinition(
@@ -122,107 +118,65 @@ register_component(
 )
 
 
+@register_component
+class PerspectiveProjection(ComponentBase):
+    """
+    Blender uses a different coordinate system so we use a custom struct for this.
+    For more details see:
+    https://bevy-cheatbook.github.io/cookbook/custom-projection.html
+    """
 
-# @register_component
-# class BlendCameraProjection(ComponentBase):
-#     """
-#     Blender uses a different coordinate system so we use a custom struct for this.
-#     For more details see:
-#     https://bevy-cheatbook.github.io/cookbook/custom-projection.html
-#     """
+    @staticmethod
+    def encode(config, obj):
+        return ComponentRepresentation(
+            "bevy_render::camera::projection::PerspectiveProjection",
+            {
+                # "projection_matrix", # Auto-computed from projection component (I hope)
+                "near": utils.F32(obj.data.clip_start),
+                "far": utils.F32(obj.data.clip_end),
+                "fov": utils.F32(obj.data.angle),
+            },
+        )
 
-#     @staticmethod
-#     def encode(config, obj):
-#         return ComponentRepresentation(
-#             "blender_bevy_toolkit::blend_camera::BlendCameraProjection",
-#             {
-#                 # "projection_matrix", # Auto-computed from projection component (I hope)
-#                 "clip_start": utils.F32(obj.data.clip_start),
-#                 "clip_end": utils.F32(obj.data.clip_end),
-#                 "angle": utils.F32(obj.data.angle),
-#                 "ortho_scale": utils.F32(obj.data.ortho_scale),
-#                 "type": obj.data.type
-#             },
-#         )
+    @staticmethod
+    def is_present(obj):
+        return Camera.is_present(obj)
 
-#     @staticmethod
-#     def is_present(obj):
-#         return Camera.is_present(obj)
+    @staticmethod
+    def register():
+        bpy.utils.register_class(PerspectiveProjectionPanel)
 
-#     @staticmethod
-#     def register():
-#         bpy.utils.register_class(PerspectiveProjectionPanel)
+    @staticmethod
+    def unregister():
+        bpy.utils.unregister_class(PerspectiveProjectionPanel)
 
-#     @staticmethod
-#     def unregister():
-#         bpy.utils.unregister_class(PerspectiveProjectionPanel)
+    @staticmethod
+    def can_add(obj):
+        return False
 
-#     @staticmethod
-#     def can_add(obj):
-#         return False
-    
 
-# class PerspectiveProjectionPanel(bpy.types.Panel):
-#     bl_idname = "OBJECT_PT_projection_properties"
-#     bl_label = "BevyBlenderProjectionMatrix"
-#     bl_space_type = "PROPERTIES"
-#     bl_region_type = "WINDOW"
-#     bl_context = "physics"
+class PerspectiveProjectionPanel(bpy.types.Panel):
+    bl_idname = "OBJECT_PT_projection_properties"
+    bl_label = "BevyBlenderProjectionMatrix"
+    bl_space_type = "PROPERTIES"
+    bl_region_type = "WINDOW"
+    bl_context = "physics"
 
-#     @classmethod
-#     def poll(cls, context):
-#         return Camera.is_present(context.object)
+    @classmethod
+    def poll(cls, context):
+        return Camera.is_present(context.object)
 
-#     def draw(self, context):
-#         row = self.layout.row()
-#         row.label(text="Computes a projection matrix from a set of properties")
+    def draw(self, context):
+        row = self.layout.row()
+        row.label(text="Computes a projection matrix from a set of properties")
 
-#         row = self.layout.row()
-#         row.prop(context.object.data, "angle")
-#         row = self.layout.row()
-#         row.prop(context.object.data, "clip_start")
-#         row = self.layout.row()
-#         row.prop(context.object.data, "clip_end")
-#         row = self.layout.row()
-#         row.prop(context.object.data, "ortho_scale")
-#         row = self.layout.row()
-#         row.prop(context.object.data, "type")
-
-# TODO: Should be full component
-# TODO: https://bevy-cheatbook.github.io/cookbook/custom-projection.html because blender uses a different coordinate system
-"""
-      {
-        "type": "bevy_render::camera::projection::PerspectiveProjection",
-        "struct": {
-          "fov": {
-            "type": "f32",
-            "value": 0.7853982,
-          },
-          "aspect_ratio": {
-            "type": "f32",
-            "value": 1.0,
-          },
-          "near": {
-            "type": "f32",
-            "value": 0.1,
-          },
-          "far": {
-            "type": "f32",
-            "value": 1000.0,
-          },
-        },
-      },
-  ),
-"""
-register_component(
-    component_from_def(
-        ComponentDefinition(
-            name="PerspectiveProjection",
-            description="AUTO: Used by camera",
-            id="perspective_projection",
-            struct="bevy_render::camera::projection::PerspectiveProjection",
-            fields=[],
-        ),
-        is_present_function=Camera.is_present,
-    )
-)
+        row = self.layout.row()
+        row.prop(context.object.data, "angle", text="FOV")
+        row = self.layout.row()
+        row.prop(context.object.data, "clip_start", text="Near")
+        row = self.layout.row()
+        row.prop(context.object.data, "clip_end", text="Far")
+        row = self.layout.row()
+        row.prop(context.object.data, "ortho_scale")
+        row = self.layout.row()
+        row.prop(context.object.data, "type")

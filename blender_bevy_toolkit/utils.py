@@ -120,6 +120,16 @@ class EnumStruct:
 
 
 class EnumTuple:
+    """
+    In rust you can define enums that contain tuples, eg:
+    ```
+    enum Event {
+        Death(i64),
+        Spawn(String),
+    }
+    ```
+    """
+
     def __init__(self, name, values):
         self.name = name
         assert isinstance(values, tuple)
@@ -129,17 +139,24 @@ class EnumTuple:
         """Serialize"""
         return f"{self.name}{encode(self.values)}"
 
+
 class Option:
+    """Rust option. None or Some(value)"""
+
     def __init__(self, contained_type, value):
         self.contained_type = contained_type
         self.value = value
-    
-    def to_str(self):
-        return encode({
-            "type": f"core::option::Option<{self.contained_type}>",
-            "value": "None" if self.value is None else EnumTuple("Some", (self.value, ))
-        })
 
+    def to_str(self):
+        """Serialize"""
+        return encode(
+            {
+                "type": f"core::option::Option<{self.contained_type}>",
+                "value": "None"
+                if self.value is None
+                else EnumTuple("Some", (self.value,)),
+            }
+        )
 
 
 def encode(data):
