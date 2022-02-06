@@ -49,13 +49,11 @@ fn key_handler(
     mut scene_spawner: ResMut<SceneSpawner>,
     entities: Query<Entity, Without<Preserve>>,
     mut commands: Commands,
-
 ) {
     for event in keyboard_input_events.iter() {
         if event.state == ElementState::Released {
-
             // Reload list of scenes
-            if event.key_code == Some(KeyCode::R)  {
+            if event.key_code == Some(KeyCode::R) {
                 scene_handler.scene_list = read_scene_list();
             }
 
@@ -66,9 +64,10 @@ fn key_handler(
                     commands.entity(e).despawn()
                 }
                 scene_handler.current_scene_name = None;
-                
+
                 info!("Loading Scene: {:?}", scene_handler.selected_scene_name);
-                let scene_handle: Handle<DynamicScene> = asset_server.load(&scene_handler.selected_scene_name);
+                let scene_handle: Handle<DynamicScene> =
+                    asset_server.load(&scene_handler.selected_scene_name);
                 scene_spawner.spawn_dynamic(scene_handle);
                 scene_handler.current_scene_name = Some(scene_handler.selected_scene_name.clone());
             }
@@ -76,31 +75,43 @@ fn key_handler(
         if event.state == ElementState::Pressed {
             // Scroll through list of scenes
             if event.key_code == Some(KeyCode::Down) {
-                let index = scene_handler.scene_list.iter().position(|s| s == &scene_handler.selected_scene_name).unwrap_or(0) + 1;
+                let index = scene_handler
+                    .scene_list
+                    .iter()
+                    .position(|s| s == &scene_handler.selected_scene_name)
+                    .unwrap_or(0)
+                    + 1;
                 let constrained_index = index.min(scene_handler.scene_list.len() - 1);
                 let new_scene_name = &scene_handler.scene_list[constrained_index];
                 scene_handler.selected_scene_name = new_scene_name.clone();
             }
             if event.key_code == Some(KeyCode::Up) {
-                let index = scene_handler.scene_list.iter().position(|s| s == &scene_handler.selected_scene_name).unwrap_or(0);
+                let index = scene_handler
+                    .scene_list
+                    .iter()
+                    .position(|s| s == &scene_handler.selected_scene_name)
+                    .unwrap_or(0);
                 let constrained_index = index.max(1) - 1;
                 let new_scene_name = &scene_handler.scene_list[constrained_index];
                 scene_handler.selected_scene_name = new_scene_name.clone();
-                
             }
         }
     }
 }
 
-fn setup_world(mut physics_config: ResMut<RapierConfiguration>, mut ambient_light: ResMut<AmbientLight>,) {
+fn setup_world(
+    mut physics_config: ResMut<RapierConfiguration>,
+    mut ambient_light: ResMut<AmbientLight>,
+) {
     ambient_light.color = Color::BLACK;
     physics_config.gravity.y = 0.0;
     physics_config.gravity.z = -9.8;
 }
 
-
-fn setup_ui(mut commands: Commands, asset_server: Res<AssetServer>,) {
-    commands.spawn_bundle(UiCameraBundle::default()).insert(Preserve {});
+fn setup_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
+    commands
+        .spawn_bundle(UiCameraBundle::default())
+        .insert(Preserve {});
 
     commands
         .spawn_bundle(TextBundle {
@@ -113,7 +124,8 @@ fn setup_ui(mut commands: Commands, asset_server: Res<AssetServer>,) {
                 // Construct a `Vec` of `TextSection`s
                 sections: vec![
                     TextSection {
-                        value: "Scenes: (S to scan again, Arrows to select, Enter to load)".to_string(),
+                        value: "Scenes: (S to scan again, Arrows to select, Enter to load)"
+                            .to_string(),
                         style: TextStyle {
                             font: asset_server.load("DroidSans.ttf"),
                             font_size: 20.0,
@@ -132,31 +144,35 @@ fn setup_ui(mut commands: Commands, asset_server: Res<AssetServer>,) {
                 ..Default::default()
             },
             ..Default::default()
-        }).insert(SceneListTag {} ).insert(Preserve {});
+        })
+        .insert(SceneListTag {})
+        .insert(Preserve {});
 }
 
-fn display_scene_list(mut query: Query<&mut Text, With<SceneListTag>>, scene_handler: ResMut<SceneHandler>,) {
+fn display_scene_list(
+    mut query: Query<&mut Text, With<SceneListTag>>,
+    scene_handler: ResMut<SceneHandler>,
+) {
     let mut scene_path_list = String::new();
 
     for scene_path in scene_handler.scene_list.iter() {
         let selected = scene_path == &scene_handler.selected_scene_name;
 
         scene_path_list += "\n";
-        if selected{
+        if selected {
             scene_path_list += "> "
         } else {
             scene_path_list += "   "
         }
         scene_path_list += scene_path;
     }
-    
+
     for mut text in query.iter_mut() {
         text.sections[1].value = scene_path_list.clone();
     }
 }
 
 fn main() {
-
     let scene_list = read_scene_list();
     let start_scene = scene_list[0].clone();
     App::new()

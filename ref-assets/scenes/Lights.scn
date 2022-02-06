@@ -1,9 +1,13 @@
 [(
     entity: 0,
     components:[
+        {"type":"bevy_render::camera::camera::Camera","struct":{"near":{"type":"f32","value":0.10000000149011612},"far":{"type":"f32","value":1000.0},"name":{"type":"core::option::Option<alloc::string::String>","value":Some("camera_3d")}}},
+        {"type":"bevy_render::primitives::Frustum","struct":{}},
         {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(180.0,0.0,130.0)},"rotation":{"type":"glam::quat::Quat","value":(0.29883623123168945,0.29883623123168945,0.6408564448356628,0.6408563852310181)},"scale":{"type":"glam::vec3::Vec3","value":(1.0000001192092896,1.0000001192092896,1.0)}}},
         {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Camera"}},
-        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(180.0,0.0,130.0)},"rotation":{"type":"glam::quat::Quat","value":(0.29883623123168945,0.29883623123168945,0.6408564448356628,0.6408563852310181)},"scale":{"type":"glam::vec3::Vec3","value":(1.0000001192092896,1.0000001192092896,1.0)}}}
+        {"type":"bevy_render::camera::projection::PerspectiveProjection","struct":{"near":{"type":"f32","value":0.10000000149011612},"far":{"type":"f32","value":1000.0},"fov":{"type":"f32","value":0.6911112070083618}}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(180.0,0.0,130.0)},"rotation":{"type":"glam::quat::Quat","value":(0.29883623123168945,0.29883623123168945,0.6408564448356628,0.6408563852310181)},"scale":{"type":"glam::vec3::Vec3","value":(1.0000001192092896,1.0000001192092896,1.0)}}},
+        {"type":"bevy_render::view::visibility::VisibleEntities","struct":{}}
     ]
 ),(
     entity: 1,
@@ -28,13 +32,6 @@
 ),(
     entity: 3,
     components:[
-        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-20.0,0.0,10.0)},"rotation":{"type":"glam::quat::Quat","value":(0.194632887840271,-0.48910951614379883,-0.7945100665092468,0.3027271032333374)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,0.9999999403953552,1.0)}}},
-        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Camera.001"}},
-        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-20.0,0.0,10.0)},"rotation":{"type":"glam::quat::Quat","value":(0.194632887840271,-0.48910951614379883,-0.7945100665092468,0.3027271032333374)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,0.9999999403953552,1.0)}}}
-    ]
-),(
-    entity: 4,
-    components:[
         {"type":"bevy_render::primitives::CubemapFrusta","struct":{}},
         {"type":"bevy_pbr::bundle::CubemapVisibleEntities","struct":{}},
         {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-30.0,-30.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
@@ -43,7 +40,7 @@
         {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-30.0,-30.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
     ]
 ),(
-    entity: 5,
+    entity: 4,
     components:[
         {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(30.0,-30.0,-10.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
         {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Plane.004"}},
@@ -51,7 +48,7 @@
         {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(30.0,-30.0,-10.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
     ]
 ),(
-    entity: 6,
+    entity: 5,
     components:[
         {"type":"bevy_render::primitives::CubemapFrusta","struct":{}},
         {"type":"bevy_pbr::bundle::CubemapVisibleEntities","struct":{}},
@@ -61,7 +58,7 @@
         {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(30.0,-30.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
     ]
 ),(
-    entity: 7,
+    entity: 6,
     components:[
         {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(30.0,30.0,-10.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
         {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Plane.001"}},
@@ -69,7 +66,7 @@
         {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(30.0,30.0,-10.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
     ]
 ),(
-    entity: 8,
+    entity: 7,
     components:[
         {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-30.0,30.0,-10.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
         {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Plane.002"}},
@@ -77,11 +74,19 @@
         {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-30.0,30.0,-10.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
     ]
 ),(
-    entity: 9,
+    entity: 8,
     components:[
         {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-30.0,-30.0,-10.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
         {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Plane.003"}},
         {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/8f156e36fcfac3635168bd11cb869397.mesh"}},
         {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-30.0,-30.0,-10.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+    ]
+),(
+    entity: 9,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(180.0,0.0,130.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(5.0,5.0,5.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Cube"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/b9a123b1fd5cedfa91c5145401080043.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(180.0,0.0,130.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(5.0,5.0,5.0)}}}
     ]
 )]
