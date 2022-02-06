@@ -11,6 +11,7 @@ assets:
 	$(BLENDER) -b test_scenes/PhysicsTest.blend --python export.py -- --output-file="assets/scenes/PhysicsTest.scn" --log-level=DEBUG
 	$(BLENDER) -b test_scenes/Heirarchy.blend --python export.py -- --output-file="assets/scenes/Heirarchy.scn" --log-level=DEBUG
 	$(BLENDER) -b test_scenes/Lights.blend --python export.py -- --output-file="assets/scenes/Lights.scn" --log-level=DEBUG
+	$(BLENDER) -b test_scenes/Camera.blend --python export.py -- --output-file="assets/scenes/Camera.scn" --log-level=DEBUG
 
 run:
 	cargo run --example scenes -- scenes/Lights.scn

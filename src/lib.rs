@@ -1,5 +1,6 @@
 use bevy::prelude::*;
 
+
 pub mod blend_collection;
 pub mod blend_label;
 pub mod blend_mesh;
@@ -22,7 +23,7 @@ impl Plugin for BlendLoadPlugin {
         app.register_type::<rapier_physics::RigidBodyDescription>();
         app.register_type::<rapier_physics::ColliderDescription>();
         app.init_asset_loader::<blend_mesh::BlendMeshAssetLoader>();
-
+        
         app.add_system(blend_collection::blend_collection_loader.system());
         app.add_system(blend_mesh::blend_mesh_loader.system());
         app.add_system(rapier_physics::body_description_to_builder.system());

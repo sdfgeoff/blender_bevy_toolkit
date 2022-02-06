@@ -119,6 +119,29 @@ class EnumStruct:
         return f"{self.name}({field_string})"
 
 
+class EnumTuple:
+    def __init__(self, name, values):
+        self.name = name
+        assert isinstance(values, tuple)
+        self.values = values
+
+    def to_str(self):
+        """Serialize"""
+        return f"{self.name}{encode(self.values)}"
+
+class Option:
+    def __init__(self, contained_type, value):
+        self.contained_type = contained_type
+        self.value = value
+    
+    def to_str(self):
+        return encode({
+            "type": f"core::option::Option<{self.contained_type}>",
+            "value": "None" if self.value is None else EnumTuple("Some", (self.value, ))
+        })
+
+
+
 def encode(data):
     """The "base" encoder. Call this with some data and hopefully it will be encoded
     as a string"""

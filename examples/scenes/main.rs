@@ -13,13 +13,13 @@ fn spawn_scene(
 ) {
     ambient_light.color = Color::BLACK;
     //Create a camera
-    commands.spawn().insert_bundle(PerspectiveCameraBundle {
-        transform: Transform::from_matrix(Mat4::from_rotation_translation(
-            Quat::from_xyzw(-0.3, -0.5, -0.3, 0.5).normalize(),
-            Vec3::new(-13.0, 20.0, 0.0) * 6.0,
-        )),
-        ..Default::default()
-    });
+    // commands.spawn().insert_bundle(PerspectiveCameraBundle {
+    //     transform: Transform::from_matrix(Mat4::from_rotation_translation(
+    //         Quat::from_xyzw(-0.3, -0.5, -0.3, 0.5).normalize(),
+    //         Vec3::new(-13.0, 20.0, 0.0) * 6.0,
+    //     )),
+    //     ..Default::default()
+    // });
 
     // Create a Light
     commands.spawn().insert_bundle(PointLightBundle {
