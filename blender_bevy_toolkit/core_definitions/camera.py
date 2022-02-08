@@ -129,7 +129,6 @@ class PerspectiveProjection(ComponentBase):
         return ComponentRepresentation(
             "bevy_render::camera::projection::PerspectiveProjection",
             {
-                # "projection_matrix", # Auto-computed from projection component (I hope)
                 "near": utils.F32(obj.data.clip_start),
                 "far": utils.F32(obj.data.clip_end),
                 "fov": utils.F32(obj.data.angle),
