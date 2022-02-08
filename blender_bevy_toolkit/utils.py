@@ -156,18 +156,25 @@ class EnumValue:
         self.name = name
 
     def to_str(self):
+        """Serialize"""
         return f"{self.name}"
 
 
 class Enum:
+    """Container for rust enum. Use like:
+    ```
+    Enum("path::to::Thing", EnumValue("Thing1"))
+    Enum("my::game::Event", EnumTuple("Death", 23))
+    ```
+
+    """
+
     def __init__(self, enum_type, value):
         self.enum_type = enum_type
         self.value = value
 
     def to_str(self):
-        print(
-            self.value, type(self.value), encode(self.value), type(encode(self.value))
-        )
+        """Serialize"""
         return encode({"type": self.enum_type, "value": self.value})
 
 
@@ -175,7 +182,6 @@ class Option(Enum):
     """Rust option. None or Some(value)"""
 
     def __init__(self, contained_type, value):
-        print(value, type(value))
         super().__init__(
             f"core::option::Option<{contained_type}>",
             EnumValue("None") if value is None else EnumTuple("Some", (value,)),
