@@ -1,70 +1,70 @@
 [(
     entity: 0,
     components:[
-        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(10.0,0.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.3535533845424652,0.3535533845424652,-0.1464466005563736,0.8535534143447876)},"scale":{"type":"glam::vec3::Vec3","value":(0.9999999403953552,1.0,1.0)}}},
-        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Cube"}},
-        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/b9d1cb9f2481cdd9afce4e957a8146b8.mesh"}},
-        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(10.0,0.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.3535533845424652,0.3535533845424652,-0.1464466005563736,0.8535534143447876)},"scale":{"type":"glam::vec3::Vec3","value":(0.9999999403953552,1.0,1.0)}}}
-    ]
-),(
-    entity: 1,
-    components:[
         {"type":"bevy_render::primitives::CubemapFrusta","struct":{}},
         {"type":"bevy_pbr::bundle::CubemapVisibleEntities","struct":{}},
         {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(4.076245307922363,1.0054539442062378,5.903861999511719)},"rotation":{"type":"glam::quat::Quat","value":(0.16907575726509094,0.27217134833335876,0.7558802962303162,0.570947527885437)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,0.9999999403953552,1.0)}}},
         {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Light"}},
-        {"type":"bevy_pbr::light::PointLight","struct":{"color":{"type":"bevy_render::color::Color","value":RgbaLinear(red:1.0,green:1.0,blue:1.0,alpha:1.0)},"intensity":{"type":"f32","value":1000.0},"range":{"type":"f32","value":40.0},"radius":{"type":"f32","value":0.10000000149011612},"shadows_enabled":{"type":"bool","value":true},"shadow_depth_bias":{"type":"f32","value":1.0},"shadow_normal_bias":{"type":"f32","value":0.0}}},
+        {"type":"bevy_pbr::light::PointLight","struct":{"color":{"type":"bevy_render::color::Color","value":RgbaLinear(red:1.0,green:1.0,blue:1.0,alpha:1.0)},"intensity":{"type":"f32","value":1000.0},"range":{"type":"f32","value":40.0},"radius":{"type":"f32","value":0.10000000149011612},"shadows_enabled":{"type":"bool","value":false},"shadow_depth_bias":{"type":"f32","value":1.0},"shadow_normal_bias":{"type":"f32","value":0.0}}},
         {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(4.076245307922363,1.0054539442062378,5.903861999511719)},"rotation":{"type":"glam::quat::Quat","value":(0.16907575726509094,0.27217134833335876,0.7558802962303162,0.570947527885437)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,0.9999999403953552,1.0)}}}
     ]
 ),(
-    entity: 2,
+    entity: 1,
     components:[
         {"type":"bevy_render::camera::camera::Camera","struct":{"near":{"type":"f32","value":0.10000000149011612},"far":{"type":"f32","value":100.0},"name":{"type":"core::option::Option<alloc::string::String>","value":Some("camera_3d")}}},
         {"type":"bevy_render::primitives::Frustum","struct":{}},
         {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(0.0,0.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.7071068286895752,0.0,0.0,0.7071068286895752)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
         {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Camera"}},
-        {"type":"bevy_render::camera::projection::PerspectiveProjection","struct":{"near":{"type":"f32","value":0.10000000149011612},"far":{"type":"f32","value":100.0},"fov":{"type":"f32","value":0.6911112070083618}}},
+        {"type":"bevy_render::camera::projection::OrthographicProjection","struct":{"left":{"type":"f32","value":-1.0},"right":{"type":"f32","value":1.0},"bottom":{"type":"f32","value":-1.0},"top":{"type":"f32","value":1.0},"near":{"type":"f32","value":0.10000000149011612},"far":{"type":"f32","value":100.0},"scale":{"type":"f32","value":10.0}}},
         {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(0.0,0.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.7071068286895752,0.0,0.0,0.7071068286895752)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
         {"type":"bevy_render::view::visibility::VisibleEntities","struct":{}}
     ]
 ),(
+    entity: 2,
+    components:[
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(0.0,0.0,-1.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.4226182699203491,0.9063078165054321)},"scale":{"type":"glam::vec3::Vec3","value":(2.0,2.0,2.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Hor2"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/efa2d4a4030e11e0b9f4ee34d2f24535.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(0.0,0.0,-1.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.4226182699203491,0.9063078165054321)},"scale":{"type":"glam::vec3::Vec3","value":(2.0,2.0,2.0)}}}
+    ]
+),(
     entity: 3,
     components:[
-        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-10.0,0.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
-        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Icosphere"}},
-        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/c26820cb142ddfb490a13a8e534167ae.mesh"}},
-        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-10.0,0.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.0,1.0)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(10.0,10.0,6.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.7071068286895752,0.7071068286895752)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"GridHor"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/b1d229dd9ad23ae8eeeae813c22ca7f9.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(10.0,10.0,6.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.7071068286895752,0.7071068286895752)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
     ]
 ),(
     entity: 4,
     components:[
-        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(0.0,0.0,-10.0)},"rotation":{"type":"glam::quat::Quat","value":(-0.7071068286895752,0.0,0.0,0.7071068286895752)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
-        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Suzanne"}},
-        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/ceb94d37aeb0c1092f34ba5bfe85692c.mesh"}},
-        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(0.0,0.0,-10.0)},"rotation":{"type":"glam::quat::Quat","value":(-0.7071068286895752,0.0,0.0,0.7071068286895752)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(6.0,10.0,-10.0)},"rotation":{"type":"glam::quat::Quat","value":(0.5,0.5,0.5,0.4999999701976776)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"GridVert"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/b1d229dd9ad23ae8eeeae813c22ca7f9.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(6.0,10.0,-10.0)},"rotation":{"type":"glam::quat::Quat","value":(0.5,0.5,0.5,0.4999999701976776)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
     ]
 ),(
     entity: 5,
     components:[
-        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(0.0,-10.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(-0.7071068286895752,0.0,0.0,0.7071068286895752)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
-        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Cone"}},
-        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/4d2104f994eec806e6b7d4e9a14b1edd.mesh"}},
-        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(0.0,-10.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(-0.7071068286895752,0.0,0.0,0.7071068286895752)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-1.0,0.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.29883623123168945,0.6408564448356628,0.2988363206386566,0.6408563256263733)},"scale":{"type":"glam::vec3::Vec3","value":(2.0,2.0,2.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Vert1"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/efa2d4a4030e11e0b9f4ee34d2f24535.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-1.0,0.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.29883623123168945,0.6408564448356628,0.2988363206386566,0.6408563256263733)},"scale":{"type":"glam::vec3::Vec3","value":(2.0,2.0,2.0)}}}
     ]
 ),(
     entity: 6,
     components:[
-        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(0.0,10.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.7071068286895752,0.0,0.0,0.7071068286895752)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
-        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Torus"}},
-        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/96e70b429ac590a0db36b147cde81831.mesh"}},
-        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(0.0,10.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.7071068286895752,0.0,0.0,0.7071068286895752)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(0.0,0.0,-1.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.3826834261417389,0.9238795638084412)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Hor1"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/efa2d4a4030e11e0b9f4ee34d2f24535.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(0.0,0.0,-1.0)},"rotation":{"type":"glam::quat::Quat","value":(0.0,0.0,0.3826834261417389,0.9238795638084412)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
     ]
 ),(
     entity: 7,
     components:[
-        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(0.0,0.0,10.0)},"rotation":{"type":"glam::quat::Quat","value":(-0.7071068286895752,0.0,0.0,0.7071068286895752)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
-        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Cone.001"}},
-        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/4d2104f994eec806e6b7d4e9a14b1edd.mesh"}},
-        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(0.0,0.0,10.0)},"rotation":{"type":"glam::quat::Quat","value":(-0.7071068286895752,0.0,0.0,0.7071068286895752)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
+        {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-1.0,0.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.27059805393218994,0.653281569480896,0.2705981135368347,0.6532814502716064)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}},
+        {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Vert2"}},
+        {"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader","struct":{"path":"scenes/meshes/efa2d4a4030e11e0b9f4ee34d2f24535.mesh"}},
+        {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(-1.0,0.0,0.0)},"rotation":{"type":"glam::quat::Quat","value":(0.27059805393218994,0.653281569480896,0.2705981135368347,0.6532814502716064)},"scale":{"type":"glam::vec3::Vec3","value":(1.0,1.0,1.0)}}}
     ]
 )]

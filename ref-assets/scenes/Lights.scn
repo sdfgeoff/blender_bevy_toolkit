@@ -5,7 +5,7 @@
         {"type":"bevy_render::primitives::Frustum","struct":{}},
         {"type":"bevy_transform::components::global_transform::GlobalTransform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(180.0,0.0,130.0)},"rotation":{"type":"glam::quat::Quat","value":(0.29883623123168945,0.29883623123168945,0.6408564448356628,0.6408563852310181)},"scale":{"type":"glam::vec3::Vec3","value":(1.0000001192092896,1.0000001192092896,1.0)}}},
         {"type":"blender_bevy_toolkit::blend_label::BlendLabel","struct":{"name":"Camera"}},
-        {"type":"bevy_render::camera::projection::PerspectiveProjection","struct":{"near":{"type":"f32","value":0.10000000149011612},"far":{"type":"f32","value":1000.0},"fov":{"type":"f32","value":0.6911112070083618}}},
+        {"type":"bevy_render::camera::projection::PerspectiveProjection","struct":{"near":{"type":"f32","value":0.10000000149011612},"far":{"type":"f32","value":1000.0},"fov":{"type":"f32","value":0.4710899591445923}}},
         {"type":"bevy_transform::components::transform::Transform","struct":{"translation":{"type":"glam::vec3::Vec3","value":(180.0,0.0,130.0)},"rotation":{"type":"glam::quat::Quat","value":(0.29883623123168945,0.29883623123168945,0.6408564448356628,0.6408563852310181)},"scale":{"type":"glam::vec3::Vec3","value":(1.0000001192092896,1.0000001192092896,1.0)}}},
         {"type":"bevy_render::view::visibility::VisibleEntities","struct":{}}
     ]

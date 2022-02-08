@@ -140,22 +140,45 @@ class EnumTuple:
         return f"{self.name}{encode(self.values)}"
 
 
-class Option:
-    """Rust option. None or Some(value)"""
+class EnumValue:
+    """
+    A simple enum value with no sub-values, eg:
+    ```
+    enum Thing {
+        Thing1,
+        Thing2,
+        Thing3,
+    }
+    ```
+    """
 
-    def __init__(self, contained_type, value):
-        self.contained_type = contained_type
+    def __init__(self, name):
+        self.name = name
+
+    def to_str(self):
+        return f"{self.name}"
+
+
+class Enum:
+    def __init__(self, enum_type, value):
+        self.enum_type = enum_type
         self.value = value
 
     def to_str(self):
-        """Serialize"""
-        return encode(
-            {
-                "type": f"core::option::Option<{self.contained_type}>",
-                "value": "None"
-                if self.value is None
-                else EnumTuple("Some", (self.value,)),
-            }
+        print(
+            self.value, type(self.value), encode(self.value), type(encode(self.value))
+        )
+        return encode({"type": self.enum_type, "value": self.value})
+
+
+class Option(Enum):
+    """Rust option. None or Some(value)"""
+
+    def __init__(self, contained_type, value):
+        print(value, type(value))
+        super().__init__(
+            f"core::option::Option<{contained_type}>",
+            EnumValue("None") if value is None else EnumTuple("Some", (value,)),
         )
 
 
