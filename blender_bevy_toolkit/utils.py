@@ -2,7 +2,6 @@
 bevy/glam formats """
 import json
 import mathutils
-import bpy
 
 
 def jdict(**kwargs):
@@ -115,8 +114,78 @@ class EnumStruct:
         self.fields = fields
 
     def to_str(self):
-        fieldString = ",".join(f"{f}:{encode(v)}" for f, v in self.fields.items())
-        return f"{self.name}({fieldString})"
+        """Serialize"""
+        field_string = ",".join(f"{f}:{encode(v)}" for f, v in self.fields.items())
+        return f"{self.name}({field_string})"
+
+
+class EnumTuple:
+    """
+    In rust you can define enums that contain tuples, eg:
+    ```
+    enum Event {
+        Death(i64),
+        Spawn(String),
+    }
+    ```
+    """
+
+    def __init__(self, name, values):
+        self.name = name
+        assert isinstance(values, tuple)
+        self.values = values
+
+    def to_str(self):
+        """Serialize"""
+        return f"{self.name}{encode(self.values)}"
+
+
+class EnumValue:
+    """
+    A simple enum value with no sub-values, eg:
+    ```
+    enum Thing {
+        Thing1,
+        Thing2,
+        Thing3,
+    }
+    ```
+    """
+
+    def __init__(self, name):
+        self.name = name
+
+    def to_str(self):
+        """Serialize"""
+        return f"{self.name}"
+
+
+class Enum:
+    """Container for rust enum. Use like:
+    ```
+    Enum("path::to::Thing", EnumValue("Thing1"))
+    Enum("my::game::Event", EnumTuple("Death", 23))
+    ```
+
+    """
+
+    def __init__(self, enum_type, value):
+        self.enum_type = enum_type
+        self.value = value
+
+    def to_str(self):
+        """Serialize"""
+        return encode({"type": self.enum_type, "value": self.value})
+
+
+class Option(Enum):
+    """Rust option. None or Some(value)"""
+
+    def __init__(self, contained_type, value):
+        super().__init__(
+            f"core::option::Option<{contained_type}>",
+            EnumValue("None") if value is None else EnumTuple("Some", (value,)),
+        )
 
 
 def encode(data):

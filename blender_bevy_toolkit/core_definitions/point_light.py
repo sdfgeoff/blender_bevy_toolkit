@@ -5,6 +5,11 @@ from blender_bevy_toolkit.component_base import (
     ComponentBase,
 )
 
+from blender_bevy_toolkit.component_constructor import (
+    ComponentDefinition,
+    component_from_def,
+)
+
 
 import logging
 from blender_bevy_toolkit import jdict, utils
@@ -55,6 +60,7 @@ class PointLight(ComponentBase):
       },
     """
 
+    @staticmethod
     def encode(config, obj):
         assert PointLight.is_present(obj)
 
@@ -73,9 +79,11 @@ class PointLight(ComponentBase):
             },
         )
 
+    @staticmethod
     def can_add(obj):
         False
 
+    @staticmethod
     def is_present(obj):
         return obj.type == "LIGHT" and obj.data.type == "POINT"
 
@@ -94,43 +102,6 @@ class PointLight(ComponentBase):
         del bpy.types.Object.bevy_point_light_properties
 
 
-# Supporting classes
-@register_component
-class CubemapVisibleEntities(ComponentBase):
-    def encode(config, obj):
-        return ComponentRepresentation("bevy_pbr::bundle::CubemapVisibleEntities", {})
-
-    def is_present(obj):
-        return PointLight.is_present(obj)
-
-    def register():
-        pass
-
-    def unregister():
-        pass
-
-    def can_add(obj):
-        return False
-
-
-@register_component
-class CubemapFrusta(ComponentBase):
-    def encode(config, obj):
-        return ComponentRepresentation("bevy_render::primitives::CubemapFrusta", {})
-
-    def is_present(obj):
-        return PointLight.is_present(obj)
-
-    def register():
-        pass
-
-    def unregister():
-        pass
-
-    def can_add(obj):
-        return False
-
-
 class PointLightPanel(bpy.types.Panel):
     bl_idname = "OBJECT_PT_point_light_properties"
     bl_label = "BevyPointLight"
@@ -142,6 +113,7 @@ class PointLightPanel(bpy.types.Panel):
     def poll(cls, context):
         return PointLight.is_present(context.object)
 
+    @staticmethod
     def draw(self, context):
         row = self.layout.row()
         row.label(text="Provider of omnidirectional illumination")
@@ -151,9 +123,9 @@ class PointLightPanel(bpy.types.Panel):
         row = self.layout.row()
         row.prop(context.object.data, "energy")
         row = self.layout.row()
-        row.prop(context.object.data, "cutoff_distance")  # Bevy Range
+        row.prop(context.object.data, "cutoff_distance", text="Range")  # Bevy Range
         row = self.layout.row()
-        row.prop(context.object.data, "shadow_soft_size")  # Bevy Radius
+        row.prop(context.object.data, "shadow_soft_size", text="Radius")  # Bevy Radius
         row = self.layout.row()
         row.prop(context.object.data, "use_shadow", text="Enable Shadow")
 
@@ -168,3 +140,30 @@ class PointLightPanel(bpy.types.Panel):
 
 class PointLightProperties(bpy.types.PropertyGroup):
     shadow_normal_bias: bpy.props.FloatProperty(name="Shadow Normal Bias", default=0.0)
+
+
+register_component(
+    component_from_def(
+        ComponentDefinition(
+            name="CubemapVisibleEntities",
+            description="AUTO: Used by point light sources",
+            id="cubemap_visible_entities",
+            struct="bevy_pbr::bundle::CubemapVisibleEntities",
+            fields=[],
+        ),
+        is_present_function=PointLight.is_present,
+    )
+)
+
+register_component(
+    component_from_def(
+        ComponentDefinition(
+            name="CubemapFrusta",
+            description="AUTO: Used by point light sources",
+            id="cubemap_frustra",
+            struct="bevy_render::primitives::CubemapFrusta",
+            fields=[],
+        ),
+        is_present_function=PointLight.is_present,
+    )
+)
