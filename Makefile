@@ -52,7 +52,7 @@ ref-assets:
 diff-test: assets
 	# Check for changes against the files in ref-assets. This allows seeing what impact a PR has by forcing output changes to show up in the commit
 	# To update the reference assets run `make ref-assets`
-	diff --recursive assets ref-assets
+	diff --recursive assets/scenes ref-assets/scenes
 
 
 # Version of blender for testing
