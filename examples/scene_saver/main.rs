@@ -2,20 +2,19 @@
 use bevy::prelude::*;
 use bevy::reflect::TypeRegistry;
 use bevy_rapier3d::physics::{NoUserData, RapierPhysicsPlugin};
+use bevy_rapier3d::prelude::*;
 use blender_bevy_toolkit::BlendLoadPlugin;
+use std::env;
 
 fn save_scene(world: &mut World) {
     //Create a camera
-    // world.spawn().insert_bundle(PerspectiveCameraBundle {
-    //     transform: Transform::from_matrix(Mat4::from_rotation_translation(
-    //         Quat::from_xyzw(-0.3, -0.5, -0.3, 0.5).normalize(),
-    //         Vec3::new(-13.0, 20.0, 0.0) * 6.0,
-    //     )),
-    //     ..Default::default()
-    // });
-    world
-        .spawn()
-        .insert_bundle(OrthographicCameraBundle::new_3d());
+    world.spawn().insert_bundle(PerspectiveCameraBundle {
+        transform: Transform::from_matrix(Mat4::from_rotation_translation(
+            Quat::from_xyzw(-0.3, -0.5, -0.3, 0.5).normalize(),
+            Vec3::new(-13.0, 20.0, 0.0) * 6.0,
+        )),
+        ..Default::default()
+    });
 
     // Create a Light
     world.spawn().insert_bundle(PointLightBundle {
