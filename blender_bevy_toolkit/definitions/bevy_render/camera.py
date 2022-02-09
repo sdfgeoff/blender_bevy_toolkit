@@ -1,6 +1,5 @@
 import bpy
 from blender_bevy_toolkit.component_base import (
-    ComponentRepresentation,
     register_component,
     ComponentBase,
 )
@@ -11,7 +10,8 @@ from blender_bevy_toolkit.component_constructor import (
 
 
 import logging
-from blender_bevy_toolkit import jdict, utils
+from blender_bevy_toolkit.utils import jdict
+from blender_bevy_toolkit.rust_types import F32, Option, Enum, EnumValue, Map
 
 logger = logging.getLogger(__name__)
 
@@ -43,14 +43,14 @@ class Camera(ComponentBase):
             },
         },
         """
-        return ComponentRepresentation(
-            "bevy_render::camera::camera::Camera",
-            {
+        return Map(
+            type="bevy_render::camera::camera::Camera",
+            struct=Map(
                 # "projection_matrix", # Auto-computed from projection component (I hope)
-                "near": utils.F32(obj.data.clip_start),
-                "far": utils.F32(obj.data.clip_end),
-                "name": utils.Option("alloc::string::String", "camera_3d"),
-            },
+                near=F32(obj.data.clip_start),
+                far=F32(obj.data.clip_end),
+                name=Option("alloc::string::String", "camera_3d"),
+            ),
         )
 
     @staticmethod
@@ -126,13 +126,13 @@ class PerspectiveProjection(ComponentBase):
 
     @staticmethod
     def encode(config, obj):
-        return ComponentRepresentation(
-            "bevy_render::camera::projection::PerspectiveProjection",
-            {
-                "near": utils.F32(obj.data.clip_start),
-                "far": utils.F32(obj.data.clip_end),
-                "fov": utils.F32(obj.data.angle),
-            },
+        return Map(
+            type="bevy_render::camera::projection::PerspectiveProjection",
+            struct=Map(
+                near=F32(obj.data.clip_start),
+                far=F32(obj.data.clip_end),
+                fov=F32(obj.data.angle),
+            ),
         )
 
     @staticmethod
@@ -231,29 +231,29 @@ class OrthographicProjection(ComponentBase):
 
     @staticmethod
     def encode(config, obj):
-        return ComponentRepresentation(
-            "bevy_render::camera::projection::OrthographicProjection",
-            {
-                "left": utils.F32(-1.0),
-                "right": utils.F32(1.0),
-                "bottom": utils.F32(-1.0),
-                "top": utils.F32(1.0),
-                "near": utils.F32(obj.data.clip_start),
-                "far": utils.F32(obj.data.clip_end),
-                "window_origin": utils.Enum(
+        return Map(
+            type="bevy_render::camera::projection::OrthographicProjection",
+            struct=Map(
+                left=F32(-1.0),
+                right=F32(1.0),
+                bottom=F32(-1.0),
+                top=F32(1.0),
+                near=F32(obj.data.clip_start),
+                far=F32(obj.data.clip_end),
+                window_origin=Enum(
                     "bevy_render::camera::projection::WindowOrigin",
-                    utils.EnumValue("Center"),
+                    EnumValue("Center"),
                 ),
-                "scaling_mode": utils.Enum(
+                scaling_mode=Enum(
                     "bevy_render::camera::projection::ScalingMode",
-                    utils.EnumValue("FixedVertical"),
+                    EnumValue("FixedVertical"),
                 ),
-                "scale": utils.F32(obj.data.ortho_scale / 2.0),
-                "depth_calculation": utils.Enum(
+                scale=F32(obj.data.ortho_scale / 2.0),
+                depth_calculation=Enum(
                     "bevy_render::camera::camera::DepthCalculation",
-                    utils.EnumValue("Distance"),
+                    EnumValue("Distance"),
                 ),
-            },
+            ),
         )
 
     @staticmethod

@@ -1,16 +1,19 @@
 from blender_bevy_toolkit.component_base import (
-    ComponentRepresentation,
     register_component,
     ComponentBase,
 )
+from blender_bevy_toolkit import rust_types
 
 
 @register_component
 class Label(ComponentBase):
     def encode(config, obj):
-        """Returns a ComponentRepresentation representing this component"""
-        return ComponentRepresentation(
-            "blender_bevy_toolkit::blend_label::BlendLabel", {"name": obj.name}
+        """Returns a Component representing this component"""
+        return rust_types.Map(
+            type="blender_bevy_toolkit::blend_label::BlendLabel", 
+            struct=rust_types.Map(
+                name=rust_types.Str(obj.name)
+            )
         )
 
     def is_present(obj):

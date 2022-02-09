@@ -1,7 +1,7 @@
 """ Converts from blender objects into a scene description """
 import os
 import bpy
-from . import utils, component_base
+from . import utils, component_base, rust_types
 
 
 class Entity:
@@ -15,12 +15,15 @@ class Entity:
 
     def to_str(self):
         """Convert into a ... string!"""
-        return "(\n    entity: {},\n    components:{}\n)".format(
-            utils.encode(self.entity_id),
-            utils.iterable_to_string(
-                self.components, "[\n        ", "\n    ]", ",\n        "
-            ),
-        )
+        return rust_types.ron.encode(rust_types.ron.Struct(
+            entity=rust_types.Int(self.entity_id),
+            components=rust_types.List(*self.components)
+            # "(\n    entity: {},\n    components:{}\n)".format(
+            # rust_types.encode(self.entity_id),
+            # rust_types.iterable_to_string(
+            #     self.components, "[\n        ", "\n    ]", ",\n        "
+            # ),
+        ))
 
 
 def export_entity(config, obj, entity_id):
@@ -30,9 +33,6 @@ def export_entity(config, obj, entity_id):
     for component in component_base.COMPONENTS:
         if component.is_present(obj):
             new_component = component.encode(config, obj)
-            assert isinstance(
-                new_component, component_base.ComponentRepresentation
-            ), f"Component {component} did not return ComponentDefinition"
             entity.components.append(new_component)
 
     return entity
@@ -66,4 +66,4 @@ def export_all(config):
     entities = [export_entity(config, o, i) for i, o in enumerate(scene.objects)]
 
     with open(config["output_filepath"], "w", encoding="utf-8") as outfile:
-        outfile.write(utils.encode(entities))
+        outfile.write(rust_types.encode(entities))

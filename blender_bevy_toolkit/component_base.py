@@ -1,7 +1,7 @@
 """ Base functionality for all components and for finding/idetifying
 them """
 from abc import ABCMeta, abstractmethod
-from . import utils
+from . import rust_types
 
 
 class ComponentBase(metaclass=ABCMeta):
@@ -10,10 +10,10 @@ class ComponentBase(metaclass=ABCMeta):
     @staticmethod
     @abstractmethod
     def encode(config, obj):
-        """Returns a ComponentRepresentation representing this component"""
-        return ComponentRepresentation(
+        """Returns a Component representing this component"""
+        return rust_types.Component(
             "mycrate::mymodule::MyStruct",
-            [],
+            rust_types.Map(),
         )
 
     @staticmethod
@@ -45,24 +45,6 @@ class ComponentBase(metaclass=ABCMeta):
 
         You should probably call bpy.utils.unregister_class in here somewhere
         """
-
-
-class ComponentRepresentation:
-    """Utility class to assis with encoding a component struct.
-    All components need to identify their type external to their data,
-    and this class aids in that."""
-
-    def __init__(self, typ, struct, type_override="struct"):
-        self.typ = typ
-        self.struct = struct
-        self.type_override = type_override
-
-    def to_str(self):
-        """Converts into the string that is encoded into the scene"""
-        return utils.encode({"type": self.typ, self.type_override: self.struct})
-
-    def __repr__(self):
-        return f"{self.typ} {{...}}"
 
 
 COMPONENTS = []

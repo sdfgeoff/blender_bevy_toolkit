@@ -1,14 +1,14 @@
 from blender_bevy_toolkit.component_base import (
-    ComponentRepresentation,
     register_component,
     ComponentBase,
+    rust_types,
 )
 
 
 @register_component
 class Transform(ComponentBase):
     def encode(config, obj):
-        """Returns a ComponentRepresentation representing this component
+        """Returns a Component representing this component
 
         {
             "type": "bevy_transform::components::transform::Transform",
@@ -34,13 +34,13 @@ class Transform(ComponentBase):
             transform = obj.matrix_local
 
         position, rotation, scale = transform.decompose()
-        return ComponentRepresentation(
-            "bevy_transform::components::transform::Transform",
-            {
-                "translation": position,
-                "rotation": rotation,
-                "scale": scale,
-            },
+        return rust_types.Map(
+            type="bevy_transform::components::transform::Transform",
+            struct=rust_types.Map(
+                translation=rust_types.Vec3(position),
+                rotation=rust_types.Quat(rotation),
+                scale=rust_types.Vec3(scale),
+            ),
         )
 
     def is_present(obj):

@@ -1,8 +1,7 @@
 from blender_bevy_toolkit.component_base import (
-    ComponentRepresentation,
     ComponentBase,
     register_component,
-    utils,
+    rust_types,
 )
 import bpy
 import struct
@@ -62,20 +61,7 @@ COLLIDER_SHAPES = [
 @register_component
 class ColliderDescription(ComponentBase):
     def encode(config, obj):
-        """Returns a ComponentRepresentation representing this component"""
-
-        field_converters = [
-            ("friction", utils.F32),
-            ("restitution", utils.F32),
-            ("is_sensor", bool),
-            ("density", utils.F32),
-        ]
-
-        field_dict = {}
-        for field_name, converter in field_converters:
-            field_dict[field_name] = converter(
-                getattr(obj.rapier_collider_description, field_name)
-            )
+        """Returns a Component representing this component"""
 
         # The collider_data field is dependant on the collider_shape, so we have to do some
         # derivation here
@@ -83,17 +69,24 @@ class ColliderDescription(ComponentBase):
 
         encode_function = COLLIDER_SHAPES[collider_shape].encoder
         raw_data = encode_function(obj)
-
         data = list(raw_data)
 
+        field_dict = {}
         field_dict["collider_shape"] = collider_shape
-        field_dict["collider_shape_data"] = {
-            "type": "smallvec::SmallVec<[u8; {}]>".format(len(data)),
-            "list": data,
-        }
+        field_dict["collider_shape_data"] = rust_types.Map(
+            type="smallvec::SmallVec<[u8; {}]>".format(len(data)),
+            list=rust_types.List(*data),
+        )
 
-        return ComponentRepresentation(
-            "blender_bevy_toolkit::rapier_physics::ColliderDescription", field_dict
+        return rust_types.Map(
+            type="blender_bevy_toolkit::rapier_physics::ColliderDescription", 
+            struct=rust_types.Map(
+                friction=rust_types.F32(obj.rapier_collider_description.friction),
+                restitution=rust_types.F32(obj.rapier_collider_description.restitution),
+                is_sensor=rust_types.Bool(obj.rapier_collider_description.is_sensor),
+                density=rust_types.F32(obj.rapier_collider_description.density),
+                **field_dict
+            )
         )
 
     def is_present(obj):

@@ -21,9 +21,11 @@ import abc
 import bpy
 import mathutils
 
-from .utils import jdict, F64, F32
+from .utils import jdict
+from . import rust_types
 
-from .component_base import ComponentRepresentation, ComponentBase
+from .component_base import ComponentBase
+from . import rust_types
 
 logger = logging.getLogger(__name__)
 
@@ -51,14 +53,14 @@ TYPE_PROPERTIES = {
 # Map from JSON strings to a function/object that the encoder can process
 # to serialize the data
 TYPE_ENCODERS = {
-    "string": str,
-    "bool": bool,
-    "f64": F64,
-    "f32": F32,
-    "int": int,
-    "vec3": mathutils.Vector,
-    "vec2": mathutils.Vector,
-    "u8enum": int,
+    "string": rust_types.Str,
+    "bool": rust_types.Bool,
+    "f64": rust_types.F64,
+    "f32": rust_types.F32,
+    "int": rust_types.Int,
+    "vec3": rust_types.Vec3,
+    "vec2": rust_types.Vec2,
+    "u8enum": rust_types.Int,
 }
 
 
@@ -131,7 +133,7 @@ def insert_class_methods(
         getattr(obj, component_def.id).present = False
 
     def encode(_config, obj):
-        """Returns a ComponentRepresentation representing this component"""
+        """Returns a Component representing this component"""
         component_data = getattr(obj, component_def.id)
 
         def fix_types(field_name, value):
@@ -145,7 +147,10 @@ def insert_class_methods(
             for f in fields
             if f != "present"
         }
-        return ComponentRepresentation(component_def.struct, component_values)
+        return rust_types.Map(
+            type=component_def.struct, 
+            struct=rust_types.Map(**component_values)
+        )
 
     component_class.register = staticmethod(register)
     component_class.unregister = staticmethod(unregister)
