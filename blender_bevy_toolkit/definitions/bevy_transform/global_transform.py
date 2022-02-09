@@ -1,7 +1,7 @@
 from blender_bevy_toolkit.component_base import (
     register_component,
     ComponentBase,
-    rust_types
+    rust_types,
 )
 
 

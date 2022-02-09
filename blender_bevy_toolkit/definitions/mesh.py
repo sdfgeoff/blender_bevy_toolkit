@@ -43,10 +43,8 @@ class Mesh(ComponentBase):
         path = os.path.join("scenes", path)
 
         return rust_types.Map(
-            type="blender_bevy_toolkit::blend_mesh::BlendMeshLoader", 
-            struct=rust_types.Map(
-                path=rust_types.Str(path)
-            )
+            type="blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
+            struct=rust_types.Map(path=rust_types.Str(path)),
         )
 
     def is_present(obj):

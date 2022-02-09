@@ -11,9 +11,9 @@ class ComponentBase(metaclass=ABCMeta):
     @abstractmethod
     def encode(config, obj):
         """Returns a Component representing this component"""
-        return rust_types.Component(
-            "mycrate::mymodule::MyStruct",
-            rust_types.Map(),
+        return rust_types.Map(
+            type="mycrate::mymodule::MyStruct",
+            struct=rust_types.Map(),
         )
 
     @staticmethod

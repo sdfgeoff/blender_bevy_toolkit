@@ -19,13 +19,11 @@ import functools
 import abc
 
 import bpy
-import mathutils
 
 from .utils import jdict
 from . import rust_types
 
 from .component_base import ComponentBase
-from . import rust_types
 
 logger = logging.getLogger(__name__)
 
@@ -148,8 +146,7 @@ def insert_class_methods(
             if f != "present"
         }
         return rust_types.Map(
-            type=component_def.struct, 
-            struct=rust_types.Map(**component_values)
+            type=component_def.struct, struct=rust_types.Map(**component_values)
         )
 
     component_class.register = staticmethod(register)

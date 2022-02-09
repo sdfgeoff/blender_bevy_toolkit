@@ -79,14 +79,14 @@ class ColliderDescription(ComponentBase):
         )
 
         return rust_types.Map(
-            type="blender_bevy_toolkit::rapier_physics::ColliderDescription", 
+            type="blender_bevy_toolkit::rapier_physics::ColliderDescription",
             struct=rust_types.Map(
                 friction=rust_types.F32(obj.rapier_collider_description.friction),
                 restitution=rust_types.F32(obj.rapier_collider_description.restitution),
                 is_sensor=rust_types.Bool(obj.rapier_collider_description.is_sensor),
                 density=rust_types.F32(obj.rapier_collider_description.density),
                 **field_dict
-            )
+            ),
         )
 
     def is_present(obj):

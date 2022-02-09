@@ -1,7 +1,7 @@
 """ Converts from blender objects into a scene description """
 import os
 import bpy
-from . import utils, component_base, rust_types
+from . import component_base, rust_types
 
 
 class Entity:
@@ -15,15 +15,17 @@ class Entity:
 
     def to_str(self):
         """Convert into a ... string!"""
-        return rust_types.ron.encode(rust_types.ron.Struct(
-            entity=rust_types.Int(self.entity_id),
-            components=rust_types.List(*self.components)
-            # "(\n    entity: {},\n    components:{}\n)".format(
-            # rust_types.encode(self.entity_id),
-            # rust_types.iterable_to_string(
-            #     self.components, "[\n        ", "\n    ]", ",\n        "
-            # ),
-        ))
+        return rust_types.ron.encode(
+            rust_types.ron.Struct(
+                entity=rust_types.Int(self.entity_id),
+                components=rust_types.List(*self.components)
+                # "(\n    entity: {},\n    components:{}\n)".format(
+                # rust_types.encode(self.entity_id),
+                # rust_types.iterable_to_string(
+                #     self.components, "[\n        ", "\n    ]", ",\n        "
+                # ),
+            )
+        )
 
 
 def export_entity(config, obj, entity_id):

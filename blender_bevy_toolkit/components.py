@@ -46,7 +46,7 @@ def generate_component_list():
 
 def load_folder(folder):
     """Look for component defitions in a specific folder"""
-    for root, folders, files in os.walk(folder):
+    for root, _folders, files in os.walk(folder):
         for filename in files:
             filepath = os.path.join(root, filename)
             if filepath.endswith(".py"):
@@ -63,15 +63,11 @@ def load_python_component(full_path):
     different versions of python and possibly differnet OS's"""
     module_name = os.path.splitext(os.path.basename(full_path))[0]
 
-    logger.info(
-        jdict(event="load_python_component", path=full_path, state="start")
-    )
+    logger.info(jdict(event="load_python_component", path=full_path, state="start"))
 
     spec = importlib.util.spec_from_file_location(module_name, full_path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     sys.modules[module_name] = module
 
-    logger.info(
-        jdict(event="load_python_component", path=full_path, state="end")
-    )
+    logger.info(jdict(event="load_python_component", path=full_path, state="end"))

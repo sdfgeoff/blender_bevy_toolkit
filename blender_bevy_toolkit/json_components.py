@@ -76,7 +76,7 @@ def construct_component_classes(component_filepath):
 
 
 def load_file(full_path):
-    """ Load a component from a json file"""
+    """Load a component from a json file"""
     logger.info(jdict(event="load_json_component", folder=full_path))
     component_class = construct_component_classes(full_path)
     register_component(component_class)

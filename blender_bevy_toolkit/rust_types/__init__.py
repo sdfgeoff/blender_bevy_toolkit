@@ -16,16 +16,22 @@ def reflect(type_path, processor):
     return ReflectedType
 
 
-Quat = reflect("glam::quat::Quat", lambda quat: ron.Tuple(quat.x, quat.y, quat.z, quat.w))
+Quat = reflect(
+    "glam::quat::Quat", lambda quat: ron.Tuple(quat.x, quat.y, quat.z, quat.w)
+)
 Vec2 = reflect("glam::vec2::Vec2", lambda vec: ron.Tuple(vec.x, vec.y))
 Vec3 = reflect("glam::vec3::Vec3", lambda vec: ron.Tuple(vec.x, vec.y, vec.z))
 Vec4 = reflect("glam::vec4::Vec4", lambda vec: ron.Tuple(vec.x, vec.y, vec.z, vec.w))
 F32 = reflect("f32", lambda f: ron.Float(f))
 F64 = reflect("f64", lambda f: ron.Float(f))
 Bool = reflect("bool", lambda f: ron.Bool(f))
-RgbaLinear = reflect("bevy_render::color::Color", lambda col: ron.EnumValue("RgbaLinear", ron.Struct(red=col.r, green=col.g, blue=col.b, alpha=1.0)))
+RgbaLinear = reflect(
+    "bevy_render::color::Color",
+    lambda col: ron.EnumValue(
+        "RgbaLinear", ron.Struct(red=col.r, green=col.g, blue=col.b, alpha=1.0)
+    ),
+)
 Entity = reflect("bevy_ecs::entity::Entity", lambda x: x)
-
 
 
 class Enum:
@@ -34,10 +40,12 @@ class Enum:
         self.value = value
 
     def to_str(self):
-        return ron.encode(ron.Map(
-            type=self.contained_type,
-            value=self.value,
-        ))
+        return ron.encode(
+            ron.Map(
+                type=self.contained_type,
+                value=self.value,
+            )
+        )
 
 
 class Option:
@@ -48,16 +56,19 @@ class Option:
         self.value = value
 
     def to_str(self):
-        return ron.encode(ron.Map(
-            type=f"core::option::Option<{self.contained_type}>",
-            value=ron.EnumValue("None") if self.value is None else ron.EnumValue("Some", ron.Tuple(self.value)),
-        ))
+        return ron.encode(
+            ron.Map(
+                type=f"core::option::Option<{self.contained_type}>",
+                value=ron.EnumValue("None")
+                if self.value is None
+                else ron.EnumValue("Some", ron.Tuple(self.value)),
+            )
+        )
 
 
 def iterable_to_string(data, start="[", end="]", joiner=","):
     """recursively encodes an array as a string by calling `encode`"""
     return start + joiner.join(ron.encode(d) for d in data) + end
-
 
 
 def dq_string(data):
@@ -69,9 +80,6 @@ def dq_string(data):
 def bool_to_str(value):
     """represents a boolean as a string true and false"""
     return str(value).lower()
-
-
-
 
 
 def encode(data):

@@ -10,10 +10,8 @@ class Label(ComponentBase):
     def encode(config, obj):
         """Returns a Component representing this component"""
         return rust_types.Map(
-            type="blender_bevy_toolkit::blend_label::BlendLabel", 
-            struct=rust_types.Map(
-                name=rust_types.Str(obj.name)
-            )
+            type="blender_bevy_toolkit::blend_label::BlendLabel",
+            struct=rust_types.Map(name=rust_types.Str(obj.name)),
         )
 
     def is_present(obj):
