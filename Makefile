@@ -71,5 +71,9 @@ diff-test: assets
 	cd .blender; tar -xf blender-3.0.0-linux-x64.tar.xz
 	cd .blender; touch blender-3.0.0-linux-x64/blender 
 	cd .blender; ln -s blender-3.0.0-linux-x64/blender blender 
+	
+	$(BLENDER) -b --python ./scripts/install_test_deps_in_blender.py
+
+.PHONY: .blender/blender
 
 blender: .blender/blender
