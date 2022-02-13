@@ -37,12 +37,11 @@ pub fn blend_mesh_loader(
             material,
             ..Default::default()
         };
+        
 
         commands.entity(entity).insert_bundle((
             bundle.mesh,
             bundle.material,
-            bundle.visibility,
-            bundle.computed_visibility,
         ));
     }
 }
