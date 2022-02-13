@@ -21,7 +21,7 @@ class Mesh(ComponentBase):
         into a scene file"""
         assert Mesh.is_present(obj)
 
-        mesh_data = Mesh.serialize_mesh(obj)
+        mesh_data = serialize_mesh(obj)
 
         hash = hashlib.md5()
         hash.update(mesh_data)
@@ -51,82 +51,6 @@ class Mesh(ComponentBase):
         """Returns true if the supplied object has this component"""
         return obj.type == "MESH"
 
-    # INTERNAL FUNCTIONS
-
-    def serialize_mesh(obj):
-        depsgraph = bpy.context.view_layer.depsgraph
-        depsgraph.update()
-
-        eval_object = obj.evaluated_get(depsgraph)
-        mesh = eval_object.to_mesh(
-            # preserve_all_data_layers=preserve_vertex_groups,
-            depsgraph=depsgraph
-        )
-
-        mesh.calc_loop_triangles()
-        mesh.calc_normals_split()
-
-        verts = []
-        normals = []
-        indices = []
-        uv0 = []
-
-        dedup_data_lookup = {}
-
-        for loop_tri in mesh.loop_triangles:
-            triangle_indices = []
-
-            for loop_index in loop_tri.loops:
-                loop = mesh.loops[loop_index]
-
-                vert = mesh.vertices[loop.vertex_index]
-                position = tuple(vert.co)
-                normal = tuple(loop.normal)
-
-                if mesh.uv_layers:
-
-                    uv_raw = mesh.uv_layers[0].data[loop_index].uv
-                    uv = (uv_raw[0], uv_raw[1])
-                else:
-                    uv = (0.0, 0.0)
-
-                dedup = (position, normal, uv)
-                if dedup not in dedup_data_lookup:
-                    index = len(verts)
-                    verts.append(position)
-                    normals.append(normal)
-                    uv0.append(uv)
-                    dedup_data_lookup[dedup] = index
-                else:
-                    index = dedup_data_lookup[dedup]
-
-                triangle_indices.append(index)
-            indices.append(tuple(triangle_indices))
-
-        eval_object.to_mesh_clear()
-
-        # Output our file
-        # We start off with a header containing data about the file
-        out_data = b""
-        out_data += struct.pack("H", len(verts))
-        out_data += struct.pack("H", len(indices))
-
-        # We don't need len(normals) because:
-        assert len(normals) == len(verts)
-        assert len(uv0) == len(verts)
-
-        # Now we can pack all our data:
-        for vert in verts:
-            out_data += struct.pack("fff", *vert)
-        for normal in normals:
-            out_data += struct.pack("fff", *normal)
-        for uv in uv0:
-            out_data += struct.pack("ff", *uv)
-        for index in indices:
-            out_data += struct.pack("III", *index)
-
-        return out_data
-
     def can_add(obj):
         return False
 
@@ -137,3 +61,78 @@ class Mesh(ComponentBase):
     @staticmethod
     def unregister():
         pass
+
+
+def serialize_mesh(obj):
+    depsgraph = bpy.context.view_layer.depsgraph
+    depsgraph.update()
+
+    eval_object = obj.evaluated_get(depsgraph)
+    mesh = eval_object.to_mesh(
+        # preserve_all_data_layers=preserve_vertex_groups,
+        depsgraph=depsgraph
+    )
+
+    mesh.calc_loop_triangles()
+    mesh.calc_normals_split()
+
+    verts = []
+    normals = []
+    indices = []
+    uv0 = []
+
+    dedup_data_lookup = {}
+
+    for loop_tri in mesh.loop_triangles:
+        triangle_indices = []
+
+        for loop_index in loop_tri.loops:
+            loop = mesh.loops[loop_index]
+
+            vert = mesh.vertices[loop.vertex_index]
+            position = tuple(vert.co)
+            normal = tuple(loop.normal)
+
+            if mesh.uv_layers:
+
+                uv_raw = mesh.uv_layers[0].data[loop_index].uv
+                uv = (uv_raw[0], uv_raw[1])
+            else:
+                uv = (0.0, 0.0)
+
+            dedup = (position, normal, uv)
+            if dedup not in dedup_data_lookup:
+                index = len(verts)
+                verts.append(position)
+                normals.append(normal)
+                uv0.append(uv)
+                dedup_data_lookup[dedup] = index
+            else:
+                index = dedup_data_lookup[dedup]
+
+            triangle_indices.append(index)
+        indices.append(tuple(triangle_indices))
+
+    eval_object.to_mesh_clear()
+
+    # Output our file
+    # We start off with a header containing data about the file
+    out_data = b""
+    out_data += struct.pack("H", len(verts))
+    out_data += struct.pack("H", len(indices))
+
+    # We don't need len(normals) because:
+    assert len(normals) == len(verts)
+    assert len(uv0) == len(verts)
+
+    # Now we can pack all our data:
+    for vert in verts:
+        out_data += struct.pack("fff", *vert)
+    for normal in normals:
+        out_data += struct.pack("fff", *normal)
+    for uv in uv0:
+        out_data += struct.pack("ff", *uv)
+    for index in indices:
+        out_data += struct.pack("III", *index)
+
+    return out_data

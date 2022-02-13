@@ -53,6 +53,12 @@ def export_all(config):
     if not os.path.exists(config["mesh_output_folder"]):
         os.makedirs(config["mesh_output_folder"])
 
+    config["material_output_folder"] = os.path.join(
+        output_folder, config["material_output_folder"]
+    )
+    if not os.path.exists(config["material_output_folder"]):
+        os.makedirs(config["material_output_folder"])
+
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
