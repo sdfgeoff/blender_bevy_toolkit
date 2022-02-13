@@ -10,8 +10,10 @@ def reflect(type_path, processor):
         def __init__(self, value):
             self.value = value
 
-        def to_str(self):
-            return ron.encode(ron.Map(type=type_path, value=processor(self.value)))
+        def to_str(self, indent):
+            return ron.encode(
+                ron.Map(type=type_path, value=processor(self.value)), indent
+            )
 
     return ReflectedType
 
@@ -39,12 +41,13 @@ class Enum:
         self.contained_type = contained_type
         self.value = value
 
-    def to_str(self):
+    def to_str(self, indent):
         return ron.encode(
             ron.Map(
                 type=self.contained_type,
                 value=self.value,
-            )
+            ),
+            indent,
         )
 
 
@@ -55,43 +58,13 @@ class Option:
         self.contained_type = contained_type
         self.value = value
 
-    def to_str(self):
+    def to_str(self, indent):
         return ron.encode(
             ron.Map(
                 type=f"core::option::Option<{self.contained_type}>",
                 value=ron.EnumValue("None")
                 if self.value is None
                 else ron.EnumValue("Some", ron.Tuple(self.value)),
-            )
+            ),
+            indent,
         )
-
-
-def iterable_to_string(data, start="[", end="]", joiner=","):
-    """recursively encodes an array as a string by calling `encode`"""
-    return start + joiner.join(ron.encode(d) for d in data) + end
-
-
-def dq_string(data):
-    """repr a string with double quotes. This is probably a fragile
-    hack, so if it breaks, please do something better!"""
-    return '"' + repr("'" + data)[2:]
-
-
-def bool_to_str(value):
-    """represents a boolean as a string true and false"""
-    return str(value).lower()
-
-
-def encode(data):
-    """The "base" encoder. Call this with some data and hopefully it will be encoded
-    as a string"""
-    if hasattr(data, "to_str"):
-        return data.to_str()
-    return ENCODE_MAP[type(data)](data)
-
-
-ENCODE_MAP = {
-    str: dq_string,
-    int: str,
-    list: lambda x: iterable_to_string(x, "[", "]", ","),
-}
