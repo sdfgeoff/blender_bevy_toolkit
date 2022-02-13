@@ -28,7 +28,7 @@ required=True)
         import blender_bevy_toolkit
         print("WARNING: Plugin is installed in blender, using installed version for export")
     except ImportError:
-        sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+        sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
         import blender_bevy_toolkit
         blender_bevy_toolkit.register()
         blender_bevy_toolkit.load_handler(None)
