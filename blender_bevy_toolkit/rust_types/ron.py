@@ -1,4 +1,4 @@
-""" Ron is a fairly nice format for encoding data in rust. 
+""" Ron is a fairly nice format for encoding data in rust.
 For more information, see:
 https://github.com/ron-rs/ron
 
@@ -18,6 +18,7 @@ INDENT_CHAR = "\t"
 
 
 def ind(indent_level):
+    """Create indent string"""
     if INDENT_SIZE == 0:
         return ""
     return "\n" + INDENT_CHAR * INDENT_SIZE * indent_level
