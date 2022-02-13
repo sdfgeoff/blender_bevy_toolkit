@@ -263,6 +263,15 @@
 		entity:2,
 		components:[
 			{
+				"type":"bevy_render::view::visibility::ComputedVisibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
+			},
+			{
 				"type":"bevy_transform::components::global_transform::GlobalTransform",
 				"struct":{
 					"translation":{
@@ -333,12 +342,30 @@
 						)
 					}
 				}
+			},
+			{
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
 			}
 		]
 	),
 	(
 		entity:3,
 		components:[
+			{
+				"type":"bevy_render::view::visibility::ComputedVisibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
+			},
 			{
 				"type":"bevy_transform::components::global_transform::GlobalTransform",
 				"struct":{
@@ -410,12 +437,30 @@
 						)
 					}
 				}
+			},
+			{
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
 			}
 		]
 	),
 	(
 		entity:4,
 		components:[
+			{
+				"type":"bevy_render::view::visibility::ComputedVisibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
+			},
 			{
 				"type":"bevy_transform::components::global_transform::GlobalTransform",
 				"struct":{
@@ -487,12 +532,30 @@
 						)
 					}
 				}
+			},
+			{
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
 			}
 		]
 	),
 	(
 		entity:5,
 		components:[
+			{
+				"type":"bevy_render::view::visibility::ComputedVisibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
+			},
 			{
 				"type":"bevy_transform::components::global_transform::GlobalTransform",
 				"struct":{
@@ -564,12 +627,30 @@
 						)
 					}
 				}
+			},
+			{
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
 			}
 		]
 	),
 	(
 		entity:6,
 		components:[
+			{
+				"type":"bevy_render::view::visibility::ComputedVisibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
+			},
 			{
 				"type":"bevy_transform::components::global_transform::GlobalTransform",
 				"struct":{
@@ -641,12 +722,30 @@
 						)
 					}
 				}
+			},
+			{
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
 			}
 		]
 	),
 	(
 		entity:7,
 		components:[
+			{
+				"type":"bevy_render::view::visibility::ComputedVisibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
+			},
 			{
 				"type":"bevy_transform::components::global_transform::GlobalTransform",
 				"struct":{
@@ -716,6 +815,15 @@
 							1.0,
 							1.0
 						)
+					}
+				}
+			},
+			{
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
 					}
 				}
 			}
