@@ -7,11 +7,11 @@ BLENDER = .blender/blender
 
 assets:
 	rm -r assets/scenes || true
-	$(BLENDER) -b test_scenes/Cube.blend --python export.py -- --output-file="assets/scenes/Cube.scn" --log-level=DEBUG
-	$(BLENDER) -b test_scenes/PhysicsTest.blend --python export.py -- --output-file="assets/scenes/PhysicsTest.scn" --log-level=DEBUG
-	$(BLENDER) -b test_scenes/Heirarchy.blend --python export.py -- --output-file="assets/scenes/Heirarchy.scn" --log-level=DEBUG
-	$(BLENDER) -b test_scenes/Lights.blend --python export.py -- --output-file="assets/scenes/Lights.scn" --log-level=DEBUG
-	$(BLENDER) -b test_scenes/Camera.blend --python export.py -- --output-file="assets/scenes/Camera.scn" --log-level=DEBUG
+	$(BLENDER) -b test_scenes/Cube.blend --python ./scripts/export.py --python-exit-code=1  -- --output-file="assets/scenes/Cube.scn" --log-level=DEBUG
+	$(BLENDER) -b test_scenes/PhysicsTest.blend --python ./scripts/export.py --python-exit-code=1   -- --output-file="assets/scenes/PhysicsTest.scn" --log-level=DEBUG
+	$(BLENDER) -b test_scenes/Heirarchy.blend --python ./scripts/export.py --python-exit-code=1   -- --output-file="assets/scenes/Heirarchy.scn" --log-level=DEBUG
+	$(BLENDER) -b test_scenes/Lights.blend --python ./scripts/export.py --python-exit-code=1   -- --output-file="assets/scenes/Lights.scn" --log-level=DEBUG
+	$(BLENDER) -b test_scenes/Camera.blend --python ./scripts/export.py --python-exit-code=1   -- --output-file="assets/scenes/Camera.scn" --log-level=DEBUG
 
 run:
 	cargo run --example scenes
@@ -26,13 +26,13 @@ fmt-test:
 	python -m black --diff --check blender_bevy_toolkit
 	
 	# Linting python requires the blender environment
-	$(BLENDER) -b --python-expr "from pylint.lint import Run; Run(['blender_bevy_toolkit'])"
+	$(BLENDER) -b --python ./scripts/pylint_in_blender.py --python-exit-code=1
 	
 	# Dead code check (python)
 	python -m vulture --min-confidence 100 blender_bevy_toolkit
 
 test:
-	$(BLENDER) -b --python-expr "import pytest; pytest.main([])"
+	$(BLENDER) -b --python ./scripts/pytest_in_blender  --python-exit-code=1
 	cargo test
 	
 	
@@ -71,5 +71,9 @@ diff-test: assets
 	cd .blender; tar -xf blender-3.0.0-linux-x64.tar.xz
 	cd .blender; touch blender-3.0.0-linux-x64/blender 
 	cd .blender; ln -s blender-3.0.0-linux-x64/blender blender 
+	
+	$(BLENDER) -b --python ./scripts/install_test_deps_in_blender.py
+
+.PHONY: .blender/blender
 
 blender: .blender/blender
