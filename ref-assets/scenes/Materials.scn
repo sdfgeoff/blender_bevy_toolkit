@@ -3,44 +3,12 @@
 		entity:0,
 		components:[
 			{
-				"type":"blender_bevy_toolkit::rapier_physics::ColliderDescription",
-				"struct":{
-					"friction":{
-						"type":"f32",
-						"value":0.5
-					},
-					"restitution":{
-						"type":"f32",
-						"value":0.5
-					},
-					"is_sensor":{
-						"type":"bool",
-						"value":false
-					},
-					"density":{
-						"type":"f32",
-						"value":0.5
-					},
-					"collider_shape":0,
-					"collider_shape_data":{
-						"type":"smallvec::SmallVec<[u8; 4]>",
-						"list":[
-							0,
-							0,
-							128,
-							63
-						]
-					}
-				}
+				"type":"bevy_render::primitives::CubemapFrusta",
+				"struct":{}
 			},
 			{
-				"type":"bevy_render::view::visibility::ComputedVisibility",
-				"struct":{
-					"is_visible":{
-						"type":"bool",
-						"value":true
-					}
-				}
+				"type":"bevy_pbr::bundle::CubemapVisibleEntities",
+				"struct":{}
 			},
 			{
 				"type":"bevy_transform::components::global_transform::GlobalTransform",
@@ -48,25 +16,25 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							0.0,
-							0.0,
-							0.0
+							4.076245307922363,
+							-9.994545936584473,
+							6.903861999511719
 						)
 					},
 					"rotation":{
 						"type":"glam::quat::Quat",
 						"value":(
-							0.0,
-							0.0,
-							0.0,
-							1.0
+							0.16907575726509094,
+							0.27217134833335876,
+							0.7558802962303162,
+							0.570947527885437
 						)
 					},
 					"scale":{
 						"type":"glam::vec3::Vec3",
 						"value":(
 							1.0,
-							1.0,
+							0.9999999403953552,
 							1.0
 						)
 					}
@@ -75,40 +43,44 @@
 			{
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
-					"name":"Cube"
+					"name":"Light"
 				}
 			},
 			{
-				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"type":"bevy_pbr::light::PointLight",
 				"struct":{
-					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
-				}
-			},
-			{
-				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
-				"struct":{
-					"path":"scenes/meshes/90dcf6196a36e977372fbdb99fe5e442.mesh"
-				}
-			},
-			{
-				"type":"blender_bevy_toolkit::rapier_physics::RigidBodyDescription",
-				"struct":{
-					"body_status":0,
-					"damping_angular":{
+					"color":{
+						"type":"bevy_render::color::Color",
+						"value":RgbaLinear(
+							red:1.0,
+							green:0.9430527091026306,
+							blue:0.800000011920929,
+							alpha:1.0
+						)
+					},
+					"intensity":{
+						"type":"f32",
+						"value":2000.0
+					},
+					"range":{
+						"type":"f32",
+						"value":40.0
+					},
+					"radius":{
+						"type":"f32",
+						"value":0.10000000149011612
+					},
+					"shadows_enabled":{
+						"type":"bool",
+						"value":true
+					},
+					"shadow_depth_bias":{
+						"type":"f32",
+						"value":1.0
+					},
+					"shadow_normal_bias":{
 						"type":"f32",
 						"value":0.0
-					},
-					"damping_linear":{
-						"type":"f32",
-						"value":0.0
-					},
-					"ccd_enable":{
-						"type":"bool",
-						"value":false
-					},
-					"sleep_allow":{
-						"type":"bool",
-						"value":false
 					}
 				}
 			},
@@ -118,36 +90,27 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							0.0,
-							0.0,
-							0.0
+							4.076245307922363,
+							-9.994545936584473,
+							6.903861999511719
 						)
 					},
 					"rotation":{
 						"type":"glam::quat::Quat",
 						"value":(
-							0.0,
-							0.0,
-							0.0,
-							1.0
+							0.16907575726509094,
+							0.27217134833335876,
+							0.7558802962303162,
+							0.570947527885437
 						)
 					},
 					"scale":{
 						"type":"glam::vec3::Vec3",
 						"value":(
 							1.0,
-							1.0,
+							0.9999999403953552,
 							1.0
 						)
-					}
-				}
-			},
-			{
-				"type":"bevy_render::view::visibility::Visibility",
-				"struct":{
-					"is_visible":{
-						"type":"bool",
-						"value":true
 					}
 				}
 			}
@@ -157,48 +120,27 @@
 		entity:1,
 		components:[
 			{
-				"type":"blender_bevy_toolkit::rapier_physics::ColliderDescription",
+				"type":"bevy_render::camera::camera::Camera",
 				"struct":{
-					"friction":{
+					"near":{
 						"type":"f32",
-						"value":0.5
+						"value":0.10000000149011612
 					},
-					"restitution":{
+					"far":{
 						"type":"f32",
-						"value":0.5
+						"value":100.0
 					},
-					"is_sensor":{
-						"type":"bool",
-						"value":false
-					},
-					"density":{
-						"type":"f32",
-						"value":0.5
-					},
-					"collider_shape":1,
-					"collider_shape_data":{
-						"type":"smallvec::SmallVec<[u8; 8]>",
-						"list":[
-							0,
-							0,
-							32,
-							64,
-							2,
-							0,
-							128,
-							63
-						]
+					"name":{
+						"type":"core::option::Option<alloc::string::String>",
+						"value":Some(
+							"camera_3d"
+						)
 					}
 				}
 			},
 			{
-				"type":"bevy_render::view::visibility::ComputedVisibility",
-				"struct":{
-					"is_visible":{
-						"type":"bool",
-						"value":true
-					}
-				}
+				"type":"bevy_render::primitives::Frustum",
+				"struct":{}
 			},
 			{
 				"type":"bevy_transform::components::global_transform::GlobalTransform",
@@ -206,18 +148,18 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							-3.0,
-							-14.0,
-							14.0
+							0.0,
+							-25.0,
+							10.0
 						)
 					},
 					"rotation":{
 						"type":"glam::quat::Quat",
 						"value":(
-							0.0,
-							0.0,
-							0.0,
-							1.0
+							0.5735764503479004,
+							1.2735956954669118e-16,
+							4.039204493003147e-24,
+							0.8191521763801575
 						)
 					},
 					"scale":{
@@ -233,40 +175,23 @@
 			{
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
-					"name":"Sphere"
+					"name":"Camera"
 				}
 			},
 			{
-				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"type":"bevy_render::camera::projection::PerspectiveProjection",
 				"struct":{
-					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
-				}
-			},
-			{
-				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
-				"struct":{
-					"path":"scenes/meshes/f506f52d6a0eddb06bdc568d9c4b898f.mesh"
-				}
-			},
-			{
-				"type":"blender_bevy_toolkit::rapier_physics::RigidBodyDescription",
-				"struct":{
-					"body_status":0,
-					"damping_angular":{
+					"near":{
 						"type":"f32",
-						"value":0.0
+						"value":0.10000000149011612
 					},
-					"damping_linear":{
+					"far":{
 						"type":"f32",
-						"value":0.0
+						"value":100.0
 					},
-					"ccd_enable":{
-						"type":"bool",
-						"value":false
-					},
-					"sleep_allow":{
-						"type":"bool",
-						"value":false
+					"fov":{
+						"type":"f32",
+						"value":0.4710899591445923
 					}
 				}
 			},
@@ -276,18 +201,18 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							-3.0,
-							-14.0,
-							14.0
+							0.0,
+							-25.0,
+							10.0
 						)
 					},
 					"rotation":{
 						"type":"glam::quat::Quat",
 						"value":(
-							0.0,
-							0.0,
-							0.0,
-							1.0
+							0.5735764503479004,
+							1.2735956954669118e-16,
+							4.039204493003147e-24,
+							0.8191521763801575
 						)
 					},
 					"scale":{
@@ -301,13 +226,8 @@
 				}
 			},
 			{
-				"type":"bevy_render::view::visibility::Visibility",
-				"struct":{
-					"is_visible":{
-						"type":"bool",
-						"value":true
-					}
-				}
+				"type":"bevy_render::view::visibility::VisibleEntities",
+				"struct":{}
 			}
 		]
 	),
@@ -315,41 +235,6 @@
 		entity:2,
 		components:[
 			{
-				"type":"blender_bevy_toolkit::rapier_physics::ColliderDescription",
-				"struct":{
-					"friction":{
-						"type":"f32",
-						"value":0.5
-					},
-					"restitution":{
-						"type":"f32",
-						"value":0.5
-					},
-					"is_sensor":{
-						"type":"bool",
-						"value":false
-					},
-					"density":{
-						"type":"f32",
-						"value":0.5
-					},
-					"collider_shape":1,
-					"collider_shape_data":{
-						"type":"smallvec::SmallVec<[u8; 8]>",
-						"list":[
-							0,
-							0,
-							32,
-							64,
-							2,
-							0,
-							128,
-							63
-						]
-					}
-				}
-			},
-			{
 				"type":"bevy_render::view::visibility::ComputedVisibility",
 				"struct":{
 					"is_visible":{
@@ -364,18 +249,18 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							-2.200000047683716,
-							-11.899999618530273,
-							16.0
+							0.0,
+							0.0,
+							0.0
 						)
 					},
 					"rotation":{
 						"type":"glam::quat::Quat",
 						"value":(
-							-0.5735764503479004,
-							-1.2735955631180138e-16,
 							0.0,
-							0.8191521763801575
+							0.0,
+							-0.4617486596107483,
+							0.887010931968689
 						)
 					},
 					"scale":{
@@ -391,41 +276,19 @@
 			{
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
-					"name":"Sphere.001"
+					"name":"Icosphere"
 				}
 			},
 			{
 				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
 				"struct":{
-					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+					"path":"scenes/materials/c895160e2a111ccb32b9828d2ce3e595.material"
 				}
 			},
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/f506f52d6a0eddb06bdc568d9c4b898f.mesh"
-				}
-			},
-			{
-				"type":"blender_bevy_toolkit::rapier_physics::RigidBodyDescription",
-				"struct":{
-					"body_status":0,
-					"damping_angular":{
-						"type":"f32",
-						"value":0.0
-					},
-					"damping_linear":{
-						"type":"f32",
-						"value":0.0
-					},
-					"ccd_enable":{
-						"type":"bool",
-						"value":false
-					},
-					"sleep_allow":{
-						"type":"bool",
-						"value":false
-					}
+					"path":"scenes/meshes/d66928c362c5e5b875e5addf87a4f45c.mesh"
 				}
 			},
 			{
@@ -434,18 +297,18 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							-2.200000047683716,
-							-11.899999618530273,
-							16.0
+							0.0,
+							0.0,
+							0.0
 						)
 					},
 					"rotation":{
 						"type":"glam::quat::Quat",
 						"value":(
-							-0.5735764503479004,
-							-1.2735955631180138e-16,
 							0.0,
-							0.8191521763801575
+							0.0,
+							-0.4617486596107483,
+							0.887010931968689
 						)
 					},
 					"scale":{
@@ -473,41 +336,6 @@
 		entity:3,
 		components:[
 			{
-				"type":"blender_bevy_toolkit::rapier_physics::ColliderDescription",
-				"struct":{
-					"friction":{
-						"type":"f32",
-						"value":0.5
-					},
-					"restitution":{
-						"type":"f32",
-						"value":0.5
-					},
-					"is_sensor":{
-						"type":"bool",
-						"value":false
-					},
-					"density":{
-						"type":"f32",
-						"value":0.5
-					},
-					"collider_shape":1,
-					"collider_shape_data":{
-						"type":"smallvec::SmallVec<[u8; 8]>",
-						"list":[
-							0,
-							0,
-							240,
-							64,
-							2,
-							0,
-							64,
-							64
-						]
-					}
-				}
-			},
-			{
 				"type":"bevy_render::view::visibility::ComputedVisibility",
 				"struct":{
 					"is_visible":{
@@ -522,24 +350,24 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							-5.555000305175781,
-							7.26676607131958,
-							9.390933990478516
+							-3.0,
+							0.0,
+							0.0
 						)
 					},
 					"rotation":{
 						"type":"glam::quat::Quat",
 						"value":(
-							-0.2837282717227936,
-							0.24147158861160278,
-							-0.08738618344068527,
-							0.9238795638084412
+							0.0,
+							0.0,
+							-0.4617486596107483,
+							0.887010931968689
 						)
 					},
 					"scale":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							0.9999999403953552,
+							1.0,
 							1.0,
 							1.0
 						)
@@ -549,41 +377,19 @@
 			{
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
-					"name":"Sphere.002"
+					"name":"Icosphere.001"
 				}
 			},
 			{
 				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
 				"struct":{
-					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+					"path":"scenes/materials/504fe9123d693e3107fd28f4a5da95cc.material"
 				}
 			},
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/17afe186fd43618f304e2a83adec7765.mesh"
-				}
-			},
-			{
-				"type":"blender_bevy_toolkit::rapier_physics::RigidBodyDescription",
-				"struct":{
-					"body_status":0,
-					"damping_angular":{
-						"type":"f32",
-						"value":0.0
-					},
-					"damping_linear":{
-						"type":"f32",
-						"value":0.0
-					},
-					"ccd_enable":{
-						"type":"bool",
-						"value":false
-					},
-					"sleep_allow":{
-						"type":"bool",
-						"value":false
-					}
+					"path":"scenes/meshes/d66928c362c5e5b875e5addf87a4f45c.mesh"
 				}
 			},
 			{
@@ -592,24 +398,24 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							-5.555000305175781,
-							7.26676607131958,
-							9.390933990478516
+							-3.0,
+							0.0,
+							0.0
 						)
 					},
 					"rotation":{
 						"type":"glam::quat::Quat",
 						"value":(
-							-0.2837282717227936,
-							0.24147158861160278,
-							-0.08738618344068527,
-							0.9238795638084412
+							0.0,
+							0.0,
+							-0.4617486596107483,
+							0.887010931968689
 						)
 					},
 					"scale":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							0.9999999403953552,
+							1.0,
 							1.0,
 							1.0
 						)
@@ -631,37 +437,6 @@
 		entity:4,
 		components:[
 			{
-				"type":"blender_bevy_toolkit::rapier_physics::ColliderDescription",
-				"struct":{
-					"friction":{
-						"type":"f32",
-						"value":0.5
-					},
-					"restitution":{
-						"type":"f32",
-						"value":0.5
-					},
-					"is_sensor":{
-						"type":"bool",
-						"value":false
-					},
-					"density":{
-						"type":"f32",
-						"value":0.5
-					},
-					"collider_shape":0,
-					"collider_shape_data":{
-						"type":"smallvec::SmallVec<[u8; 4]>",
-						"list":[
-							0,
-							0,
-							64,
-							64
-						]
-					}
-				}
-			},
-			{
 				"type":"bevy_render::view::visibility::ComputedVisibility",
 				"struct":{
 					"is_visible":{
@@ -676,9 +451,9 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							10.0,
-							4.0,
-							11.0
+							0.0,
+							-5.0,
+							0.0
 						)
 					},
 					"rotation":{
@@ -686,8 +461,8 @@
 						"value":(
 							0.0,
 							0.0,
-							0.0,
-							1.0
+							-0.4617486596107483,
+							0.887010931968689
 						)
 					},
 					"scale":{
@@ -703,41 +478,19 @@
 			{
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
-					"name":"Icosphere"
+					"name":"Icosphere.002"
 				}
 			},
 			{
 				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
 				"struct":{
-					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+					"path":"scenes/materials/6ff27002090c0281ee9014128e9dc357.material"
 				}
 			},
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/aa2991b2542f12efdaa2f05ccf5b0334.mesh"
-				}
-			},
-			{
-				"type":"blender_bevy_toolkit::rapier_physics::RigidBodyDescription",
-				"struct":{
-					"body_status":0,
-					"damping_angular":{
-						"type":"f32",
-						"value":0.0
-					},
-					"damping_linear":{
-						"type":"f32",
-						"value":0.0
-					},
-					"ccd_enable":{
-						"type":"bool",
-						"value":false
-					},
-					"sleep_allow":{
-						"type":"bool",
-						"value":false
-					}
+					"path":"scenes/meshes/d66928c362c5e5b875e5addf87a4f45c.mesh"
 				}
 			},
 			{
@@ -746,9 +499,9 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							10.0,
-							4.0,
-							11.0
+							0.0,
+							-5.0,
+							0.0
 						)
 					},
 					"rotation":{
@@ -756,8 +509,8 @@
 						"value":(
 							0.0,
 							0.0,
-							0.0,
-							1.0
+							-0.4617486596107483,
+							0.887010931968689
 						)
 					},
 					"scale":{
@@ -785,37 +538,6 @@
 		entity:5,
 		components:[
 			{
-				"type":"blender_bevy_toolkit::rapier_physics::ColliderDescription",
-				"struct":{
-					"friction":{
-						"type":"f32",
-						"value":0.5
-					},
-					"restitution":{
-						"type":"f32",
-						"value":0.5
-					},
-					"is_sensor":{
-						"type":"bool",
-						"value":false
-					},
-					"density":{
-						"type":"f32",
-						"value":0.5
-					},
-					"collider_shape":0,
-					"collider_shape_data":{
-						"type":"smallvec::SmallVec<[u8; 4]>",
-						"list":[
-							0,
-							0,
-							64,
-							64
-						]
-					}
-				}
-			},
-			{
 				"type":"bevy_render::view::visibility::ComputedVisibility",
 				"struct":{
 					"is_visible":{
@@ -830,9 +552,9 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							7.0,
-							-2.0,
-							6.0
+							-3.0,
+							-5.0,
+							0.0
 						)
 					},
 					"rotation":{
@@ -840,8 +562,8 @@
 						"value":(
 							0.0,
 							0.0,
-							0.0,
-							1.0
+							-0.4617486596107483,
+							0.887010931968689
 						)
 					},
 					"scale":{
@@ -857,41 +579,19 @@
 			{
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
-					"name":"Icosphere.001"
+					"name":"Icosphere.003"
 				}
 			},
 			{
 				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
 				"struct":{
-					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+					"path":"scenes/materials/2befd9fc1d28242b61722b757ffa63fc.material"
 				}
 			},
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/aa2991b2542f12efdaa2f05ccf5b0334.mesh"
-				}
-			},
-			{
-				"type":"blender_bevy_toolkit::rapier_physics::RigidBodyDescription",
-				"struct":{
-					"body_status":0,
-					"damping_angular":{
-						"type":"f32",
-						"value":0.0
-					},
-					"damping_linear":{
-						"type":"f32",
-						"value":0.0
-					},
-					"ccd_enable":{
-						"type":"bool",
-						"value":false
-					},
-					"sleep_allow":{
-						"type":"bool",
-						"value":false
-					}
+					"path":"scenes/meshes/d66928c362c5e5b875e5addf87a4f45c.mesh"
 				}
 			},
 			{
@@ -900,9 +600,9 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							7.0,
-							-2.0,
-							6.0
+							-3.0,
+							-5.0,
+							0.0
 						)
 					},
 					"rotation":{
@@ -910,8 +610,8 @@
 						"value":(
 							0.0,
 							0.0,
-							0.0,
-							1.0
+							-0.4617486596107483,
+							0.887010931968689
 						)
 					},
 					"scale":{
@@ -939,37 +639,6 @@
 		entity:6,
 		components:[
 			{
-				"type":"blender_bevy_toolkit::rapier_physics::ColliderDescription",
-				"struct":{
-					"friction":{
-						"type":"f32",
-						"value":0.5
-					},
-					"restitution":{
-						"type":"f32",
-						"value":0.5
-					},
-					"is_sensor":{
-						"type":"bool",
-						"value":false
-					},
-					"density":{
-						"type":"f32",
-						"value":0.5
-					},
-					"collider_shape":0,
-					"collider_shape_data":{
-						"type":"smallvec::SmallVec<[u8; 4]>",
-						"list":[
-							0,
-							0,
-							64,
-							64
-						]
-					}
-				}
-			},
-			{
 				"type":"bevy_render::view::visibility::ComputedVisibility",
 				"struct":{
 					"is_visible":{
@@ -984,9 +653,9 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							5.0,
-							-6.0,
-							14.0
+							0.0,
+							-9.0,
+							0.0
 						)
 					},
 					"rotation":{
@@ -994,8 +663,8 @@
 						"value":(
 							0.0,
 							0.0,
-							0.0,
-							1.0
+							-0.4617486596107483,
+							0.887010931968689
 						)
 					},
 					"scale":{
@@ -1011,41 +680,19 @@
 			{
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
-					"name":"Icosphere.002"
+					"name":"Icosphere.004"
 				}
 			},
 			{
 				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
 				"struct":{
-					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+					"path":"scenes/materials/81773845d230ca2924848f6aa354c5ab.material"
 				}
 			},
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/aa2991b2542f12efdaa2f05ccf5b0334.mesh"
-				}
-			},
-			{
-				"type":"blender_bevy_toolkit::rapier_physics::RigidBodyDescription",
-				"struct":{
-					"body_status":0,
-					"damping_angular":{
-						"type":"f32",
-						"value":0.0
-					},
-					"damping_linear":{
-						"type":"f32",
-						"value":0.0
-					},
-					"ccd_enable":{
-						"type":"bool",
-						"value":false
-					},
-					"sleep_allow":{
-						"type":"bool",
-						"value":false
-					}
+					"path":"scenes/meshes/d66928c362c5e5b875e5addf87a4f45c.mesh"
 				}
 			},
 			{
@@ -1054,9 +701,9 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							5.0,
-							-6.0,
-							14.0
+							0.0,
+							-9.0,
+							0.0
 						)
 					},
 					"rotation":{
@@ -1064,8 +711,8 @@
 						"value":(
 							0.0,
 							0.0,
-							0.0,
-							1.0
+							-0.4617486596107483,
+							0.887010931968689
 						)
 					},
 					"scale":{
@@ -1093,37 +740,6 @@
 		entity:7,
 		components:[
 			{
-				"type":"blender_bevy_toolkit::rapier_physics::ColliderDescription",
-				"struct":{
-					"friction":{
-						"type":"f32",
-						"value":0.20000001788139343
-					},
-					"restitution":{
-						"type":"f32",
-						"value":0.5
-					},
-					"is_sensor":{
-						"type":"bool",
-						"value":false
-					},
-					"density":{
-						"type":"f32",
-						"value":0.5
-					},
-					"collider_shape":0,
-					"collider_shape_data":{
-						"type":"smallvec::SmallVec<[u8; 4]>",
-						"list":[
-							82,
-							79,
-							205,
-							64
-						]
-					}
-				}
-			},
-			{
 				"type":"bevy_render::view::visibility::ComputedVisibility",
 				"struct":{
 					"is_visible":{
@@ -1138,9 +754,9 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							-18.0,
-							-15.0,
-							11.0
+							-3.0,
+							-9.0,
+							0.0
 						)
 					},
 					"rotation":{
@@ -1148,16 +764,16 @@
 						"value":(
 							0.0,
 							0.0,
-							0.0,
-							1.0
+							-0.4617486596107483,
+							0.887010931968689
 						)
 					},
 					"scale":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							2.0,
-							2.0,
-							2.0
+							1.0,
+							1.0,
+							1.0
 						)
 					}
 				}
@@ -1165,41 +781,19 @@
 			{
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
-					"name":"Cube.021"
+					"name":"Icosphere.005"
 				}
 			},
 			{
 				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
 				"struct":{
-					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+					"path":"scenes/materials/360aef0782c9314bbee88a516aa2399d.material"
 				}
 			},
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/365cfa03a6190853a425ff2696564dbf.mesh"
-				}
-			},
-			{
-				"type":"blender_bevy_toolkit::rapier_physics::RigidBodyDescription",
-				"struct":{
-					"body_status":1,
-					"damping_angular":{
-						"type":"f32",
-						"value":0.0
-					},
-					"damping_linear":{
-						"type":"f32",
-						"value":0.0
-					},
-					"ccd_enable":{
-						"type":"bool",
-						"value":false
-					},
-					"sleep_allow":{
-						"type":"bool",
-						"value":false
-					}
+					"path":"scenes/meshes/d66928c362c5e5b875e5addf87a4f45c.mesh"
 				}
 			},
 			{
@@ -1208,9 +802,9 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							-18.0,
-							-15.0,
-							11.0
+							-3.0,
+							-9.0,
+							0.0
 						)
 					},
 					"rotation":{
@@ -1218,16 +812,16 @@
 						"value":(
 							0.0,
 							0.0,
-							0.0,
-							1.0
+							-0.4617486596107483,
+							0.887010931968689
 						)
 					},
 					"scale":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							2.0,
-							2.0,
-							2.0
+							1.0,
+							1.0,
+							1.0
 						)
 					}
 				}
@@ -1247,37 +841,6 @@
 		entity:8,
 		components:[
 			{
-				"type":"blender_bevy_toolkit::rapier_physics::ColliderDescription",
-				"struct":{
-					"friction":{
-						"type":"f32",
-						"value":0.5
-					},
-					"restitution":{
-						"type":"f32",
-						"value":0.5
-					},
-					"is_sensor":{
-						"type":"bool",
-						"value":false
-					},
-					"density":{
-						"type":"f32",
-						"value":0.5
-					},
-					"collider_shape":0,
-					"collider_shape_data":{
-						"type":"smallvec::SmallVec<[u8; 4]>",
-						"list":[
-							22,
-							157,
-							228,
-							64
-						]
-					}
-				}
-			},
-			{
 				"type":"bevy_render::view::visibility::ComputedVisibility",
 				"struct":{
 					"is_visible":{
@@ -1292,9 +855,9 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							15.020100593566895,
-							18.34473419189453,
-							20.004051208496094
+							3.0,
+							0.0,
+							0.0
 						)
 					},
 					"rotation":{
@@ -1302,16 +865,16 @@
 						"value":(
 							0.0,
 							0.0,
-							0.0,
-							1.0
+							-0.4617486596107483,
+							0.887010931968689
 						)
 					},
 					"scale":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							5.715340614318848,
-							5.715340614318848,
-							5.715340614318848
+							1.0,
+							1.0,
+							1.0
 						)
 					}
 				}
@@ -1319,41 +882,19 @@
 			{
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
-					"name":"Torus"
+					"name":"Icosphere.006"
 				}
 			},
 			{
 				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
 				"struct":{
-					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+					"path":"scenes/materials/15cfb4ba7f1684b0d0eddadd946d3ddc.material"
 				}
 			},
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/96e70b429ac590a0db36b147cde81831.mesh"
-				}
-			},
-			{
-				"type":"blender_bevy_toolkit::rapier_physics::RigidBodyDescription",
-				"struct":{
-					"body_status":0,
-					"damping_angular":{
-						"type":"f32",
-						"value":0.0
-					},
-					"damping_linear":{
-						"type":"f32",
-						"value":0.0
-					},
-					"ccd_enable":{
-						"type":"bool",
-						"value":false
-					},
-					"sleep_allow":{
-						"type":"bool",
-						"value":false
-					}
+					"path":"scenes/meshes/d66928c362c5e5b875e5addf87a4f45c.mesh"
 				}
 			},
 			{
@@ -1362,9 +903,9 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							15.020100593566895,
-							18.34473419189453,
-							20.004051208496094
+							3.0,
+							0.0,
+							0.0
 						)
 					},
 					"rotation":{
@@ -1372,16 +913,16 @@
 						"value":(
 							0.0,
 							0.0,
-							0.0,
-							1.0
+							-0.4617486596107483,
+							0.887010931968689
 						)
 					},
 					"scale":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							5.715340614318848,
-							5.715340614318848,
-							5.715340614318848
+							1.0,
+							1.0,
+							1.0
 						)
 					}
 				}
@@ -1401,45 +942,6 @@
 		entity:9,
 		components:[
 			{
-				"type":"blender_bevy_toolkit::rapier_physics::ColliderDescription",
-				"struct":{
-					"friction":{
-						"type":"f32",
-						"value":0.5
-					},
-					"restitution":{
-						"type":"f32",
-						"value":0.5
-					},
-					"is_sensor":{
-						"type":"bool",
-						"value":false
-					},
-					"density":{
-						"type":"f32",
-						"value":0.5
-					},
-					"collider_shape":2,
-					"collider_shape_data":{
-						"type":"smallvec::SmallVec<[u8; 12]>",
-						"list":[
-							0,
-							0,
-							240,
-							65,
-							0,
-							0,
-							240,
-							65,
-							0,
-							0,
-							128,
-							63
-						]
-					}
-				}
-			},
-			{
 				"type":"bevy_render::view::visibility::ComputedVisibility",
 				"struct":{
 					"is_visible":{
@@ -1454,9 +956,9 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							0.0,
-							0.0,
-							-17.0
+							3.0,
+							-5.0,
+							0.0
 						)
 					},
 					"rotation":{
@@ -1464,15 +966,15 @@
 						"value":(
 							0.0,
 							0.0,
-							0.0,
-							1.0
+							-0.4617486596107483,
+							0.887010931968689
 						)
 					},
 					"scale":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							30.0,
-							30.0,
+							1.0,
+							1.0,
 							1.0
 						)
 					}
@@ -1481,41 +983,19 @@
 			{
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
-					"name":"Cube.001"
+					"name":"Icosphere.007"
 				}
 			},
 			{
 				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
 				"struct":{
-					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+					"path":"scenes/materials/345b1034453ac2f17e5d2cfce8363b8a.material"
 				}
 			},
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/90dcf6196a36e977372fbdb99fe5e442.mesh"
-				}
-			},
-			{
-				"type":"blender_bevy_toolkit::rapier_physics::RigidBodyDescription",
-				"struct":{
-					"body_status":1,
-					"damping_angular":{
-						"type":"f32",
-						"value":0.0
-					},
-					"damping_linear":{
-						"type":"f32",
-						"value":0.0
-					},
-					"ccd_enable":{
-						"type":"bool",
-						"value":false
-					},
-					"sleep_allow":{
-						"type":"bool",
-						"value":false
-					}
+					"path":"scenes/meshes/d66928c362c5e5b875e5addf87a4f45c.mesh"
 				}
 			},
 			{
@@ -1524,9 +1004,9 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							0.0,
-							0.0,
-							-17.0
+							3.0,
+							-5.0,
+							0.0
 						)
 					},
 					"rotation":{
@@ -1534,15 +1014,15 @@
 						"value":(
 							0.0,
 							0.0,
-							0.0,
-							1.0
+							-0.4617486596107483,
+							0.887010931968689
 						)
 					},
 					"scale":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							30.0,
-							30.0,
+							1.0,
+							1.0,
 							1.0
 						)
 					}
@@ -1563,27 +1043,13 @@
 		entity:10,
 		components:[
 			{
-				"type":"bevy_render::camera::camera::Camera",
+				"type":"bevy_render::view::visibility::ComputedVisibility",
 				"struct":{
-					"near":{
-						"type":"f32",
-						"value":0.10000000149011612
-					},
-					"far":{
-						"type":"f32",
-						"value":1000.0
-					},
-					"name":{
-						"type":"core::option::Option<alloc::string::String>",
-						"value":Some(
-							"camera_3d"
-						)
+					"is_visible":{
+						"type":"bool",
+						"value":true
 					}
 				}
-			},
-			{
-				"type":"bevy_render::primitives::Frustum",
-				"struct":{}
 			},
 			{
 				"type":"bevy_transform::components::global_transform::GlobalTransform",
@@ -1591,26 +1057,26 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							-86.84036254882812,
-							32.72780990600586,
-							7.096597671508789
+							3.0,
+							-9.0,
+							0.0
 						)
 					},
 					"rotation":{
 						"type":"glam::quat::Quat",
 						"value":(
-							0.38095909357070923,
-							-0.5563769340515137,
-							-0.6093083024024963,
-							0.4172031581401825
+							0.0,
+							0.0,
+							-0.4617486596107483,
+							0.887010931968689
 						)
 					},
 					"scale":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							0.9999999403953552,
-							0.9999999403953552,
-							0.9999999403953552
+							1.0,
+							1.0,
+							1.0
 						)
 					}
 				}
@@ -1618,24 +1084,19 @@
 			{
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
-					"name":"Camera"
+					"name":"Icosphere.008"
 				}
 			},
 			{
-				"type":"bevy_render::camera::projection::PerspectiveProjection",
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
 				"struct":{
-					"near":{
-						"type":"f32",
-						"value":0.10000000149011612
-					},
-					"far":{
-						"type":"f32",
-						"value":1000.0
-					},
-					"fov":{
-						"type":"f32",
-						"value":0.9267306327819824
-					}
+					"path":"scenes/materials/cba395b219a5fd1237a8921206916da9.material"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
+				"struct":{
+					"path":"scenes/meshes/d66928c362c5e5b875e5addf87a4f45c.mesh"
 				}
 			},
 			{
@@ -1644,38 +1105,144 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							-86.84036254882812,
-							32.72780990600586,
-							7.096597671508789
+							3.0,
+							-9.0,
+							0.0
 						)
 					},
 					"rotation":{
 						"type":"glam::quat::Quat",
 						"value":(
-							0.38095909357070923,
-							-0.5563769340515137,
-							-0.6093083024024963,
-							0.4172031581401825
+							0.0,
+							0.0,
+							-0.4617486596107483,
+							0.887010931968689
 						)
 					},
 					"scale":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							0.9999999403953552,
-							0.9999999403953552,
-							0.9999999403953552
+							1.0,
+							1.0,
+							1.0
 						)
 					}
 				}
 			},
 			{
-				"type":"bevy_render::view::visibility::VisibleEntities",
-				"struct":{}
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
 			}
 		]
 	),
 	(
 		entity:11,
+		components:[
+			{
+				"type":"bevy_render::view::visibility::ComputedVisibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
+			},
+			{
+				"type":"bevy_transform::components::global_transform::GlobalTransform",
+				"struct":{
+					"translation":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							0.0,
+							0.0,
+							-2.0
+						)
+					},
+					"rotation":{
+						"type":"glam::quat::Quat",
+						"value":(
+							0.0,
+							0.0,
+							0.0,
+							1.0
+						)
+					},
+					"scale":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							10.0,
+							10.0,
+							10.0
+						)
+					}
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
+				"struct":{
+					"name":"Plane"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
+				"struct":{
+					"path":"scenes/meshes/69011efd7fcc99e68d9bcc6213de1db2.mesh"
+				}
+			},
+			{
+				"type":"bevy_transform::components::transform::Transform",
+				"struct":{
+					"translation":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							0.0,
+							0.0,
+							-2.0
+						)
+					},
+					"rotation":{
+						"type":"glam::quat::Quat",
+						"value":(
+							0.0,
+							0.0,
+							0.0,
+							1.0
+						)
+					},
+					"scale":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							10.0,
+							10.0,
+							10.0
+						)
+					}
+				}
+			},
+			{
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
+			}
+		]
+	),
+	(
+		entity:12,
 		components:[
 			{
 				"type":"bevy_render::primitives::CubemapFrusta",
@@ -1691,25 +1258,25 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							0.0,
-							0.0,
-							38.974098205566406
+							-4.361010551452637,
+							-9.171122550964355,
+							9.16618537902832
 						)
 					},
 					"rotation":{
 						"type":"glam::quat::Quat",
 						"value":(
-							0.0,
-							0.0,
-							0.0,
-							1.0
+							0.16907575726509094,
+							0.27217134833335876,
+							0.7558802962303162,
+							0.570947527885437
 						)
 					},
 					"scale":{
 						"type":"glam::vec3::Vec3",
 						"value":(
 							1.0,
-							1.0,
+							0.9999999403953552,
 							1.0
 						)
 					}
@@ -1718,7 +1285,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
-					"name":"Point"
+					"name":"Light.001"
 				}
 			},
 			{
@@ -1727,19 +1294,19 @@
 					"color":{
 						"type":"bevy_render::color::Color",
 						"value":RgbaLinear(
-							red:1.0,
-							green:1.0,
+							red:0.6464146971702576,
+							green:0.9428282976150513,
 							blue:1.0,
 							alpha:1.0
 						)
 					},
 					"intensity":{
 						"type":"f32",
-						"value":5000.0
+						"value":1000.0
 					},
 					"range":{
 						"type":"f32",
-						"value":199.99998474121094
+						"value":40.0
 					},
 					"radius":{
 						"type":"f32",
@@ -1747,7 +1314,7 @@
 					},
 					"shadows_enabled":{
 						"type":"bool",
-						"value":true
+						"value":false
 					},
 					"shadow_depth_bias":{
 						"type":"f32",
@@ -1765,25 +1332,25 @@
 					"translation":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							0.0,
-							0.0,
-							38.974098205566406
+							-4.361010551452637,
+							-9.171122550964355,
+							9.16618537902832
 						)
 					},
 					"rotation":{
 						"type":"glam::quat::Quat",
 						"value":(
-							0.0,
-							0.0,
-							0.0,
-							1.0
+							0.16907575726509094,
+							0.27217134833335876,
+							0.7558802962303162,
+							0.570947527885437
 						)
 					},
 					"scale":{
 						"type":"glam::vec3::Vec3",
 						"value":(
 							1.0,
-							1.0,
+							0.9999999403953552,
 							1.0
 						)
 					}

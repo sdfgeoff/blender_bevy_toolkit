@@ -1,0 +1,25 @@
+(
+	base_color:RgbaLinear(
+		red:0.10216749459505081,
+		green:0.28807175159454346,
+		blue:0.8000000715255737,
+		alpha:1.0
+	),
+	base_color_texture:None,
+	emissive:RgbaLinear(
+		red:0.0,
+		green:0.0,
+		blue:0.0,
+		alpha:1.0
+	),
+	emissive_texture:None,
+	perceptual_roughness:0.20000000298023224,
+	metallic:0.8999999761581421,
+	metallic_roughness_texture:None,
+	reflectance:0.5,
+	normal_map_texture:None,
+	occlusion_texture:None,
+	double_sided:true,
+	unlit:false,
+	alpha_mode:Opaque
+)

@@ -23,7 +23,7 @@ class Material(ComponentBase):
 
         material_data = (
             serialize_material(obj.data.materials[0])
-            if obj.data.materials
+            if obj.data.materials and obj.data.materials[0] is not None
             else DEFAULT_MATERIAL
         )
 
@@ -67,10 +67,27 @@ class Material(ComponentBase):
         pass
 
 
+def col_to_ron(col):
+    return ron.EnumValue(
+        "RgbaLinear", ron.Struct(red=col[0], green=col[1], blue=col[2], alpha=col[3])
+    )
+
+
 DEFAULT_MATERIAL = ron.encode(
     ron.Struct(
-        base_color=ron.Tuple(1.0, 0.0, 1.0, 1.0),
-        unlit=ron.Bool(True),
+        base_color=col_to_ron([0.8, 0.8, 0.8, 1.0]),
+        base_color_texture=ron.EnumValue("None"),
+        emissive=col_to_ron((0.0, 0.0, 0.0, 1.0)),
+        emissive_texture=ron.EnumValue("None"),
+        perceptual_roughness=ron.Float(0.5),
+        metallic=ron.Float(0.5),
+        metallic_roughness_texture=ron.EnumValue("None"),
+        reflectance=ron.Float(0.5),
+        normal_map_texture=ron.EnumValue("None"),
+        occlusion_texture=ron.EnumValue("None"),
+        double_sided=ron.Bool(False),
+        unlit=ron.Bool(False),
+        alpha_mode=ron.EnumValue("Opaque"),
     )
 ).encode("utf-8")
 
@@ -119,10 +136,10 @@ def serialize_material(material):
     if main_node.type == "BSDF_PRINCIPLED":
         return ron.encode(
             ron.Struct(
-                base_color=ron.Tuple(*main_node.inputs["Base Color"].default_value),
+                base_color=col_to_ron(main_node.inputs["Base Color"].default_value),
                 base_color_texture=ron.EnumValue("None"),  # TODO
-                emisssive=ron.Tuple(*main_node.inputs["Emission"].default_value),
-                emisssive_texture=ron.EnumValue("None"),  # TODO
+                emissive=col_to_ron(main_node.inputs["Emission"].default_value),
+                emissive_texture=ron.EnumValue("None"),  # TODO
                 perceptual_roughness=ron.Float(
                     main_node.inputs["Roughness"].default_value
                 ),

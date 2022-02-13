@@ -514,6 +514,12 @@
 				}
 			},
 			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+				}
+			},
+			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
 					"path":"scenes/meshes/8f156e36fcfac3635168bd11cb869397.mesh"
@@ -726,6 +732,12 @@
 				}
 			},
 			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+				}
+			},
+			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
 					"path":"scenes/meshes/8f156e36fcfac3635168bd11cb869397.mesh"
@@ -818,6 +830,12 @@
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
 					"name":"Plane.002"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
 				}
 			},
 			{
@@ -916,6 +934,12 @@
 				}
 			},
 			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+				}
+			},
+			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
 					"path":"scenes/meshes/8f156e36fcfac3635168bd11cb869397.mesh"
@@ -1008,6 +1032,12 @@
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
 					"name":"Cube"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
 				}
 			},
 			{

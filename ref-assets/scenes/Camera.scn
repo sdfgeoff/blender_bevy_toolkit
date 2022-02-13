@@ -308,6 +308,12 @@
 				}
 			},
 			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+				}
+			},
+			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
 					"path":"scenes/meshes/efa2d4a4030e11e0b9f4ee34d2f24535.mesh"
@@ -400,6 +406,12 @@
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
 					"name":"GridHor"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
 				}
 			},
 			{
@@ -498,6 +510,12 @@
 				}
 			},
 			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+				}
+			},
+			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
 					"path":"scenes/meshes/b1d229dd9ad23ae8eeeae813c22ca7f9.mesh"
@@ -590,6 +608,12 @@
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
 					"name":"Vert1"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
 				}
 			},
 			{
@@ -688,6 +712,12 @@
 				}
 			},
 			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+				}
+			},
+			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
 					"path":"scenes/meshes/efa2d4a4030e11e0b9f4ee34d2f24535.mesh"
@@ -780,6 +810,12 @@
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
 					"name":"Vert2"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
 				}
 			},
 			{

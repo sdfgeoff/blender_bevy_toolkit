@@ -12,6 +12,7 @@ assets:
 	$(BLENDER) -b test_scenes/Heirarchy.blend --python ./scripts/export.py --python-exit-code=1   -- --output-file="assets/scenes/Heirarchy.scn" --log-level=DEBUG
 	$(BLENDER) -b test_scenes/Lights.blend --python ./scripts/export.py --python-exit-code=1   -- --output-file="assets/scenes/Lights.scn" --log-level=DEBUG
 	$(BLENDER) -b test_scenes/Camera.blend --python ./scripts/export.py --python-exit-code=1   -- --output-file="assets/scenes/Camera.scn" --log-level=DEBUG
+	$(BLENDER) -b test_scenes/Materials.blend --python ./scripts/export.py --python-exit-code=1   -- --output-file="assets/scenes/Materials.scn" --log-level=DEBUG
 
 run:
 	cargo run --example scenes
