@@ -782,6 +782,7 @@ dependencies = [
  "anyhow",
  "bevy",
  "bevy_rapier3d",
+ "ron",
  "serde",
  "smallvec",
 ]

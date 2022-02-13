@@ -48,6 +48,12 @@
 				}
 			},
 			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+				}
+			},
+			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
 					"path":"scenes/meshes/3b8561feaf141b84a3f405efbd22786a.mesh"

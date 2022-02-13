@@ -36,6 +36,7 @@ required=True)
     blender_bevy_toolkit.do_export({
         "output_filepath": config.output_file,
         "mesh_output_folder": "meshes",
+        "material_output_folder": "materials",
         "make_duplicates_real": True
     })
 

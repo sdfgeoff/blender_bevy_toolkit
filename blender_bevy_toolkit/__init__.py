@@ -116,6 +116,7 @@ class ExportBevy(bpy.types.Operator, ExportHelper):
             {
                 "output_filepath": self.filepath,
                 "mesh_output_folder": "meshes",
+                "material_output_folder": "materials",
                 "make_duplicates_real": False,
             }
         )

@@ -18,29 +18,13 @@ type FVec2Arr = Vec<[f32; 2]>;
 pub fn blend_mesh_loader(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
-    mut materials: ResMut<Assets<StandardMaterial>>,
     query: Query<(&BlendMeshLoader, Entity)>,
 ) {
     for (meshloader, entity) in query.iter() {
         //println!("Loading Mesh {} for {:?}", meshloader.path, entity);
         commands.entity(entity).remove::<BlendMeshLoader>();
-
         let mesh_handle: Handle<Mesh> = asset_server.load(meshloader.path.as_str());
-
-        let material = materials.add(StandardMaterial {
-            base_color: Color::rgb(0.8, 0.7, 0.6),
-            ..Default::default()
-        });
-
-        let bundle = PbrBundle {
-            mesh: mesh_handle,
-            material,
-            ..Default::default()
-        };
-
-        commands
-            .entity(entity)
-            .insert_bundle((bundle.mesh, bundle.material));
+        commands.entity(entity).insert(mesh_handle);
     }
 }
 

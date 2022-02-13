@@ -48,6 +48,12 @@
 				}
 			},
 			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+				}
+			},
+			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
 					"path":"scenes/meshes/07a6c200460edda71452fb91a39ee02f.mesh"
@@ -140,6 +146,12 @@
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
 					"name":"Plane"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
 				}
 			},
 			{
@@ -238,6 +250,12 @@
 				}
 			},
 			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+				}
+			},
+			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
 					"path":"scenes/meshes/53a68837075e40e98bdf4849cc3e3597.mesh"
@@ -330,6 +348,12 @@
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
 					"name":"Cube.002"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
 				}
 			},
 			{
@@ -437,6 +461,12 @@
 				}
 			},
 			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+				}
+			},
+			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
 					"path":"scenes/meshes/53a68837075e40e98bdf4849cc3e3597.mesh"
@@ -538,6 +568,12 @@
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
 					"name":"Cylinder"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
 				}
 			},
 			{
@@ -1010,6 +1046,12 @@
 				}
 			},
 			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+				}
+			},
+			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
 					"path":"scenes/meshes/53a68837075e40e98bdf4849cc3e3597.mesh"
@@ -1111,6 +1153,12 @@
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
 					"name":"Cube.005"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
 				}
 			},
 			{
@@ -1218,6 +1266,12 @@
 				}
 			},
 			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+				}
+			},
+			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
 					"path":"scenes/meshes/53a68837075e40e98bdf4849cc3e3597.mesh"
@@ -1319,6 +1373,12 @@
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
 					"name":"Ship.002"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
 				}
 			},
 			{
@@ -1426,6 +1486,12 @@
 				}
 			},
 			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
+				}
+			},
+			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
 					"path":"scenes/meshes/53a68837075e40e98bdf4849cc3e3597.mesh"
@@ -1527,6 +1593,12 @@
 				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
 				"struct":{
 					"name":"Cube.008"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/fee242958bbfa886b9719e65a351339b.material"
 				}
 			},
 			{
