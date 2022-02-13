@@ -3,10 +3,10 @@ import struct
 import hashlib
 import os
 from blender_bevy_toolkit.component_base import (
-    ComponentRepresentation,
     register_component,
     ComponentBase,
 )
+from blender_bevy_toolkit import rust_types
 
 import logging
 from blender_bevy_toolkit import jdict
@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 @register_component
 class Mesh(ComponentBase):
     def encode(config, obj):
-        """Returns a ComponentRepresentation to encode this component
+        """Returns a Component to encode this component
         into a scene file"""
         assert Mesh.is_present(obj)
 
@@ -42,8 +42,9 @@ class Mesh(ComponentBase):
         # TODO: The rust side doesn't support relative paths, so for now we have to hardcode this
         path = os.path.join("scenes", path)
 
-        return ComponentRepresentation(
-            "blender_bevy_toolkit::blend_mesh::BlendMeshLoader", {"path": path}
+        return rust_types.Map(
+            type="blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
+            struct=rust_types.Map(path=rust_types.Str(path)),
         )
 
     def is_present(obj):

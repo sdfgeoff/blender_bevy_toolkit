@@ -75,18 +75,8 @@ def construct_component_classes(component_filepath):
     return component_from_def(component_def)
 
 
-def load_folder(folder):
-    """Scans a folder for json files and loads them as components"""
-    logger.info(jdict(event="scan_folder_for_json_components", folder=folder))
-
-    json_files = get_component_files(folder)
-    logger.info(
-        jdict(
-            event="scan_folder_for_json_components",
-            folder=folder,
-            json_files=json_files,
-        )
-    )
-    classes = [construct_component_classes(c) for c in json_files]
-    for cls in classes:
-        register_component(cls)
+def load_file(full_path):
+    """Load a component from a json file"""
+    logger.info(jdict(event="load_json_component", folder=full_path))
+    component_class = construct_component_classes(full_path)
+    register_component(component_class)

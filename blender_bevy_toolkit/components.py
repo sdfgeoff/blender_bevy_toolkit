@@ -27,8 +27,7 @@ def generate_component_list():
 
     here = os.path.dirname(os.path.abspath(__file__))
 
-    load_folder(os.path.join(here, "core_definitions"))
-    load_folder(os.path.join(here, "rapier_definitions"))
+    load_folder(os.path.join(here, "definitions"))
 
     try:
         blend_path = bpy.path.abspath("//")
@@ -47,32 +46,28 @@ def generate_component_list():
 
 def load_folder(folder):
     """Look for component defitions in a specific folder"""
-    json_components.load_folder(folder)
-    load_python_components(folder)
+    for root, _folders, files in os.walk(folder):
+        for filename in files:
+            filepath = os.path.join(root, filename)
+            if filepath.endswith(".py"):
+                load_python_component(filepath)
+            elif filepath.endswith(".json"):
+                json_components.load_file(filepath)
 
 
-def load_python_components(folder):
+def load_python_component(full_path):
     """Looks for python files in a folder. If they exist, load it as a module.
 
     Unfortunately loading a python module from a specific filepath is not a
     straightforward operation, so it is likely this will require revising for
     different versions of python and possibly differnet OS's"""
-    logger.info(jdict(event="scan_folder_for_python_components", folder=folder))
+    module_name = os.path.splitext(os.path.basename(full_path))[0]
 
-    for filename in os.listdir(folder):
-        if filename.endswith(".py"):
-            module_name = os.path.splitext(filename)[0]
-            full_path = os.path.join(folder, filename)
+    logger.info(jdict(event="load_python_component", path=full_path, state="start"))
 
-            logger.info(
-                jdict(event="load_python_component", path=full_path, state="start")
-            )
+    spec = importlib.util.spec_from_file_location(module_name, full_path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    sys.modules[module_name] = module
 
-            spec = importlib.util.spec_from_file_location(module_name, full_path)
-            module = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(module)
-            sys.modules[module_name] = module
-
-            logger.info(
-                jdict(event="load_python_component", path=full_path, state="end")
-            )
+    logger.info(jdict(event="load_python_component", path=full_path, state="end"))

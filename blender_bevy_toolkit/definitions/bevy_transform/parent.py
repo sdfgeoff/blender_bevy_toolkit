@@ -1,28 +1,24 @@
 from blender_bevy_toolkit.component_base import (
-    ComponentRepresentation,
     register_component,
     ComponentBase,
 )
+from blender_bevy_toolkit import rust_types
 
 
 @register_component
 class Parent(ComponentBase):
     def encode(config, obj):
-        """Returns a ComponentRepresentation representing this component"""
+        """Returns a Component representing this component"""
 
         collection_objs = list(config["scene"].objects)
 
         parent_id = collection_objs.index(obj.parent)
 
-        return ComponentRepresentation(
-            "bevy_transform::components::parent::Parent",
-            [
-                {
-                    "type": "bevy_ecs::entity::Entity",
-                    "value": parent_id,
-                },
-            ],
-            type_override="tuple_struct",
+        return rust_types.Map(
+            type="bevy_transform::components::parent::Parent",
+            tuple_struct=rust_types.List(
+                rust_types.Entity(parent_id),
+            ),
         )
 
     def is_present(obj):

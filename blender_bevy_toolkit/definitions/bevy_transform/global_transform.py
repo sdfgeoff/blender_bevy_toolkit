@@ -1,17 +1,17 @@
 from blender_bevy_toolkit.component_base import (
-    ComponentRepresentation,
     register_component,
     ComponentBase,
+    rust_types,
 )
 
 
 @register_component
-class Transform(ComponentBase):
+class GlobalTransform(ComponentBase):
     def encode(config, obj):
-        """Returns a ComponentRepresentation representing this component
+        """Returns a Component representing this component
 
         {
-            "type": "bevy_transform::components::transform::Transform",
+            "type": "bevy_transform::components::transform::GlobalTransform",
             "struct": {
                 "translation": {
                     "type": "glam::vec3::Vec3",
@@ -28,19 +28,16 @@ class Transform(ComponentBase):
         }
         """
 
-        if obj.parent is None:
-            transform = obj.matrix_world
-        else:
-            transform = obj.matrix_local
+        transform = obj.matrix_world
 
         position, rotation, scale = transform.decompose()
-        return ComponentRepresentation(
-            "bevy_transform::components::transform::Transform",
-            {
-                "translation": position,
-                "rotation": rotation,
-                "scale": scale,
-            },
+        return rust_types.Map(
+            type="bevy_transform::components::global_transform::GlobalTransform",
+            struct=rust_types.Map(
+                translation=rust_types.Vec3(position),
+                rotation=rust_types.Quat(rotation),
+                scale=rust_types.Vec3(scale),
+            ),
         )
 
     def is_present(obj):

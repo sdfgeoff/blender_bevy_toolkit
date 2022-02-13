@@ -30,6 +30,11 @@ fmt-test:
 	
 	# Dead code check (python)
 	python -m vulture --min-confidence 100 blender_bevy_toolkit
+
+test:
+	$(BLENDER) -b --python-expr "import pytest; pytest.main([])"
+	cargo test
+	
 	
 	
 ref-assets:

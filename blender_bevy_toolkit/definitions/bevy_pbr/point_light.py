@@ -1,6 +1,5 @@
 import bpy
 from blender_bevy_toolkit.component_base import (
-    ComponentRepresentation,
     register_component,
     ComponentBase,
 )
@@ -12,7 +11,8 @@ from blender_bevy_toolkit.component_constructor import (
 
 
 import logging
-from blender_bevy_toolkit import jdict, utils
+from blender_bevy_toolkit.utils import jdict
+from blender_bevy_toolkit.rust_types import F32, Bool, RgbaLinear, Map
 
 logger = logging.getLogger(__name__)
 
@@ -64,19 +64,19 @@ class PointLight(ComponentBase):
     def encode(config, obj):
         assert PointLight.is_present(obj)
 
-        return ComponentRepresentation(
-            "bevy_pbr::light::PointLight",
-            {
-                "color": obj.data.color,
-                "intensity": utils.F32(obj.data.energy),
-                "range": utils.F32(obj.data.cutoff_distance),
-                "radius": utils.F32(obj.data.shadow_soft_size),
-                "shadows_enabled": utils.Bool(obj.data.use_shadow),
-                "shadow_depth_bias": utils.F32(obj.data.shadow_buffer_bias),
-                "shadow_normal_bias": utils.F32(
+        return Map(
+            type="bevy_pbr::light::PointLight",
+            struct=Map(
+                color=RgbaLinear(obj.data.color),
+                intensity=F32(obj.data.energy),
+                range=F32(obj.data.cutoff_distance),
+                radius=F32(obj.data.shadow_soft_size),
+                shadows_enabled=Bool(obj.data.use_shadow),
+                shadow_depth_bias=F32(obj.data.shadow_buffer_bias),
+                shadow_normal_bias=F32(
                     obj.bevy_point_light_properties.shadow_normal_bias
                 ),
-            },
+            ),
         )
 
     @staticmethod
