@@ -34,6 +34,15 @@
 				}
 			},
 			{
+				"type":"bevy_render::view::visibility::ComputedVisibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
+			},
+			{
 				"type":"bevy_transform::components::global_transform::GlobalTransform",
 				"struct":{
 					"translation":{
@@ -126,6 +135,15 @@
 						)
 					}
 				}
+			},
+			{
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
 			}
 		]
 	),
@@ -164,6 +182,15 @@
 							128,
 							63
 						]
+					}
+				}
+			},
+			{
+				"type":"bevy_render::view::visibility::ComputedVisibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
 					}
 				}
 			},
@@ -260,6 +287,15 @@
 						)
 					}
 				}
+			},
+			{
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
 			}
 		]
 	),
@@ -298,6 +334,15 @@
 							128,
 							63
 						]
+					}
+				}
+			},
+			{
+				"type":"bevy_render::view::visibility::ComputedVisibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
 					}
 				}
 			},
@@ -394,6 +439,15 @@
 						)
 					}
 				}
+			},
+			{
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
 			}
 		]
 	),
@@ -432,6 +486,15 @@
 							64,
 							64
 						]
+					}
+				}
+			},
+			{
+				"type":"bevy_render::view::visibility::ComputedVisibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
 					}
 				}
 			},
@@ -528,6 +591,15 @@
 						)
 					}
 				}
+			},
+			{
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
 			}
 		]
 	),
@@ -562,6 +634,15 @@
 							64,
 							64
 						]
+					}
+				}
+			},
+			{
+				"type":"bevy_render::view::visibility::ComputedVisibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
 					}
 				}
 			},
@@ -658,6 +739,15 @@
 						)
 					}
 				}
+			},
+			{
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
 			}
 		]
 	),
@@ -692,6 +782,15 @@
 							64,
 							64
 						]
+					}
+				}
+			},
+			{
+				"type":"bevy_render::view::visibility::ComputedVisibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
 					}
 				}
 			},
@@ -788,6 +887,15 @@
 						)
 					}
 				}
+			},
+			{
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
 			}
 		]
 	),
@@ -822,6 +930,15 @@
 							64,
 							64
 						]
+					}
+				}
+			},
+			{
+				"type":"bevy_render::view::visibility::ComputedVisibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
 					}
 				}
 			},
@@ -918,6 +1035,15 @@
 						)
 					}
 				}
+			},
+			{
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
 			}
 		]
 	),
@@ -952,6 +1078,15 @@
 							205,
 							64
 						]
+					}
+				}
+			},
+			{
+				"type":"bevy_render::view::visibility::ComputedVisibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
 					}
 				}
 			},
@@ -1048,6 +1183,15 @@
 						)
 					}
 				}
+			},
+			{
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
 			}
 		]
 	),
@@ -1082,6 +1226,15 @@
 							228,
 							64
 						]
+					}
+				}
+			},
+			{
+				"type":"bevy_render::view::visibility::ComputedVisibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
 					}
 				}
 			},
@@ -1178,6 +1331,15 @@
 						)
 					}
 				}
+			},
+			{
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
 			}
 		]
 	),
@@ -1220,6 +1382,15 @@
 							128,
 							63
 						]
+					}
+				}
+			},
+			{
+				"type":"bevy_render::view::visibility::ComputedVisibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
 					}
 				}
 			},
@@ -1314,6 +1485,15 @@
 							30.0,
 							1.0
 						)
+					}
+				}
+			},
+			{
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
 					}
 				}
 			}

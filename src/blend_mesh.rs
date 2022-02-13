@@ -38,12 +38,9 @@ pub fn blend_mesh_loader(
             ..Default::default()
         };
 
-        commands.entity(entity).insert_bundle((
-            bundle.mesh,
-            bundle.material,
-            bundle.visibility,
-            bundle.computed_visibility,
-        ));
+        commands
+            .entity(entity)
+            .insert_bundle((bundle.mesh, bundle.material));
     }
 }
 
