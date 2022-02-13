@@ -16,8 +16,6 @@ from blender_bevy_toolkit.rust_types import F32, Option, Enum, EnumValue, Map, B
 logger = logging.getLogger(__name__)
 
 
-
-
 @register_component
 class Visibility(ComponentBase):
     """
@@ -47,7 +45,9 @@ class Visibility(ComponentBase):
 
     @staticmethod
     def is_present(obj):
-        return obj.type in ['MESH', ]
+        return obj.type in [
+            "MESH",
+        ]
 
     @staticmethod
     def register():
@@ -78,11 +78,9 @@ class VisibilityPanel(bpy.types.Panel):
         row.label(text="AUTO: Part of PbrBundle")
 
         row = self.layout.row()
-        row.prop(context.object.data, "hide_viewport", text="Visible", invert_checkbox=True)
-
-
-
-
+        row.prop(
+            context.object.data, "hide_viewport", text="Visible", invert_checkbox=True
+        )
 
 
 @register_component
@@ -144,9 +142,6 @@ class ComputedVisibilityPanel(bpy.types.Panel):
         row.label(text="AUTO: Part of PbrBundle")
 
         row = self.layout.row()
-        row.prop(context.object.data, "hide_viewport", text="Visible", invert_checkbox=True)
-
-
-
-
-
+        row.prop(
+            context.object.data, "hide_viewport", text="Visible", invert_checkbox=True
+        )
