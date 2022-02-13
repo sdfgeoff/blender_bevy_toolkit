@@ -18,9 +18,9 @@ class Entity:
         return rust_types.ron.encode(
             rust_types.ron.Struct(
                 entity=rust_types.Int(self.entity_id),
-                components=rust_types.List(*self.components)
+                components=rust_types.List(*self.components),
             ),
-            indent
+            indent,
         )
 
 

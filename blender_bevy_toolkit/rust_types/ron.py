@@ -78,7 +78,7 @@ class Struct(Base):
     def to_str(self, indent):
         if not self.mapping:
             return "()"
-        indc = ind(indent+1)
+        indc = ind(indent + 1)
         field_string = f",{indc}".join(
             f"{k}:{encode(v, indent+1)}" for k, v in self.mapping.items()
         )
