@@ -1,5 +1,5 @@
 use bevy::{
-    asset::{AssetLoader, LoadContext},
+    asset::{AssetLoader, LoadContext, AssetPath},
     prelude::*,
     utils::BoxedFuture,
 };
@@ -26,6 +26,7 @@ pub fn blend_material_loader(
         commands.entity(entity).insert(material_handle);
     }
 }
+use std::path::Path;
 
 #[derive(Default)]
 pub struct BlendMaterialAssetLoader;
@@ -38,9 +39,8 @@ impl AssetLoader for BlendMaterialAssetLoader {
     ) -> BoxedFuture<'a, Result<(), anyhow::Error>> {
         Box::pin(async move {
             let material_raw: BlenderStandardMaterial = ron::from_str(std::str::from_utf8(bytes)?)?;
-            println!("{:?}", material_raw);
 
-            let material = StandardMaterial {
+            let mut material = StandardMaterial {
                 base_color: material_raw.base_color,
                 emissive: material_raw.emissive,
                 perceptual_roughness: material_raw.perceptual_roughness,
@@ -51,7 +51,23 @@ impl AssetLoader for BlendMaterialAssetLoader {
                 alpha_mode: material_raw.alpha_mode.into(),
                 ..Default::default()
             };
-            let asset = bevy::asset::LoadedAsset::new(material);
+
+            let mut dependant_assets = Vec::new();
+
+            if let Some(tex_path) = material_raw.base_color_texture {
+                let path = Path::new(&tex_path);
+                let asset_path = AssetPath::new_ref(path, None);
+                material.base_color_texture = Some(load_context.get_handle(asset_path.clone()));
+                dependant_assets.push(tex_path);
+            }
+
+
+            let mut asset = bevy::asset::LoadedAsset::new(material);
+            for path in dependant_assets {
+                let path = Path::new(&path);
+                let asset_path = AssetPath::new_ref(path, None);
+                asset = asset.with_dependency(asset_path)
+            }
 
             load_context.set_default_asset(asset);
             Ok(())

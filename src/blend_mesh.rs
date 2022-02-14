@@ -88,7 +88,7 @@ fn parse_vec3_array(data: &[u8], num_elements: usize) -> Vec<[f32; 3]> {
 fn parse_vec2_array(data: &[u8], num_elements: usize) -> Vec<[f32; 2]> {
     let mut out_array = Vec::with_capacity(num_elements);
     for i in 0..num_elements {
-        out_array.push([get_f32(&data[i * 12..]), get_f32(&data[(i * 8 + 4)..])]);
+        out_array.push([get_f32(&data[i * 8..]), get_f32(&data[(i * 8 + 4)..])]);
     }
     out_array
 }
