@@ -10,6 +10,7 @@ from blender_bevy_toolkit import rust_types
 
 import logging
 from blender_bevy_toolkit import jdict
+import bmesh
 
 logger = logging.getLogger(__name__)
 
@@ -73,13 +74,16 @@ def serialize_mesh(obj):
         depsgraph=depsgraph
     )
 
+    triangulate_ngons(mesh)
     mesh.calc_loop_triangles()
     mesh.calc_normals_split()
+    mesh.calc_tangents()
 
     verts = []
     normals = []
     indices = []
     uv0 = []
+    tangents = []
 
     dedup_data_lookup = {}
 
@@ -92,6 +96,7 @@ def serialize_mesh(obj):
             vert = mesh.vertices[loop.vertex_index]
             position = tuple(vert.co)
             normal = tuple(loop.normal)
+            tangent = tuple(loop.tangent)
 
             if mesh.uv_layers:
 
@@ -100,12 +105,13 @@ def serialize_mesh(obj):
             else:
                 uv = (0.0, 0.0)
 
-            dedup = (position, normal, uv)
+            dedup = (position, normal, uv, tangent)
             if dedup not in dedup_data_lookup:
                 index = len(verts)
                 verts.append(position)
                 normals.append(normal)
                 uv0.append(uv)
+                tangents.append(tangent)
                 dedup_data_lookup[dedup] = index
             else:
                 index = dedup_data_lookup[dedup]
@@ -124,15 +130,31 @@ def serialize_mesh(obj):
     # We don't need len(normals) because:
     assert len(normals) == len(verts)
     assert len(uv0) == len(verts)
+    assert len(tangents) == len(verts)
 
     # Now we can pack all our data:
     for vert in verts:
         out_data += struct.pack("fff", *vert)
     for normal in normals:
         out_data += struct.pack("fff", *normal)
+    for tangent in tangents:
+        out_data += struct.pack("ffff", *tangent, 0.0)  # Bevy expects tangents to be a vec4 because https://github.com/bevyengine/bevy/issues/3604
     for uv in uv0:
         out_data += struct.pack("ff", *uv)
     for index in indices:
         out_data += struct.pack("III", *index)
 
     return out_data
+
+
+
+def triangulate_ngons(mesh):
+    """ Triangulate n-gons in a mesh. Copied from blender-godot-exporter used 
+    under ... GPL like all this python is by virtue of being a blender addon """
+    tri_mesh = bmesh.new()
+    tri_mesh.from_mesh(mesh)
+    ngons = [face for face in tri_mesh.faces if len(face.verts) > 4]
+    bmesh.ops.triangulate(tri_mesh, faces=ngons, quad_method="ALTERNATE")
+    tri_mesh.to_mesh(mesh)
+    tri_mesh.free()
+    mesh.update()

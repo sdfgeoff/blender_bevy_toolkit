@@ -37,6 +37,7 @@ required=True)
         "output_filepath": config.output_file,
         "mesh_output_folder": "meshes",
         "material_output_folder": "materials",
+        "texture_output_folder": "textures",
         "make_duplicates_real": True
     })
 

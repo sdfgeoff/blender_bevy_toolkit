@@ -14,6 +14,7 @@ smallvec = { version = "1.4", features = ["serde"] }
 
 [dependencies.bevy]
 version="0.6.0"
+features=['jpeg']
 
 [dependencies.bevy_rapier3d]
 version="0.12.0"

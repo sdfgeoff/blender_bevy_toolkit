@@ -2,6 +2,7 @@ import bpy
 import struct
 import hashlib
 import os
+import shutil
 from blender_bevy_toolkit.component_base import (
     register_component,
     ComponentBase,
@@ -22,7 +23,7 @@ class Material(ComponentBase):
         assert Material.is_present(obj)
 
         material_data = (
-            serialize_material(obj.data.materials[0])
+            serialize_material(config, obj.data.materials[0])
             if obj.data.materials and obj.data.materials[0] is not None
             else DEFAULT_MATERIAL
         )
@@ -92,7 +93,7 @@ DEFAULT_MATERIAL = ron.encode(
 ).encode("utf-8")
 
 
-def serialize_material(material):
+def serialize_material(config, material):
     """
     pub struct StandardMaterial {
         /// Doubles as diffuse albedo for non-metallic, specular for metallic and a mix for everything
@@ -134,20 +135,73 @@ def serialize_material(material):
     main_node = surface_socket.links[0].from_node
 
     if main_node.type == "BSDF_PRINCIPLED":
+        # In blender, the base color is overwritten by the texture
+        base_color_input = main_node.inputs["Base Color"]
+        if len(base_color_input.links) == 0:
+            base_color = col_to_ron(base_color_input.default_value)
+        else:
+            base_color = col_to_ron([1.0, 1.0, 1.0, 1.0])
+        base_color_texture = get_image_from_node_socket(config, base_color_input)
+
+        # In blender, the emissive color is overwritten by the texture
+        emmissive_color_input = main_node.inputs["Emission"]
+        if len(emmissive_color_input.links) == 0:
+            emissive_color = col_to_ron(emmissive_color_input.default_value)
+        else:
+            emissive_color = col_to_ron([1.0, 1.0, 1.0, 1.0])
+        emissive_color_texture = get_image_from_node_socket(config, emmissive_color_input)
+
+        # Roughness + metallic are combined
+        metallic_node_input = main_node.inputs["Metallic"]
+        if len(metallic_node_input.links) == 0:
+            metallic = ron.Float(metallic_node_input.default_value)
+            use_metallic_texture = False
+        else:
+            metallic = ron.Float(0.5)
+            use_metallic_texture = True
+
+        roughness_node_input = main_node.inputs["Roughness"]
+        if len(roughness_node_input.links) == 0:
+            roughness = ron.Float(roughness_node_input.default_value)
+            use_roughness_texture = False
+        else:
+            roughness = ron.Float(0.5)
+            use_roughness_texture = True
+
+        if use_roughness_texture != use_metallic_texture:
+            raise Exception("Either both or none of [metallic, roughness] must be texture driven")
+        elif use_roughness_texture and use_metallic_texture:
+
+            if roughness_node_input.links[0].from_node != metallic_node_input.links[0].from_node:
+                raise Exception("Roughness and Metallic must come from the same node")
+            
+            sep_node = roughness_node_input.links[0].from_node 
+            if sep_node.type != 'SEPRGB':
+                raise Exception("Roughness and Metallic must be connected to a Separate RGB Node")
+            
+            if roughness_node_input.links[0].from_socket.name != 'G':
+                raise Exception("Roughness should be connected to the Green Channel")
+            if metallic_node_input.links[0].from_socket.name != 'R':
+                raise Exception("Metallic should be connected to the Red Channel")
+
+            met_rough_tex = get_image_from_node_socket(config, sep_node.inputs["Image"])
+        else:
+            met_rough_tex = ron.EnumValue("None")
+
+        
+
         return ron.encode(
             ron.Struct(
-                base_color=col_to_ron(main_node.inputs["Base Color"].default_value),
-                base_color_texture=ron.EnumValue("None"),  # TODO
-                emissive=col_to_ron(main_node.inputs["Emission"].default_value),
-                emissive_texture=ron.EnumValue("None"),  # TODO
-                perceptual_roughness=ron.Float(
-                    main_node.inputs["Roughness"].default_value
-                ),
-                metallic=ron.Float(main_node.inputs["Metallic"].default_value),
-                metallic_roughness_texture=ron.EnumValue("None"),  # TODO
+                base_color=base_color,
+                base_color_texture=base_color_texture,
+                emissive=emissive_color,
+                emissive_texture=emissive_color_texture,
+                perceptual_roughness=roughness,
+                metallic=metallic,
+                metallic_roughness_texture=met_rough_tex,
                 reflectance=ron.Float(main_node.inputs["Specular"].default_value),
-                normal_map_texture=ron.EnumValue("None"),  # TODO
-                occlusion_texture=ron.EnumValue("None"),  # TODO
+                normal_map_texture=get_normal_map(config, main_node.inputs["Normal"]),
+                occlusion_texture=ron.EnumValue("None"),  # Blenders node graph doesn't have a neat way to represent this, so we'll leave it for now
                 double_sided=not material.use_backface_culling,
                 unlit=ron.Bool(False),
                 alpha_mode=ron.EnumValue("Opaque"),  # TODO
@@ -159,4 +213,72 @@ def serialize_material(material):
             f"Unable to export node type {main_node.type} from material {material.name}"
         )
 
-    return b"Test"
+def get_normal_map(config, socket):
+    """ Read through blender's normal map node """
+    if len(socket.links) == 0:
+        return ron.EnumValue("None")
+
+    normal_map_node = socket.links[0].from_node
+    if normal_map_node.type != "NORMAL_MAP":
+        raise Exception("Expected node feeding into surface normal to be a Vector -> Normal Map node")
+
+    return get_image_from_node_socket(config, normal_map_node.inputs["Color"])
+
+
+def get_image_from_node_socket(config, socket):
+    """ Copies image to textures folder """
+    if len(socket.links) == 0:
+        return ron.EnumValue("None")
+    elif len(socket.links) > 1:
+        raise Exception("Muliple inputs to image slot???")
+
+    source = socket.links[0].from_node
+    if source.type != "TEX_IMAGE":
+        raise Exception("Expected image input to socket", socket.name)
+
+    image = source.image
+    if source.image is None:
+        return ron.EnumValue("None")
+
+    current_path = bpy.path.abspath(source.image.filepath)
+    hashval = hashimage(image)
+    extension = {
+        "BMP": "bmp",
+        # "IRIS": "",
+        "PNG": "png",
+        "JPEG": "jpg",
+        # "JPEG2000": "",
+        "TARGA": "tga",
+        # "TARGA_RAW": "",
+        # "CINEON": "",
+        # "DPX": "",
+        # "OPEN_EXR_MULTILAYER": "",
+        # "OPEN_EXR": "",
+        # "HDR": "",
+        "TIFF": "tiff",
+        "AVI_JPEG": "avi",
+        "AVI_RAW": "avi",
+        # "FFMPEG": "",
+    
+    }[source.image.file_format]
+
+    image_output_path = os.path.join(
+            config["texture_output_folder"],
+            f"{hashval}.{extension}"
+    )
+    shutil.copyfile(current_path, image_output_path)
+
+    path = os.path.relpath(image_output_path, config["output_folder"])
+    # TODO: The rust side doesn't support relative paths, so for now we have to hardcode this
+    path = os.path.join("scenes", path)
+
+    return ron.EnumValue("Some", ron.Tuple(path))
+
+
+def hashimage(image):
+    hash = hashlib.md5()
+    hash.update(open(bpy.path.abspath(image.filepath), 'rb').read())
+    hash_text = hash.hexdigest()
+    return hash_text
+
+    

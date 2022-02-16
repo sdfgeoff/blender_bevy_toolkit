@@ -61,6 +61,34 @@ impl AssetLoader for BlendMaterialAssetLoader {
                 dependant_assets.push(tex_path);
             }
 
+            if let Some(tex_path) = material_raw.emissive_texture {
+                let path = Path::new(&tex_path);
+                let asset_path = AssetPath::new_ref(path, None);
+                material.emissive_texture = Some(load_context.get_handle(asset_path.clone()));
+                dependant_assets.push(tex_path);
+            }
+
+            if let Some(tex_path) = material_raw.metallic_roughness_texture {
+                let path = Path::new(&tex_path);
+                let asset_path = AssetPath::new_ref(path, None);
+                material.metallic_roughness_texture = Some(load_context.get_handle(asset_path.clone()));
+                dependant_assets.push(tex_path);
+            }
+
+            if let Some(tex_path) = material_raw.normal_map_texture {
+                let path = Path::new(&tex_path);
+                let asset_path = AssetPath::new_ref(path, None);
+                material.normal_map_texture = Some(load_context.get_handle(asset_path.clone()));
+                dependant_assets.push(tex_path);
+                println!("Found normal map!");
+            }
+
+            if let Some(tex_path) = material_raw.occlusion_texture {
+                let path = Path::new(&tex_path);
+                let asset_path = AssetPath::new_ref(path, None);
+                material.occlusion_texture = Some(load_context.get_handle(asset_path.clone()));
+                dependant_assets.push(tex_path);
+            }
 
             let mut asset = bevy::asset::LoadedAsset::new(material);
             for path in dependant_assets {

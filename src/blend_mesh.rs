@@ -12,6 +12,7 @@ pub struct BlendMeshLoader {
     path: String,
 }
 
+type FVec4Arr = Vec<[f32; 4]>;
 type FVec3Arr = Vec<[f32; 3]>;
 type FVec2Arr = Vec<[f32; 2]>;
 
@@ -52,7 +53,7 @@ impl AssetLoader for BlendMeshAssetLoader {
 }
 
 pub fn load_mesh(data: &[u8]) -> Mesh {
-    let (indices, positions, normals, uv0s) = extact_buffers_from_mesh(data);
+    let (indices, positions, tangents, normals, uv0s) = extact_buffers_from_mesh(data);
     let indices = Indices::U32(indices);
 
     let mut mesh = Mesh::new(PrimitiveTopology::TriangleList);
@@ -60,6 +61,7 @@ pub fn load_mesh(data: &[u8]) -> Mesh {
     mesh.set_attribute(Mesh::ATTRIBUTE_POSITION, positions);
     mesh.set_attribute(Mesh::ATTRIBUTE_NORMAL, normals);
     mesh.set_attribute(Mesh::ATTRIBUTE_UV_0, uv0s);
+    mesh.set_attribute(Mesh::ATTRIBUTE_TANGENT, tangents);
     mesh
 }
 
@@ -72,6 +74,20 @@ fn get_u32(arr: &[u8]) -> u32 {
     u32::from_le_bytes(arr[0..4].try_into().unwrap())
 }
 
+
+/// Converts a slice of u8's into a vec of f32;s
+fn parse_vec4_array(data: &[u8], num_elements: usize) -> Vec<[f32; 4]> {
+    let mut out_array = Vec::with_capacity(num_elements);
+    for i in 0..num_elements {
+        out_array.push([
+            get_f32(&data[i * 16..]),
+            get_f32(&data[(i * 16 + 4)..]),
+            get_f32(&data[(i * 16 + 8)..]),
+            get_f32(&data[(i * 16 + 12)..]),
+        ]);
+    }
+    out_array
+}
 /// Converts a slice of u8's into a vec of f32;s
 fn parse_vec3_array(data: &[u8], num_elements: usize) -> Vec<[f32; 3]> {
     let mut out_array = Vec::with_capacity(num_elements);
@@ -104,19 +120,21 @@ fn parse_u32_array(data: &[u8], num_elements: usize) -> Vec<u32> {
 /// Converts the bytes of a binary stl file into a vector of face indices,
 /// vertices and vertex normals.
 /// Expects correctly formatted STL files
-fn extact_buffers_from_mesh(mesh: &[u8]) -> (Vec<u32>, FVec3Arr, FVec3Arr, FVec2Arr) {
+fn extact_buffers_from_mesh(mesh: &[u8]) -> (Vec<u32>, FVec3Arr, FVec4Arr, FVec3Arr, FVec2Arr) {
     let num_verts = u16::from_le_bytes(mesh[0..2].try_into().unwrap()) as usize;
     let num_faces = u16::from_le_bytes(mesh[2..4].try_into().unwrap()) as usize;
 
     let verts_start = 4;
     let normals_start = verts_start + num_verts * 4 * 3;
-    let uv0_start = normals_start + num_verts * 4 * 3;
+    let tangents_start = normals_start + num_verts * 4 * 3;
+    let uv0_start = tangents_start + num_verts * 4 * 4;
     let indices_start = uv0_start + num_verts * 4 * 2;
 
     let positions = parse_vec3_array(&mesh[verts_start..], num_verts);
     let normals = parse_vec3_array(&mesh[normals_start..], num_verts);
+    let tangents = parse_vec4_array(&mesh[tangents_start..], num_verts);
     let uv0 = parse_vec2_array(&mesh[uv0_start..], num_verts);
     let indices = parse_u32_array(&mesh[indices_start..], num_faces * 3);
 
-    (indices, positions, normals, uv0)
+    (indices, positions, tangents, normals, uv0)
 }
