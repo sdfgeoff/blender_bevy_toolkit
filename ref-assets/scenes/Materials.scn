@@ -288,7 +288,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/d66928c362c5e5b875e5addf87a4f45c.mesh"
+					"path":"scenes/meshes/ba1ac2f2d1665a4e19c825c3f2f2719e.mesh"
 				}
 			},
 			{
@@ -389,7 +389,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/d66928c362c5e5b875e5addf87a4f45c.mesh"
+					"path":"scenes/meshes/ba1ac2f2d1665a4e19c825c3f2f2719e.mesh"
 				}
 			},
 			{
@@ -490,7 +490,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/d66928c362c5e5b875e5addf87a4f45c.mesh"
+					"path":"scenes/meshes/ba1ac2f2d1665a4e19c825c3f2f2719e.mesh"
 				}
 			},
 			{
@@ -591,7 +591,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/d66928c362c5e5b875e5addf87a4f45c.mesh"
+					"path":"scenes/meshes/ba1ac2f2d1665a4e19c825c3f2f2719e.mesh"
 				}
 			},
 			{
@@ -692,7 +692,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/d66928c362c5e5b875e5addf87a4f45c.mesh"
+					"path":"scenes/meshes/ba1ac2f2d1665a4e19c825c3f2f2719e.mesh"
 				}
 			},
 			{
@@ -793,7 +793,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/d66928c362c5e5b875e5addf87a4f45c.mesh"
+					"path":"scenes/meshes/ba1ac2f2d1665a4e19c825c3f2f2719e.mesh"
 				}
 			},
 			{
@@ -894,7 +894,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/d66928c362c5e5b875e5addf87a4f45c.mesh"
+					"path":"scenes/meshes/ba1ac2f2d1665a4e19c825c3f2f2719e.mesh"
 				}
 			},
 			{
@@ -995,7 +995,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/d66928c362c5e5b875e5addf87a4f45c.mesh"
+					"path":"scenes/meshes/ba1ac2f2d1665a4e19c825c3f2f2719e.mesh"
 				}
 			},
 			{
@@ -1096,7 +1096,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/d66928c362c5e5b875e5addf87a4f45c.mesh"
+					"path":"scenes/meshes/ba1ac2f2d1665a4e19c825c3f2f2719e.mesh"
 				}
 			},
 			{
@@ -1175,9 +1175,9 @@
 					"scale":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							10.0,
-							10.0,
-							10.0
+							1.0,
+							1.0,
+							1.0
 						)
 					}
 				}
@@ -1197,7 +1197,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/69011efd7fcc99e68d9bcc6213de1db2.mesh"
+					"path":"scenes/meshes/fdc8444ca54990a3c44e9e0d0d3fc233.mesh"
 				}
 			},
 			{
@@ -1223,9 +1223,9 @@
 					"scale":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							10.0,
-							10.0,
-							10.0
+							1.0,
+							1.0,
+							1.0
 						)
 					}
 				}
@@ -1353,6 +1353,410 @@
 							0.9999999403953552,
 							1.0
 						)
+					}
+				}
+			}
+		]
+	),
+	(
+		entity:13,
+		components:[
+			{
+				"type":"bevy_render::view::visibility::ComputedVisibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
+			},
+			{
+				"type":"bevy_transform::components::global_transform::GlobalTransform",
+				"struct":{
+					"translation":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							7.0,
+							-2.0,
+							0.0
+						)
+					},
+					"rotation":{
+						"type":"glam::quat::Quat",
+						"value":(
+							0.0,
+							0.0,
+							0.0,
+							1.0
+						)
+					},
+					"scale":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							1.0,
+							1.0,
+							1.0
+						)
+					}
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
+				"struct":{
+					"name":"Cube"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/5dd5ccc674bd40d244494ba54faf41d0.material"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
+				"struct":{
+					"path":"scenes/meshes/5c37dfb6a8d80d50eff4ac0b35204223.mesh"
+				}
+			},
+			{
+				"type":"bevy_transform::components::transform::Transform",
+				"struct":{
+					"translation":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							7.0,
+							-2.0,
+							0.0
+						)
+					},
+					"rotation":{
+						"type":"glam::quat::Quat",
+						"value":(
+							0.0,
+							0.0,
+							0.0,
+							1.0
+						)
+					},
+					"scale":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							1.0,
+							1.0,
+							1.0
+						)
+					}
+				}
+			},
+			{
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
+			}
+		]
+	),
+	(
+		entity:14,
+		components:[
+			{
+				"type":"bevy_render::view::visibility::ComputedVisibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
+			},
+			{
+				"type":"bevy_transform::components::global_transform::GlobalTransform",
+				"struct":{
+					"translation":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							-8.0,
+							-2.0,
+							-1.500393033027649
+						)
+					},
+					"rotation":{
+						"type":"glam::quat::Quat",
+						"value":(
+							0.43730035424232483,
+							0.0,
+							0.0,
+							0.8993155360221863
+						)
+					},
+					"scale":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							1.0,
+							1.0,
+							1.0
+						)
+					}
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
+				"struct":{
+					"name":"Cube.001"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/5dd5ccc674bd40d244494ba54faf41d0.material"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
+				"struct":{
+					"path":"scenes/meshes/5c37dfb6a8d80d50eff4ac0b35204223.mesh"
+				}
+			},
+			{
+				"type":"bevy_transform::components::transform::Transform",
+				"struct":{
+					"translation":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							-8.0,
+							-2.0,
+							-1.500393033027649
+						)
+					},
+					"rotation":{
+						"type":"glam::quat::Quat",
+						"value":(
+							0.43730035424232483,
+							0.0,
+							0.0,
+							0.8993155360221863
+						)
+					},
+					"scale":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							1.0,
+							1.0,
+							1.0
+						)
+					}
+				}
+			},
+			{
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
+			}
+		]
+	),
+	(
+		entity:15,
+		components:[
+			{
+				"type":"bevy_render::view::visibility::ComputedVisibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
+			},
+			{
+				"type":"bevy_transform::components::global_transform::GlobalTransform",
+				"struct":{
+					"translation":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							-7.0,
+							1.0,
+							3.0
+						)
+					},
+					"rotation":{
+						"type":"glam::quat::Quat",
+						"value":(
+							0.7071068286895752,
+							0.0,
+							0.0,
+							0.7071068286895752
+						)
+					},
+					"scale":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							1.0,
+							1.0,
+							1.0
+						)
+					}
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
+				"struct":{
+					"name":"Plane.001"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/9dfd7d30ab20659fd4bca54a278c6d50.material"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
+				"struct":{
+					"path":"scenes/meshes/374c7b215a6458c4c8676b4460703e4a.mesh"
+				}
+			},
+			{
+				"type":"bevy_transform::components::transform::Transform",
+				"struct":{
+					"translation":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							-7.0,
+							1.0,
+							3.0
+						)
+					},
+					"rotation":{
+						"type":"glam::quat::Quat",
+						"value":(
+							0.7071068286895752,
+							0.0,
+							0.0,
+							0.7071068286895752
+						)
+					},
+					"scale":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							1.0,
+							1.0,
+							1.0
+						)
+					}
+				}
+			},
+			{
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
+			}
+		]
+	),
+	(
+		entity:16,
+		components:[
+			{
+				"type":"bevy_render::view::visibility::ComputedVisibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
+					}
+				}
+			},
+			{
+				"type":"bevy_transform::components::global_transform::GlobalTransform",
+				"struct":{
+					"translation":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							0.0,
+							4.904669761657715,
+							3.0
+						)
+					},
+					"rotation":{
+						"type":"glam::quat::Quat",
+						"value":(
+							-1.7227142379283578e-08,
+							0.21643957495689392,
+							-0.9762960076332092,
+							1.630571375699219e-07
+						)
+					},
+					"scale":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							1.0,
+							1.0,
+							1.0
+						)
+					}
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_label::BlendLabel",
+				"struct":{
+					"name":"Plane.002"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
+				"struct":{
+					"path":"scenes/materials/49b84827ddb5fb8c75b1687a34f2ab39.material"
+				}
+			},
+			{
+				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
+				"struct":{
+					"path":"scenes/meshes/7792b144cc867cf4c142e2d592739e02.mesh"
+				}
+			},
+			{
+				"type":"bevy_transform::components::transform::Transform",
+				"struct":{
+					"translation":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							0.0,
+							4.904669761657715,
+							3.0
+						)
+					},
+					"rotation":{
+						"type":"glam::quat::Quat",
+						"value":(
+							-1.7227142379283578e-08,
+							0.21643957495689392,
+							-0.9762960076332092,
+							1.630571375699219e-07
+						)
+					},
+					"scale":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							1.0,
+							1.0,
+							1.0
+						)
+					}
+				}
+			},
+			{
+				"type":"bevy_render::view::visibility::Visibility",
+				"struct":{
+					"is_visible":{
+						"type":"bool",
+						"value":true
 					}
 				}
 			}

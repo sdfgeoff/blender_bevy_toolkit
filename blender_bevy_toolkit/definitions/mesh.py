@@ -96,12 +96,14 @@ def serialize_mesh(obj):
             vert = mesh.vertices[loop.vertex_index]
             position = tuple(vert.co)
             normal = tuple(loop.normal)
-            tangent = tuple(loop.tangent)
+            tangent = tuple(
+                [loop.tangent[0], loop.tangent[1], loop.tangent[2], loop.bitangent_sign]
+            )
 
             if mesh.uv_layers:
 
                 uv_raw = mesh.uv_layers[0].data[loop_index].uv
-                uv = (uv_raw[0], uv_raw[1])
+                uv = (uv_raw[0], 1.0 - uv_raw[1])
             else:
                 uv = (0.0, 0.0)
 
@@ -139,7 +141,7 @@ def serialize_mesh(obj):
         out_data += struct.pack("fff", *normal)
     for tangent in tangents:
         out_data += struct.pack(
-            "ffff", *tangent, 0.0
+            "ffff", *tangent
         )  # Bevy expects tangents to be a vec4 because https://github.com/bevyengine/bevy/issues/3604
     for uv in uv0:
         out_data += struct.pack("ff", *uv)
