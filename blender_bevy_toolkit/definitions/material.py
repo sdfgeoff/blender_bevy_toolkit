@@ -149,7 +149,9 @@ def serialize_material(config, material):
             emissive_color = col_to_ron(emmissive_color_input.default_value)
         else:
             emissive_color = col_to_ron([1.0, 1.0, 1.0, 1.0])
-        emissive_color_texture = get_image_from_node_socket(config, emmissive_color_input)
+        emissive_color_texture = get_image_from_node_socket(
+            config, emmissive_color_input
+        )
 
         # Roughness + metallic are combined
         metallic_node_input = main_node.inputs["Metallic"]
@@ -157,7 +159,7 @@ def serialize_material(config, material):
             metallic = ron.Float(metallic_node_input.default_value)
             use_metallic_texture = False
         else:
-            metallic = ron.Float(0.5)
+            metallic = ron.Float(1.0)
             use_metallic_texture = True
 
         roughness_node_input = main_node.inputs["Roughness"]
@@ -165,30 +167,35 @@ def serialize_material(config, material):
             roughness = ron.Float(roughness_node_input.default_value)
             use_roughness_texture = False
         else:
-            roughness = ron.Float(0.5)
+            roughness = ron.Float(1.0)
             use_roughness_texture = True
 
         if use_roughness_texture != use_metallic_texture:
-            raise Exception("Either both or none of [metallic, roughness] must be texture driven")
+            raise Exception(
+                "Either both or none of [metallic, roughness] must be texture driven"
+            )
         elif use_roughness_texture and use_metallic_texture:
 
-            if roughness_node_input.links[0].from_node != metallic_node_input.links[0].from_node:
+            if (
+                roughness_node_input.links[0].from_node
+                != metallic_node_input.links[0].from_node
+            ):
                 raise Exception("Roughness and Metallic must come from the same node")
-            
-            sep_node = roughness_node_input.links[0].from_node 
-            if sep_node.type != 'SEPRGB':
-                raise Exception("Roughness and Metallic must be connected to a Separate RGB Node")
-            
-            if roughness_node_input.links[0].from_socket.name != 'G':
+
+            sep_node = roughness_node_input.links[0].from_node
+            if sep_node.type != "SEPRGB":
+                raise Exception(
+                    "Roughness and Metallic must be connected to a Separate RGB Node"
+                )
+
+            if roughness_node_input.links[0].from_socket.name != "G":
                 raise Exception("Roughness should be connected to the Green Channel")
-            if metallic_node_input.links[0].from_socket.name != 'R':
+            if metallic_node_input.links[0].from_socket.name != "R":
                 raise Exception("Metallic should be connected to the Red Channel")
 
             met_rough_tex = get_image_from_node_socket(config, sep_node.inputs["Image"])
         else:
             met_rough_tex = ron.EnumValue("None")
-
-        
 
         return ron.encode(
             ron.Struct(
@@ -201,7 +208,9 @@ def serialize_material(config, material):
                 metallic_roughness_texture=met_rough_tex,
                 reflectance=ron.Float(main_node.inputs["Specular"].default_value),
                 normal_map_texture=get_normal_map(config, main_node.inputs["Normal"]),
-                occlusion_texture=ron.EnumValue("None"),  # Blenders node graph doesn't have a neat way to represent this, so we'll leave it for now
+                occlusion_texture=ron.EnumValue(
+                    "None"
+                ),  # Blenders node graph doesn't have a neat way to represent this, so we'll leave it for now
                 double_sided=not material.use_backface_culling,
                 unlit=ron.Bool(False),
                 alpha_mode=ron.EnumValue("Opaque"),  # TODO
@@ -213,20 +222,23 @@ def serialize_material(config, material):
             f"Unable to export node type {main_node.type} from material {material.name}"
         )
 
+
 def get_normal_map(config, socket):
-    """ Read through blender's normal map node """
+    """Read through blender's normal map node"""
     if len(socket.links) == 0:
         return ron.EnumValue("None")
 
     normal_map_node = socket.links[0].from_node
     if normal_map_node.type != "NORMAL_MAP":
-        raise Exception("Expected node feeding into surface normal to be a Vector -> Normal Map node")
+        raise Exception(
+            "Expected node feeding into surface normal to be a Vector -> Normal Map node"
+        )
 
     return get_image_from_node_socket(config, normal_map_node.inputs["Color"])
 
 
 def get_image_from_node_socket(config, socket):
-    """ Copies image to textures folder """
+    """Copies image to textures folder"""
     if len(socket.links) == 0:
         return ron.EnumValue("None")
     elif len(socket.links) > 1:
@@ -259,12 +271,10 @@ def get_image_from_node_socket(config, socket):
         "AVI_JPEG": "avi",
         "AVI_RAW": "avi",
         # "FFMPEG": "",
-    
     }[source.image.file_format]
 
     image_output_path = os.path.join(
-            config["texture_output_folder"],
-            f"{hashval}.{extension}"
+        config["texture_output_folder"], f"{hashval}.{extension}"
     )
     shutil.copyfile(current_path, image_output_path)
 
@@ -277,8 +287,6 @@ def get_image_from_node_socket(config, socket):
 
 def hashimage(image):
     hash = hashlib.md5()
-    hash.update(open(bpy.path.abspath(image.filepath), 'rb').read())
+    hash.update(open(bpy.path.abspath(image.filepath), "rb").read())
     hash_text = hash.hexdigest()
     return hash_text
-
-    

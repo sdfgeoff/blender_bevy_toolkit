@@ -1,5 +1,5 @@
 use bevy::{
-    asset::{AssetLoader, LoadContext, AssetPath},
+    asset::{AssetLoader, AssetPath, LoadContext},
     prelude::*,
     utils::BoxedFuture,
 };
@@ -71,7 +71,8 @@ impl AssetLoader for BlendMaterialAssetLoader {
             if let Some(tex_path) = material_raw.metallic_roughness_texture {
                 let path = Path::new(&tex_path);
                 let asset_path = AssetPath::new_ref(path, None);
-                material.metallic_roughness_texture = Some(load_context.get_handle(asset_path.clone()));
+                material.metallic_roughness_texture =
+                    Some(load_context.get_handle(asset_path.clone()));
                 dependant_assets.push(tex_path);
             }
 
@@ -80,7 +81,6 @@ impl AssetLoader for BlendMaterialAssetLoader {
                 let asset_path = AssetPath::new_ref(path, None);
                 material.normal_map_texture = Some(load_context.get_handle(asset_path.clone()));
                 dependant_assets.push(tex_path);
-                println!("Found normal map!");
             }
 
             if let Some(tex_path) = material_raw.occlusion_texture {

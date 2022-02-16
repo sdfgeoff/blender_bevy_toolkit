@@ -138,7 +138,9 @@ def serialize_mesh(obj):
     for normal in normals:
         out_data += struct.pack("fff", *normal)
     for tangent in tangents:
-        out_data += struct.pack("ffff", *tangent, 0.0)  # Bevy expects tangents to be a vec4 because https://github.com/bevyengine/bevy/issues/3604
+        out_data += struct.pack(
+            "ffff", *tangent, 0.0
+        )  # Bevy expects tangents to be a vec4 because https://github.com/bevyengine/bevy/issues/3604
     for uv in uv0:
         out_data += struct.pack("ff", *uv)
     for index in indices:
@@ -147,10 +149,9 @@ def serialize_mesh(obj):
     return out_data
 
 
-
 def triangulate_ngons(mesh):
-    """ Triangulate n-gons in a mesh. Copied from blender-godot-exporter used 
-    under ... GPL like all this python is by virtue of being a blender addon """
+    """Triangulate n-gons in a mesh. Copied from blender-godot-exporter used
+    under ... GPL like all this python is by virtue of being a blender addon"""
     tri_mesh = bmesh.new()
     tri_mesh.from_mesh(mesh)
     ngons = [face for face in tri_mesh.faces if len(face.verts) > 4]

@@ -74,7 +74,6 @@ fn get_u32(arr: &[u8]) -> u32 {
     u32::from_le_bytes(arr[0..4].try_into().unwrap())
 }
 
-
 /// Converts a slice of u8's into a vec of f32;s
 fn parse_vec4_array(data: &[u8], num_elements: usize) -> Vec<[f32; 4]> {
     let mut out_array = Vec::with_capacity(num_elements);

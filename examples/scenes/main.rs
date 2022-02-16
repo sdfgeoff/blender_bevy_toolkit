@@ -176,6 +176,7 @@ fn main() {
     let scene_list = read_scene_list();
     let start_scene = scene_list[0].clone();
     App::new()
+        .insert_resource(ClearColor(Color::BLACK))
         .add_plugins(DefaultPlugins)
         .add_plugin(RapierPhysicsPlugin::<NoUserData>::default())
         .add_plugin(BlendLoadPlugin::default())
