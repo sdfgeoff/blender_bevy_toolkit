@@ -1409,7 +1409,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
 				"struct":{
-					"path":"scenes/materials/5dd5ccc674bd40d244494ba54faf41d0.material"
+					"path":"scenes/materials/c3f16d26211f4347ebe459ca8995b224.material"
 				}
 			},
 			{
@@ -1510,7 +1510,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
 				"struct":{
-					"path":"scenes/materials/5dd5ccc674bd40d244494ba54faf41d0.material"
+					"path":"scenes/materials/c3f16d26211f4347ebe459ca8995b224.material"
 				}
 			},
 			{
@@ -1611,7 +1611,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
 				"struct":{
-					"path":"scenes/materials/9dfd7d30ab20659fd4bca54a278c6d50.material"
+					"path":"scenes/materials/98c94583fef3ac75b41982e8efce70c5.material"
 				}
 			},
 			{
@@ -1712,7 +1712,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_material::BlendMaterialLoader",
 				"struct":{
-					"path":"scenes/materials/49b84827ddb5fb8c75b1687a34f2ab39.material"
+					"path":"scenes/materials/cc1b761fb4dacef4052661ea853942e1.material"
 				}
 			},
 			{

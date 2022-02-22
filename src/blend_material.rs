@@ -5,6 +5,7 @@ use bevy::{
 };
 use ron;
 use serde::{Deserialize, Serialize};
+use std::path::Path;
 
 #[derive(Reflect, Default, Component)]
 #[reflect(Component)] // this tells the reflect derive to also reflect component behaviors
@@ -26,7 +27,6 @@ pub fn blend_material_loader(
         commands.entity(entity).insert(material_handle);
     }
 }
-use std::path::Path;
 
 #[derive(Default)]
 pub struct BlendMaterialAssetLoader;

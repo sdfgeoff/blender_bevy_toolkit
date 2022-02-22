@@ -18,7 +18,7 @@
 	metallic_roughness_texture:None,
 	reflectance:0.5,
 	normal_map_texture:Some(
-		"scenes/textures/92104f0d880b36bf5889a0ff245a6719.jpg"
+		"scenes/textures/753163b9aa274f9d7e2d3d37f506f3cd.png"
 	),
 	occlusion_texture:None,
 	double_sided:true,
