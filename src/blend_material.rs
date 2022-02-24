@@ -1,10 +1,11 @@
 use bevy::{
-    asset::{AssetLoader, LoadContext},
+    asset::{AssetLoader, AssetPath, LoadContext},
     prelude::*,
     utils::BoxedFuture,
 };
 use ron;
 use serde::{Deserialize, Serialize};
+use std::path::Path;
 
 #[derive(Reflect, Default, Component)]
 #[reflect(Component)] // this tells the reflect derive to also reflect component behaviors
@@ -38,9 +39,8 @@ impl AssetLoader for BlendMaterialAssetLoader {
     ) -> BoxedFuture<'a, Result<(), anyhow::Error>> {
         Box::pin(async move {
             let material_raw: BlenderStandardMaterial = ron::from_str(std::str::from_utf8(bytes)?)?;
-            println!("{:?}", material_raw);
 
-            let material = StandardMaterial {
+            let mut material = StandardMaterial {
                 base_color: material_raw.base_color,
                 emissive: material_raw.emissive,
                 perceptual_roughness: material_raw.perceptual_roughness,
@@ -51,7 +51,51 @@ impl AssetLoader for BlendMaterialAssetLoader {
                 alpha_mode: material_raw.alpha_mode.into(),
                 ..Default::default()
             };
-            let asset = bevy::asset::LoadedAsset::new(material);
+
+            let mut dependant_assets = Vec::new();
+
+            if let Some(tex_path) = material_raw.base_color_texture {
+                let path = Path::new(&tex_path);
+                let asset_path = AssetPath::new_ref(path, None);
+                material.base_color_texture = Some(load_context.get_handle(asset_path.clone()));
+                dependant_assets.push(tex_path);
+            }
+
+            if let Some(tex_path) = material_raw.emissive_texture {
+                let path = Path::new(&tex_path);
+                let asset_path = AssetPath::new_ref(path, None);
+                material.emissive_texture = Some(load_context.get_handle(asset_path.clone()));
+                dependant_assets.push(tex_path);
+            }
+
+            if let Some(tex_path) = material_raw.metallic_roughness_texture {
+                let path = Path::new(&tex_path);
+                let asset_path = AssetPath::new_ref(path, None);
+                material.metallic_roughness_texture =
+                    Some(load_context.get_handle(asset_path.clone()));
+                dependant_assets.push(tex_path);
+            }
+
+            if let Some(tex_path) = material_raw.normal_map_texture {
+                let path = Path::new(&tex_path);
+                let asset_path = AssetPath::new_ref(path, None);
+                material.normal_map_texture = Some(load_context.get_handle(asset_path.clone()));
+                dependant_assets.push(tex_path);
+            }
+
+            if let Some(tex_path) = material_raw.occlusion_texture {
+                let path = Path::new(&tex_path);
+                let asset_path = AssetPath::new_ref(path, None);
+                material.occlusion_texture = Some(load_context.get_handle(asset_path.clone()));
+                dependant_assets.push(tex_path);
+            }
+
+            let mut asset = bevy::asset::LoadedAsset::new(material);
+            for path in dependant_assets {
+                let path = Path::new(&path);
+                let asset_path = AssetPath::new_ref(path, None);
+                asset = asset.with_dependency(asset_path)
+            }
 
             load_context.set_default_asset(asset);
             Ok(())

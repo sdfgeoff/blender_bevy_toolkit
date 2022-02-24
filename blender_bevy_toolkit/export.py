@@ -59,6 +59,12 @@ def export_all(config):
     if not os.path.exists(config["material_output_folder"]):
         os.makedirs(config["material_output_folder"])
 
+    config["texture_output_folder"] = os.path.join(
+        output_folder, config["texture_output_folder"]
+    )
+    if not os.path.exists(config["texture_output_folder"]):
+        os.makedirs(config["texture_output_folder"])
+
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 

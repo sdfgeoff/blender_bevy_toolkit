@@ -87,7 +87,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/90dcf6196a36e977372fbdb99fe5e442.mesh"
+					"path":"scenes/meshes/99b63298142a0485c443b84e3760400c.mesh"
 				}
 			},
 			{
@@ -245,7 +245,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/f506f52d6a0eddb06bdc568d9c4b898f.mesh"
+					"path":"scenes/meshes/12cecf31bb6ab100fbab218a3b6ece5f.mesh"
 				}
 			},
 			{
@@ -403,7 +403,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/f506f52d6a0eddb06bdc568d9c4b898f.mesh"
+					"path":"scenes/meshes/12cecf31bb6ab100fbab218a3b6ece5f.mesh"
 				}
 			},
 			{
@@ -561,7 +561,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/17afe186fd43618f304e2a83adec7765.mesh"
+					"path":"scenes/meshes/7a9c625c4856ddceb9c653f0b572e7e5.mesh"
 				}
 			},
 			{
@@ -715,7 +715,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/aa2991b2542f12efdaa2f05ccf5b0334.mesh"
+					"path":"scenes/meshes/59d0798b35fc0de82d40f29f8210fef8.mesh"
 				}
 			},
 			{
@@ -869,7 +869,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/aa2991b2542f12efdaa2f05ccf5b0334.mesh"
+					"path":"scenes/meshes/59d0798b35fc0de82d40f29f8210fef8.mesh"
 				}
 			},
 			{
@@ -1023,7 +1023,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/aa2991b2542f12efdaa2f05ccf5b0334.mesh"
+					"path":"scenes/meshes/59d0798b35fc0de82d40f29f8210fef8.mesh"
 				}
 			},
 			{
@@ -1177,7 +1177,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/365cfa03a6190853a425ff2696564dbf.mesh"
+					"path":"scenes/meshes/9c437c0af6f9624fec05ed0be8267ef2.mesh"
 				}
 			},
 			{
@@ -1331,7 +1331,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/96e70b429ac590a0db36b147cde81831.mesh"
+					"path":"scenes/meshes/52d562d6334e4905bb03938b81d9e4ff.mesh"
 				}
 			},
 			{
@@ -1493,7 +1493,7 @@
 			{
 				"type":"blender_bevy_toolkit::blend_mesh::BlendMeshLoader",
 				"struct":{
-					"path":"scenes/meshes/90dcf6196a36e977372fbdb99fe5e442.mesh"
+					"path":"scenes/meshes/99b63298142a0485c443b84e3760400c.mesh"
 				}
 			},
 			{
