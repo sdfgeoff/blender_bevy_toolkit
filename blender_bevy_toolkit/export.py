@@ -3,6 +3,11 @@ import os
 import bpy
 from . import component_base, rust_types
 
+import logging
+from blender_bevy_toolkit import jdict
+
+logger = logging.getLogger(__name__)
+
 
 class Entity:
     """In an ECS, an entity is an opaque ID that is referenced by (or references)
@@ -26,6 +31,9 @@ class Entity:
 
 def export_entity(config, obj, entity_id):
     """Compile all the data about an object into an entity with components"""
+    logger.debug(
+        jdict(event="serializing_entity", obj_name=obj.name, entity_id=entity_id)
+    )
     entity = Entity(entity_id, [])
 
     for component in component_base.COMPONENTS:

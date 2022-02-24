@@ -252,7 +252,7 @@ def get_image_from_node_socket(config, socket):
     if source.image is None:
         return ron.EnumValue("None")
 
-    current_path = bpy.path.abspath(source.image.filepath)
+    current_path = bpy.path.abspath(source.image.filepath, library=source.image.library)
     hashval = hashimage(image)
     extension = {
         "BMP": "bmp",
@@ -287,6 +287,8 @@ def get_image_from_node_socket(config, socket):
 
 def hashimage(image):
     hash = hashlib.md5()
-    hash.update(open(bpy.path.abspath(image.filepath), "rb").read())
+    hash.update(
+        open(bpy.path.abspath(image.filepath, library=image.library), "rb").read()
+    )
     hash_text = hash.hexdigest()
     return hash_text
