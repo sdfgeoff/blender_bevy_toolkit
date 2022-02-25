@@ -33,6 +33,18 @@
             "type": "bool", 
             "default": false,
             "description": "allow this body to sleep when velocity is low - this increases performance"
+        },
+        {
+            "field": "lock_translation", 
+            "type": "bool_vec3", 
+            "default": [false, false, false],
+            "description": "Lock translation Axis"
+        },
+        {
+            "field": "lock_rotation", 
+            "type": "bool_vec3", 
+            "default": [false, false, false],
+            "description": "Lock Rotation Axis"
         }
     ]
 }

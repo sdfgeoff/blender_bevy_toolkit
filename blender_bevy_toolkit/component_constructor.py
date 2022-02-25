@@ -45,6 +45,7 @@ TYPE_PROPERTIES = {
     "int": bpy.props.IntProperty,
     "vec3": functools.partial(bpy.props.FloatVectorProperty, size=3),
     "vec2": functools.partial(bpy.props.FloatVectorProperty, size=2),
+    "bool_vec3": functools.partial(bpy.props.BoolVectorProperty, size=3, subtype="XYZ"),
     "u8enum": bpy.props.EnumProperty,
 }
 
@@ -59,6 +60,7 @@ TYPE_ENCODERS = {
     "vec3": rust_types.Vec3,
     "vec2": rust_types.Vec2,
     "u8enum": rust_types.Int,
+    "bool_vec3": rust_types.BoolVec3,
 }
 
 

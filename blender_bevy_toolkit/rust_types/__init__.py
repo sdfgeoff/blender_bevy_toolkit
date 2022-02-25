@@ -30,6 +30,9 @@ Quat = reflect(
 Vec2 = reflect("glam::vec2::Vec2", lambda vec: ron.Tuple(vec.x, vec.y))
 Vec3 = reflect("glam::vec3::Vec3", lambda vec: ron.Tuple(vec.x, vec.y, vec.z))
 Vec4 = reflect("glam::vec4::Vec4", lambda vec: ron.Tuple(vec.x, vec.y, vec.z, vec.w))
+BoolVec3 = reflect(
+    "glam::vec3::IVec3", lambda vec: ron.Tuple(int(vec[0]), int(vec[1]), int(vec[2]))
+)
 F32 = reflect("f32", ron.Float)
 F64 = reflect("f64", ron.Float)
 Bool = reflect("bool", ron.Bool)
