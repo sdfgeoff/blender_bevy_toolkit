@@ -1,10 +1,11 @@
 """ Converts from blender objects into a scene description """
 import os
+import logging
 import bpy
+from blender_bevy_toolkit import jdict
+
 from . import component_base, rust_types
 
-import logging
-from blender_bevy_toolkit import jdict
 
 logger = logging.getLogger(__name__)
 
@@ -53,7 +54,7 @@ def export_all(config):
         # will be subbed for actually using proper instancing of collections
         # but I couldn't get this to work in bevy :(
         bpy.ops.object.select_all(action="SELECT")
-        bpy.ops.object.duplicates_make_real(use_base_parent=True, use_hierarchy=False)
+        bpy.ops.object.duplicates_make_real(use_base_parent=True, use_hierarchy=True)
 
     config["mesh_output_folder"] = os.path.join(
         output_folder, config["mesh_output_folder"]

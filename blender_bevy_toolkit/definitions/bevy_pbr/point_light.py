@@ -139,7 +139,7 @@ class PointLightPanel(bpy.types.Panel):
 
 
 class PointLightProperties(bpy.types.PropertyGroup):
-    shadow_normal_bias: bpy.props.FloatProperty(name="Shadow Normal Bias", default=0.0)
+    shadow_normal_bias: bpy.props.FloatProperty(name="Shadow Normal Bias", default=0.6)
 
 
 register_component(

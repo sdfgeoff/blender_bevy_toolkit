@@ -80,7 +80,7 @@
 					},
 					"shadow_normal_bias":{
 						"type":"f32",
-						"value":0.0
+						"value":0.6000000238418579
 					}
 				}
 			},
@@ -1322,7 +1322,7 @@
 					},
 					"shadow_normal_bias":{
 						"type":"f32",
-						"value":0.0
+						"value":0.6000000238418579
 					}
 				}
 			},
