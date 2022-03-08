@@ -109,6 +109,22 @@
 					"sleep_allow":{
 						"type":"bool",
 						"value":false
+					},
+					"lock_translation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
+					},
+					"lock_rotation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
 					}
 				}
 			},
@@ -267,6 +283,22 @@
 					"sleep_allow":{
 						"type":"bool",
 						"value":false
+					},
+					"lock_translation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
+					},
+					"lock_rotation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
 					}
 				}
 			},
@@ -425,6 +457,22 @@
 					"sleep_allow":{
 						"type":"bool",
 						"value":false
+					},
+					"lock_translation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
+					},
+					"lock_rotation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
 					}
 				}
 			},
@@ -583,6 +631,22 @@
 					"sleep_allow":{
 						"type":"bool",
 						"value":false
+					},
+					"lock_translation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
+					},
+					"lock_rotation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
 					}
 				}
 			},
@@ -737,6 +801,22 @@
 					"sleep_allow":{
 						"type":"bool",
 						"value":false
+					},
+					"lock_translation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
+					},
+					"lock_rotation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
 					}
 				}
 			},
@@ -891,6 +971,22 @@
 					"sleep_allow":{
 						"type":"bool",
 						"value":false
+					},
+					"lock_translation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
+					},
+					"lock_rotation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
 					}
 				}
 			},
@@ -1045,6 +1141,22 @@
 					"sleep_allow":{
 						"type":"bool",
 						"value":false
+					},
+					"lock_translation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
+					},
+					"lock_rotation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
 					}
 				}
 			},
@@ -1199,6 +1311,22 @@
 					"sleep_allow":{
 						"type":"bool",
 						"value":false
+					},
+					"lock_translation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
+					},
+					"lock_rotation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
 					}
 				}
 			},
@@ -1353,6 +1481,22 @@
 					"sleep_allow":{
 						"type":"bool",
 						"value":false
+					},
+					"lock_translation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
+					},
+					"lock_rotation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
 					}
 				}
 			},
@@ -1515,6 +1659,22 @@
 					"sleep_allow":{
 						"type":"bool",
 						"value":false
+					},
+					"lock_translation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
+					},
+					"lock_rotation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
 					}
 				}
 			},

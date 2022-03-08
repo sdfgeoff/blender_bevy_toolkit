@@ -2,9 +2,7 @@
 import os
 import logging
 import bpy
-from blender_bevy_toolkit import jdict
-
-from . import component_base, rust_types
+from . import component_base, rust_types, jdict
 
 
 logger = logging.getLogger(__name__)
