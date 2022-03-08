@@ -33,8 +33,9 @@ fmt-test:
 	python -m vulture --min-confidence 100 blender_bevy_toolkit
 
 test:
-	$(BLENDER) -b --python ./scripts/pytest_in_blender.py  --python-exit-code=1
+	$(BLENDER) -b --python ./scripts/pytest_in_blender.py --python-exit-code=1
 	cargo test
+	
 	
 	
 	

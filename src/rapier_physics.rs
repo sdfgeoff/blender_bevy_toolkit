@@ -2,7 +2,6 @@ use bevy::prelude::*;
 use bevy_rapier3d::na::{Isometry3, Point3};
 use bevy_rapier3d::prelude::*;
 use bevy_rapier3d::rapier::geometry::SharedShape;
-use glam;
 use std::convert::TryInto;
 
 use smallvec;

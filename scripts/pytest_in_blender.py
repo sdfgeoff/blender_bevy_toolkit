@@ -1,3 +1,7 @@
 import pytest
+import sys
 
-pytest.main([])
+res = pytest.main([])
+
+if res == pytest.ExitCode.OK:
+    sys.exit(0)
