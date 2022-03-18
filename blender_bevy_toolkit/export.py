@@ -54,6 +54,15 @@ def export_all(config):
         bpy.ops.object.select_all(action="SELECT")
         bpy.ops.object.duplicates_make_real(use_base_parent=True, use_hierarchy=True)
 
+        # Rigid bodies can often being parented to other objects as a result of
+        # making duplicates real,, which Rapier doesn't deal with
+        # nicely. So let's forceably remove the parent before exporting.
+        for obj in bpy.context.scene.objects:
+            if hasattr(obj, "rapier_rigid_body") and obj.rapier_rigid_body.present:
+                transform_bak = obj.matrix_world.copy()
+                obj.parent = None
+                obj.matrix_world = transform_bak
+
     config["mesh_output_folder"] = os.path.join(
         output_folder, config["mesh_output_folder"]
     )
