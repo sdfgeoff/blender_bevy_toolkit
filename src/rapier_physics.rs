@@ -120,6 +120,10 @@ pub struct ColliderDescription {
     is_sensor: bool,
     density: f32,
 
+    // Transform to the center of the shape. This allows you to (eg) define a sphere that is not
+    // centered at the object origin.
+    centroid_translation: Vec3,
+
     /// At the moment, you can't use an enum with bevy's Reflect derivation.
     /// So instead we're doing this the old fashioned way.
     ///
@@ -181,6 +185,7 @@ pub fn collider_description_to_builder(
                 restitution: collider_desc.restitution,
                 ..Default::default()
             }),
+            position: ColliderPositionComponent((collider_desc.centroid_translation, Quat::IDENTITY).into()),
             mass_properties: ColliderMassPropsComponent(ColliderMassProps::Density(
                 collider_desc.density,
             )),
