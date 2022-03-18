@@ -185,7 +185,9 @@ pub fn collider_description_to_builder(
                 restitution: collider_desc.restitution,
                 ..Default::default()
             }),
-            position: ColliderPositionComponent((collider_desc.centroid_translation, Quat::IDENTITY).into()),
+            position: ColliderPositionComponent(
+                (collider_desc.centroid_translation, Quat::IDENTITY).into(),
+            ),
             mass_properties: ColliderMassPropsComponent(ColliderMassProps::Density(
                 collider_desc.density,
             )),
