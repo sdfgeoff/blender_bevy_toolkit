@@ -27,9 +27,12 @@ def reflect(type_path, processor):
 Quat = reflect(
     "glam::quat::Quat", lambda quat: ron.Tuple(quat.x, quat.y, quat.z, quat.w)
 )
-Vec2 = reflect("glam::vec2::Vec2", lambda vec: ron.Tuple(vec.x, vec.y))
-Vec3 = reflect("glam::vec3::Vec3", lambda vec: ron.Tuple(vec.x, vec.y, vec.z))
+Vec2 = reflect("glam::vec2::Vec2", lambda vec: ron.Tuple(vec[0], vec[1]))
+Vec3 = reflect("glam::vec3::Vec3", lambda vec: ron.Tuple(vec[0], vec[1], vec[2]))
 Vec4 = reflect("glam::vec4::Vec4", lambda vec: ron.Tuple(vec.x, vec.y, vec.z, vec.w))
+BoolVec3 = reflect(
+    "glam::vec3::IVec3", lambda vec: ron.Tuple(int(vec[0]), int(vec[1]), int(vec[2]))
+)
 F32 = reflect("f32", ron.Float)
 F64 = reflect("f64", ron.Float)
 Bool = reflect("bool", ron.Bool)

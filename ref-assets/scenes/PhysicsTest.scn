@@ -17,6 +17,14 @@
 						"type":"bool",
 						"value":false
 					},
+					"centroid_translation":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							0.0,
+							0.0,
+							0.0
+						)
+					},
 					"density":{
 						"type":"f32",
 						"value":0.5
@@ -109,6 +117,22 @@
 					"sleep_allow":{
 						"type":"bool",
 						"value":false
+					},
+					"lock_translation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
+					},
+					"lock_rotation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
 					}
 				}
 			},
@@ -170,6 +194,14 @@
 					"is_sensor":{
 						"type":"bool",
 						"value":false
+					},
+					"centroid_translation":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							0.0,
+							-1.7881393432617188e-07,
+							0.0
+						)
 					},
 					"density":{
 						"type":"f32",
@@ -267,6 +299,22 @@
 					"sleep_allow":{
 						"type":"bool",
 						"value":false
+					},
+					"lock_translation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
+					},
+					"lock_rotation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
 					}
 				}
 			},
@@ -329,6 +377,14 @@
 						"type":"bool",
 						"value":false
 					},
+					"centroid_translation":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							0.0,
+							-1.7881393432617188e-07,
+							0.0
+						)
+					},
 					"density":{
 						"type":"f32",
 						"value":0.5
@@ -373,8 +429,8 @@
 						"type":"glam::quat::Quat",
 						"value":(
 							-0.5735764503479004,
-							-1.2735955631180138e-16,
-							0.0,
+							-1.2735956954669118e-16,
+							-8.078408986006293e-24,
 							0.8191521763801575
 						)
 					},
@@ -425,6 +481,22 @@
 					"sleep_allow":{
 						"type":"bool",
 						"value":false
+					},
+					"lock_translation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
+					},
+					"lock_rotation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
 					}
 				}
 			},
@@ -443,8 +515,8 @@
 						"type":"glam::quat::Quat",
 						"value":(
 							-0.5735764503479004,
-							-1.2735955631180138e-16,
-							0.0,
+							-1.2735956954669118e-16,
+							-8.078408986006293e-24,
 							0.8191521763801575
 						)
 					},
@@ -486,6 +558,14 @@
 					"is_sensor":{
 						"type":"bool",
 						"value":false
+					},
+					"centroid_translation":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							0.0,
+							-4.76837158203125e-07,
+							0.0
+						)
 					},
 					"density":{
 						"type":"f32",
@@ -531,15 +611,15 @@
 						"type":"glam::quat::Quat",
 						"value":(
 							-0.2837282717227936,
-							0.24147158861160278,
-							-0.08738618344068527,
+							0.24147161841392517,
+							-0.08738619834184647,
 							0.9238795638084412
 						)
 					},
 					"scale":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							0.9999999403953552,
+							0.9999998807907104,
 							1.0,
 							1.0
 						)
@@ -583,6 +663,22 @@
 					"sleep_allow":{
 						"type":"bool",
 						"value":false
+					},
+					"lock_translation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
+					},
+					"lock_rotation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
 					}
 				}
 			},
@@ -601,15 +697,15 @@
 						"type":"glam::quat::Quat",
 						"value":(
 							-0.2837282717227936,
-							0.24147158861160278,
-							-0.08738618344068527,
+							0.24147161841392517,
+							-0.08738619834184647,
 							0.9238795638084412
 						)
 					},
 					"scale":{
 						"type":"glam::vec3::Vec3",
 						"value":(
-							0.9999999403953552,
+							0.9999998807907104,
 							1.0,
 							1.0
 						)
@@ -644,6 +740,14 @@
 					"is_sensor":{
 						"type":"bool",
 						"value":false
+					},
+					"centroid_translation":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							0.0,
+							0.0,
+							3.814697265625e-06
+						)
 					},
 					"density":{
 						"type":"f32",
@@ -737,6 +841,22 @@
 					"sleep_allow":{
 						"type":"bool",
 						"value":false
+					},
+					"lock_translation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
+					},
+					"lock_rotation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
 					}
 				}
 			},
@@ -798,6 +918,14 @@
 					"is_sensor":{
 						"type":"bool",
 						"value":false
+					},
+					"centroid_translation":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							0.0,
+							0.0,
+							3.814697265625e-06
+						)
 					},
 					"density":{
 						"type":"f32",
@@ -891,6 +1019,22 @@
 					"sleep_allow":{
 						"type":"bool",
 						"value":false
+					},
+					"lock_translation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
+					},
+					"lock_rotation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
 					}
 				}
 			},
@@ -952,6 +1096,14 @@
 					"is_sensor":{
 						"type":"bool",
 						"value":false
+					},
+					"centroid_translation":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							0.0,
+							0.0,
+							3.814697265625e-06
+						)
 					},
 					"density":{
 						"type":"f32",
@@ -1045,6 +1197,22 @@
 					"sleep_allow":{
 						"type":"bool",
 						"value":false
+					},
+					"lock_translation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
+					},
+					"lock_rotation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
 					}
 				}
 			},
@@ -1106,6 +1274,14 @@
 					"is_sensor":{
 						"type":"bool",
 						"value":false
+					},
+					"centroid_translation":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							0.548519492149353,
+							0.8580120801925659,
+							-0.5168675184249878
+						)
 					},
 					"density":{
 						"type":"f32",
@@ -1199,6 +1375,22 @@
 					"sleep_allow":{
 						"type":"bool",
 						"value":false
+					},
+					"lock_translation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
+					},
+					"lock_rotation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
 					}
 				}
 			},
@@ -1260,6 +1452,14 @@
 					"is_sensor":{
 						"type":"bool",
 						"value":false
+					},
+					"centroid_translation":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							0.0,
+							0.0,
+							0.0
+						)
 					},
 					"density":{
 						"type":"f32",
@@ -1353,6 +1553,22 @@
 					"sleep_allow":{
 						"type":"bool",
 						"value":false
+					},
+					"lock_translation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
+					},
+					"lock_rotation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
 					}
 				}
 			},
@@ -1414,6 +1630,14 @@
 					"is_sensor":{
 						"type":"bool",
 						"value":false
+					},
+					"centroid_translation":{
+						"type":"glam::vec3::Vec3",
+						"value":(
+							0.0,
+							0.0,
+							0.0
+						)
 					},
 					"density":{
 						"type":"f32",
@@ -1515,6 +1739,22 @@
 					"sleep_allow":{
 						"type":"bool",
 						"value":false
+					},
+					"lock_translation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
+					},
+					"lock_rotation":{
+						"type":"glam::vec3::IVec3",
+						"value":(
+							0,
+							0,
+							0
+						)
 					}
 				}
 			},
@@ -1755,7 +1995,7 @@
 					},
 					"shadow_normal_bias":{
 						"type":"f32",
-						"value":0.0
+						"value":0.6000000238418579
 					}
 				}
 			},

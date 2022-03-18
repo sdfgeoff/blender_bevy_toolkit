@@ -78,12 +78,34 @@ class ColliderDescription(ComponentBase):
             list=rust_types.List(*data),
         )
 
+        minx, miny, minz = 9e9, 9e9, 9e9
+        maxx, maxy, maxz = (
+            -9e9,
+            -9e9,
+            -9e9,
+        )
+        for x, y, z in obj.bound_box:
+            minx = min(minx, x)
+            miny = min(miny, y)
+            minz = min(minz, z)
+
+            maxx = max(maxx, x)
+            maxy = max(maxy, y)
+            maxz = max(maxz, z)
+
+        centroid_translation = [
+            minx + (maxx - minx) / 2,
+            miny + (maxy - miny) / 2,
+            minz + (maxz - minz) / 2,
+        ]
+
         return rust_types.Map(
             type="blender_bevy_toolkit::rapier_physics::ColliderDescription",
             struct=rust_types.Map(
                 friction=rust_types.F32(obj.rapier_collider_description.friction),
                 restitution=rust_types.F32(obj.rapier_collider_description.restitution),
                 is_sensor=rust_types.Bool(obj.rapier_collider_description.is_sensor),
+                centroid_translation=rust_types.Vec3(centroid_translation),
                 density=rust_types.F32(obj.rapier_collider_description.density),
                 **field_dict
             ),

@@ -32,6 +32,9 @@ pub struct RigidBodyDescription {
     /// Allow the physics engine to "sleep" the body when it's velocity is low. This helps
     /// save processing time if there are lots of nearly-static-bodies
     pub sleep_allow: bool,
+
+    pub lock_translation: glam::i32::IVec3,
+    pub lock_rotation: glam::i32::IVec3,
 }
 
 /// Converts a RigidBodyDescription into a rapier::dynamics::RigidBodyBuilder. This allows
@@ -53,6 +56,30 @@ pub fn body_description_to_builder(
             _ => RigidBodyType::Dynamic,
         };
 
+        let lock_flags = {
+            let mut flags = RigidBodyMassPropsFlags::empty();
+            if body_desc.lock_translation.x != 0 {
+                flags.insert(RigidBodyMassPropsFlags::TRANSLATION_LOCKED_X);
+            }
+            if body_desc.lock_translation.y != 0 {
+                flags.insert(RigidBodyMassPropsFlags::TRANSLATION_LOCKED_Y);
+            }
+            if body_desc.lock_translation.z != 0 {
+                flags.insert(RigidBodyMassPropsFlags::TRANSLATION_LOCKED_Z);
+            }
+            if body_desc.lock_rotation.x != 0 {
+                flags.insert(RigidBodyMassPropsFlags::ROTATION_LOCKED_X);
+            }
+            if body_desc.lock_rotation.y != 0 {
+                flags.insert(RigidBodyMassPropsFlags::ROTATION_LOCKED_Y);
+            }
+            if body_desc.lock_rotation.z != 0 {
+                flags.insert(RigidBodyMassPropsFlags::ROTATION_LOCKED_Z);
+            }
+
+            flags
+        };
+
         let bundle = RigidBodyBundle {
             body_type: RigidBodyTypeComponent(body_status),
             position: RigidBodyPositionComponent(RigidBodyPosition {
@@ -60,6 +87,7 @@ pub fn body_description_to_builder(
                 next_position: isometry,
             }),
             mass_properties: RigidBodyMassPropsComponent(RigidBodyMassProps {
+                flags: lock_flags,
                 ..Default::default()
             }),
             forces: RigidBodyForcesComponent(RigidBodyForces {

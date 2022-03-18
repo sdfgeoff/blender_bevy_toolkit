@@ -33,8 +33,9 @@ fmt-test:
 	python -m vulture --min-confidence 100 blender_bevy_toolkit
 
 test:
-	$(BLENDER) -b --python ./scripts/pytest_in_blender  --python-exit-code=1
+	$(BLENDER) -b --python ./scripts/pytest_in_blender.py --python-exit-code=1
 	cargo test
+	
 	
 	
 	
@@ -71,7 +72,7 @@ diff-test: assets
 	# Extracting blender
 	cd .blender; tar -xf blender-3.0.0-linux-x64.tar.xz
 	cd .blender; touch blender-3.0.0-linux-x64/blender 
-	cd .blender; ln -s blender-3.0.0-linux-x64/blender blender 
+	cd .blender; ln -s blender-3.0.0-linux-x64/blender blender  || true
 	
 	$(BLENDER) -b --python ./scripts/install_test_deps_in_blender.py
 
