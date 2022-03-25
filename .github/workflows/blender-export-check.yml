@@ -1,5 +1,5 @@
 name: Blender Export Test
-on: [push]
+on: [push, pull_request]
 jobs:
   diff-output-assets-vs-reference-assets:
     runs-on: ubuntu-latest
