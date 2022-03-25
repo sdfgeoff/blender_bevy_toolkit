@@ -19,6 +19,8 @@ from . import operators
 from . import component_base
 from . import export
 
+from . import render_engine
+
 logger = logging.getLogger(__name__)
 
 bl_info = {
@@ -53,6 +55,8 @@ def register():
     bpy.utils.register_class(operators.AddBevyComponent)
     bpy.utils.register_class(ExportBevy)
 
+    render_engine.register()
+
     bpy.app.handlers.load_post.append(load_handler)
 
     bpy.types.TOPBAR_MT_file_export.append(menu_func)
@@ -67,6 +71,8 @@ def unregister():
     bpy.utils.unregister_class(operators.RemoveBevyComponent)
     bpy.utils.unregister_class(operators.AddBevyComponent)
     bpy.utils.unregister_class(ExportBevy)
+
+    render_engine.unregister()
 
     bpy.types.TOPBAR_MT_file_export.remove(menu_func)
     bpy.app.handlers.load_post.remove(load_handler)
