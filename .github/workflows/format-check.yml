@@ -1,5 +1,5 @@
 name: Check formating
-on: [push]
+on: [push, pull_request]
 jobs:
   Fmt-check:
     runs-on: ubuntu-latest
