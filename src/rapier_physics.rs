@@ -46,69 +46,65 @@ pub fn body_description_to_builder(
     for (body_desc, entity, transform) in body_desc_query.iter() {
         commands.entity(entity).remove::<RigidBodyDescription>();
 
-        let isometry = Isometry3::from((transform.translation, transform.rotation));
+        //updated body_status to store updated RigidBody types
 
         let body_status = match body_desc.body_status {
-            0 => RigidBodyType::Dynamic,
-            1 => RigidBodyType::Static,
-            2 => RigidBodyType::KinematicPositionBased,
-            3 => RigidBodyType::KinematicVelocityBased,
-            _ => RigidBodyType::Dynamic,
+            0 => RigidBody::Dynamic,
+            1 => RigidBody::Fixed,
+            2 => RigidBody::KinematicPositionBased,
+            3 => RigidBody::KinematicVelocityBased,
+            _ => RigidBody::Dynamic,
         };
 
+        //updated lock flags to store LockedAxes to how they are used in the newest version of rapier
+
         let lock_flags = {
-            let mut flags = RigidBodyMassPropsFlags::empty();
+            let mut flags = LockedAxes::empty();
             if body_desc.lock_translation.x != 0 {
-                flags.insert(RigidBodyMassPropsFlags::TRANSLATION_LOCKED_X);
+                flags.insert(LockedAxes::TRANSLATION_LOCKED_X);
             }
             if body_desc.lock_translation.y != 0 {
-                flags.insert(RigidBodyMassPropsFlags::TRANSLATION_LOCKED_Y);
+                flags.insert(LockedAxes::TRANSLATION_LOCKED_Y);
             }
             if body_desc.lock_translation.z != 0 {
-                flags.insert(RigidBodyMassPropsFlags::TRANSLATION_LOCKED_Z);
+                flags.insert(LockedAxes::TRANSLATION_LOCKED_Z);
             }
             if body_desc.lock_rotation.x != 0 {
-                flags.insert(RigidBodyMassPropsFlags::ROTATION_LOCKED_X);
+                flags.insert(LockedAxes::ROTATION_LOCKED_X);
             }
             if body_desc.lock_rotation.y != 0 {
-                flags.insert(RigidBodyMassPropsFlags::ROTATION_LOCKED_Y);
+                flags.insert(LockedAxes::ROTATION_LOCKED_Y);
             }
             if body_desc.lock_rotation.z != 0 {
-                flags.insert(RigidBodyMassPropsFlags::ROTATION_LOCKED_Z);
+                flags.insert(LockedAxes::ROTATION_LOCKED_Z);
             }
 
             flags
         };
 
-        let bundle = RigidBodyBundle {
-            body_type: RigidBodyTypeComponent(body_status),
-            position: RigidBodyPositionComponent(RigidBodyPosition {
-                position: isometry,
-                next_position: isometry,
-            }),
-            mass_properties: RigidBodyMassPropsComponent(RigidBodyMassProps {
-                flags: lock_flags,
-                ..Default::default()
-            }),
-            forces: RigidBodyForcesComponent(RigidBodyForces {
-                ..Default::default()
-            }),
-            activation: Default::default(),
-            damping: RigidBodyDampingComponent(RigidBodyDamping {
-                linear_damping: body_desc.damping_linear,
-                angular_damping: body_desc.damping_angular,
-            }),
-            ccd: RigidBodyCcdComponent(RigidBodyCcd {
-                ccd_enabled: body_desc.ccd_enable,
-                ..Default::default()
-            }),
-            ..Default::default()
-        };
-
-        commands
-            .entity(entity)
-            .insert_bundle(bundle)
-            .insert(RigidBodyPositionSync::Discrete);
+        //new method of inserting rigid bodies into entities
+        if body_desc.ccd_enable{
+            commands
+                .entity(entity)
+                .insert(body_status)
+                .insert(lock_flags)
+                .insert(Damping {
+                    linear_damping: body_desc.damping_linear,
+                    angular_damping: body_desc.damping_angular
+                })
+                .insert(Ccd::enabled());
+        }
+        else {
+            commands
+                .entity(entity)
+                .insert(body_status)
+                .insert(lock_flags)
+                .insert(Damping {
+                    linear_damping: body_desc.damping_linear,
+                    angular_damping: body_desc.damping_angular
+                })
+                .insert(Ccd::disabled());
+        }
     }
 }
 
@@ -145,11 +141,6 @@ pub fn collider_description_to_builder(
     for (collider_desc, entity) in collider_desc_query.iter() {
         commands.entity(entity).remove::<ColliderDescription>();
 
-        let collider_type = match collider_desc.is_sensor {
-            true => ColliderType::Sensor,
-            false => ColliderType::Solid,
-        };
-
         let shape = match collider_desc.collider_shape {
             0 => {
                 // Sphere
@@ -173,27 +164,28 @@ pub fn collider_description_to_builder(
                     get_f32(&collider_desc.collider_shape_data[4..]),
                     get_f32(&collider_desc.collider_shape_data[8..]),
                 )
-            }
-            _ => panic!("Unnknown collider shape"),
+            } //fixed typo
+            _ => panic!("Unknown collider shape"),
         };
 
-        let collider_bundle = ColliderBundle {
-            collider_type: ColliderTypeComponent(collider_type),
-            shape: ColliderShapeComponent(shape),
-            material: ColliderMaterialComponent(ColliderMaterial {
-                friction: collider_desc.friction,
-                restitution: collider_desc.restitution,
-                ..Default::default()
-            }),
-            position: ColliderPositionComponent(
-                (collider_desc.centroid_translation, Quat::IDENTITY).into(),
-            ),
-            mass_properties: ColliderMassPropsComponent(ColliderMassProps::Density(
-                collider_desc.density,
-            )),
+        //new method for adding inserting Colliders and their various properties to entities
+
+        commands.entity(entity)
+        .insert(Collider::from(shape))
+        .insert(Sensor(collider_desc.is_sensor))
+        .insert(Friction {
+            coefficient: collider_desc.friction,
             ..Default::default()
-        };
-
-        commands.entity(entity).insert_bundle(collider_bundle);
+        })
+        .insert(Restitution {
+            coefficient: collider_desc.restitution,
+            ..Default::default()
+        })
+        .insert(Transform::from_xyz(
+            collider_desc.centroid_translation.x,
+            collider_desc.centroid_translation.y,
+            collider_desc.centroid_translation.z
+        ))
+        .insert(ColliderMassProperties::Density(collider_desc.density));
     }
 }
