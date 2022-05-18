@@ -26,11 +26,11 @@ impl Plugin for BlendLoadPlugin {
 
         app.init_asset_loader::<blend_mesh::BlendMeshAssetLoader>();
         app.init_asset_loader::<blend_material::BlendMaterialAssetLoader>();
-
-        app.add_system(blend_collection::blend_collection_loader.system());
-        app.add_system(blend_mesh::blend_mesh_loader.system());
-        app.add_system(blend_material::blend_material_loader.system());
-        app.add_system(rapier_physics::body_description_to_builder.system());
-        app.add_system(rapier_physics::collider_description_to_builder.system());
+        //removed deprecated .system() call, as it is no longer needed
+        app.add_system(blend_collection::blend_collection_loader);
+        app.add_system(blend_mesh::blend_mesh_loader);
+        app.add_system(blend_material::blend_material_loader);
+        app.add_system(rapier_physics::body_description_to_builder);
+        app.add_system(rapier_physics::collider_description_to_builder);
     }
 }

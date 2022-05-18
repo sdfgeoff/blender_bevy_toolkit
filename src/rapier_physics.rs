@@ -83,25 +83,24 @@ pub fn body_description_to_builder(
         };
 
         //new method of inserting rigid bodies into entities
-        if body_desc.ccd_enable{
+        if body_desc.ccd_enable {
             commands
                 .entity(entity)
                 .insert(body_status)
                 .insert(lock_flags)
                 .insert(Damping {
                     linear_damping: body_desc.damping_linear,
-                    angular_damping: body_desc.damping_angular
+                    angular_damping: body_desc.damping_angular,
                 })
                 .insert(Ccd::enabled());
-        }
-        else {
+        } else {
             commands
                 .entity(entity)
                 .insert(body_status)
                 .insert(lock_flags)
                 .insert(Damping {
                     linear_damping: body_desc.damping_linear,
-                    angular_damping: body_desc.damping_angular
+                    angular_damping: body_desc.damping_angular,
                 })
                 .insert(Ccd::disabled());
         }
@@ -169,23 +168,26 @@ pub fn collider_description_to_builder(
         };
 
         //new method for adding inserting Colliders and their various properties to entities
-
-        commands.entity(entity)
-        .insert(Collider::from(shape))
-        .insert(Sensor(collider_desc.is_sensor))
-        .insert(Friction {
-            coefficient: collider_desc.friction,
-            ..Default::default()
-        })
-        .insert(Restitution {
-            coefficient: collider_desc.restitution,
-            ..Default::default()
-        })
-        .insert(Transform::from_xyz(
-            collider_desc.centroid_translation.x,
-            collider_desc.centroid_translation.y,
-            collider_desc.centroid_translation.z
-        ))
-        .insert(ColliderMassProperties::Density(collider_desc.density));
+        //fixed an issue where colliders were not added to rigid bodies
+        commands.entity(entity).with_children(|children| {
+            children
+                .spawn()
+                .insert(Collider::from(shape))
+                .insert(Sensor(collider_desc.is_sensor))
+                .insert(Friction {
+                    coefficient: collider_desc.friction,
+                    ..Default::default()
+                })
+                .insert(Restitution {
+                    coefficient: collider_desc.restitution,
+                    ..Default::default()
+                })
+                .insert(Transform::from_xyz(
+                    collider_desc.centroid_translation.x,
+                    collider_desc.centroid_translation.y,
+                    collider_desc.centroid_translation.z,
+                ))
+                .insert(ColliderMassProperties::Density(collider_desc.density));
+        });
     }
 }
